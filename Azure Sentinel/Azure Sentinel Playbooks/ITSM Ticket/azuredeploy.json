@@ -1,0 +1,425 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "PlaybookName": {
+            "defaultValue": "SentinelTicket",
+            "type": "String"
+        },
+        "DeployserUserName": {
+            "defaultValue": "<username>@<domain>",
+            "type": "string"
+        },
+        "SentinelRG": {
+            "defaultValue": "<enter Sentinel Resource Group>",
+            "type": "String"
+        },
+        "SentinelWorkspace": {
+            "defaultValue": "<enter Sentinel Workspace>",
+            "type": "String"
+        },
+        "SentinelSubscriptionID": {
+            "defaultValue": "<enter sentinel subscription ID>",
+            "type": "String"
+        }
+    },
+    "variables": {
+		"AzureADConnectionName": "[concat('azuread-', parameters('PlaybookName'))]",
+        "o365ConnectionName": "[concat('o365-', parameters('PlaybookName'))]",
+        "AzureSentinelConnectionName": "[concat('azuresentinel-', parameters('PlaybookName'))]",
+        "azuremonitorlogsConnectionName": "[concat('azuremon-', parameters('PlaybookName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[variables('AzureADConnectionName')]",
+            "location": "[resourceGroup().location]"
+			},
+			"dependsOn":[
+                "[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                "[resourceId('Microsoft.Web/connections', variables('AzureADConnectionName'))]"
+            ],
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Month",
+                                "interval": 3
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Azure_Active_Directory_Identity_Protection": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Active Directory Identity Protection\"",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/queryData",
+                                "queries": {
+                                    "resourcegroups": "[parameters('SentinelRG')]",
+                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcetype": "Log Analytics Workspace",
+                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "timerange": "Set in query"
+                                }
+                            }
+                        },
+                        "Azure_Sentinel": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Sentinel\"",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/queryData",
+                                "queries": {
+                                    "resourcegroups": "[parameters('SentinelRG')]",
+                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcetype": "Log Analytics Workspace",
+                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "timerange": "Set in query"
+                                }
+                            }
+                        },
+                        "Defender_for_Endpoint": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Defender Advanced Threat Protection\"",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/queryData",
+                                "queries": {
+                                    "resourcegroups": "[parameters('SentinelRG')]",
+                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcetype": "Log Analytics Workspace",
+                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "timerange": "Set in query"
+                                }
+                            }
+                        },
+                        "For_each": {
+                            "foreach": "@body('Microsoft_Cloud_App_Security')?['value']",
+                            "actions": {
+                                "Status_and_Exclude_Alerts": {
+                                    "actions": {
+                                        "Send_an_email_(V2)": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each')?['Title']}<br>\n<br>\nStatus: @{items('For_each')?['Status']}<br>\n<br>\nPriority: @{items('For_each')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each')?['Description']}</p>",
+                                                    "Importance": "High",
+                                                    "Subject": "Sentinel @{items('For_each')?['IncidentNumber']}",
+                                                    "To": "sharedmailbox@domain.co.nz"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/v2/Mail"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@items('For_each')?['Status']",
+                                                    "New"
+                                                ]
+                                            },
+                                            {
+                                                "not": {
+                                                    "equals": [
+                                                        "@items('For_each')?['Title']",
+                                                        "Malicious activity by a user"
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Microsoft_Cloud_App_Security": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "For_each_2": {
+                            "foreach": "@body('Azure_Sentinel')?['value']",
+                            "actions": {
+                                "Condition": {
+                                    "actions": {
+                                        "Send_an_email_(V2)_2": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_2')?['Title']}<br>\n<br>\nStatus: @{items('For_each_2')?['Status']}<br>\n<br>\nPriority: @{items('For_each_2')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_2')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_2')?['Description']}</p>",
+                                                    "Subject": "Sentinel @{items('For_each_2')?['IncidentNumber']}",
+                                                    "To": "sharedmailbox@domain.co.nz"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/v2/Mail"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@items('For_each_2')?['Status']",
+                                                    "New"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Azure_Sentinel": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "For_each_3": {
+                            "foreach": "@body('Defender_for_Endpoint')?['value']",
+                            "actions": {
+                                "Condition_2": {
+                                    "actions": {
+                                        "Send_an_email_(V2)_3": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_3')?['Title']}<br>\n<br>\nStatus: @{items('For_each_3')?['Status']}<br>\n<br>\nPriority: @{items('For_each_3')?['Severity']}<br>\n<br>\nAzure Sentinel ID: @{items('For_each_3')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_3')?['Description']}</p>",
+                                                    "Importance": "High",
+                                                    "Subject": "Sentinel @{items('For_each_3')?['IncidentNumber']}",
+                                                    "To": "sharedmailbox@domain.co.nz"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/v2/Mail"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@items('For_each_3')?['Status']",
+                                                    "New"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Defender_for_Endpoint": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "For_each_4": {
+                            "foreach": "@body('Microsoft_Defender_for_Identity')?['value']",
+                            "actions": {
+                                "Condition_3": {
+                                    "actions": {
+                                        "Send_an_email_(V2)_4": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_4')?['Title']}<br>\n<br>\nStatus: @{items('For_each_4')?['Status']}<br>\n<br>\nPriority: @{items('For_each_4')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_4')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_4')?['Description']}</p>",
+                                                    "Subject": "Sentinel @{items('For_each_4')?['IncidentNumber']}",
+                                                    "To": "sharedmailbox@domain.co.nz"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/v2/Mail"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@items('For_each_4')?['Status']",
+                                                    "New"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Microsoft_Defender_for_Identity": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "For_each_5": {
+                            "foreach": "@body('Azure_Active_Directory_Identity_Protection')?['value']",
+                            "actions": {
+                                "Condition_4": {
+                                    "actions": {
+                                        "Send_an_email_(V2)_5": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_5')?['Title']}<br>\n<br>\nStatus: @{items('For_each_5')?['Status']}<br>\n<br>\nPriority: @{items('For_each_5')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_5')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_5')?['Description']}</p>",
+                                                    "Subject": "Sentinel @{items('For_each_5')?['IncidentNumber']}",
+                                                    "To": "sharedmailbox@domain.co.nz"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/v2/Mail"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "equals": [
+                                                    "@items('For_each_5')?['Status']",
+                                                    "New"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Azure_Active_Directory_Identity_Protection": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "Microsoft_Cloud_App_Security": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Cloud App Security\"",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/queryData",
+                                "queries": {
+                                    "resourcegroups": "[parameters('SentinelRG')]",
+                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcetype": "Log Analytics Workspace",
+                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "timerange": "Set in query"
+                                }
+                            }
+                        },
+                        "Microsoft_Defender_for_Identity": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Advanced Threat Protection\"",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/queryData",
+                                "queries": {
+                                    "resourcegroups": "[parameters('SentinelRG')]",
+                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcetype": "Log Analytics Workspace",
+                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "timerange": "Set in query"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azuremonitorlogs": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('AzureADConnectionName'))]",
+                                "connectionName": "[variables('AzureADConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuread')]"
+                            },
+                            "office365": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                                "connectionName": "[variables('AzureSentinelConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuread')]"
+                            }
+                        }
+                    }
+                }
+           }       
+     ]
+}

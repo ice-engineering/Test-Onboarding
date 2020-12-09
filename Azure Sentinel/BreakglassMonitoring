@@ -1,0 +1,2 @@
+SigninLogs
+| where OperationName == "Sign-in activity" and UserPrincipalName == "bg_account@contoso.com"
