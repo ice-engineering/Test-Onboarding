@@ -2,27 +2,22 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-	     "PlaybookName": {
+	    "PlaybookName": {
             "defaultValue": "Azure Sentinel Alerts",
-            "type": "string"
-        },
-        "UserName": {
-            "defaultValue": "<username>@<domain>",
             "type": "string"
         },
 		"SentinelRG": {
             "defaultValue": "SentinelRG",
             "type": "string"
 		},	
-			
-		"SentinelWSName": {
+	    "SentinelWSName": {
             "defaultValue": "SentinelWSName",
             "type": "string"
 		},
 		"SentinelSubID": {
             "defaultValue": "00000000-0000-0000-0000-000000000000",
             "type": "string"			
-		
+        }
     },
     "variables": {
 	    "o365ConnectionName": "[concat('o365-', parameters('PlaybookName'))]",
