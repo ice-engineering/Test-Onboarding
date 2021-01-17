@@ -17,7 +17,7 @@
 		"SentinelSubID": {
             "defaultValue": "00000000-0000-0000-0000-000000000000",
             "type": "string"			
-        },
+        }
     },
     "variables": {
 	    "o365ConnectionName": "[concat('o365-', parameters('PlaybookName'))]",
