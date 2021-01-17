@@ -2,46 +2,39 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "PlaybookName": {
-            "defaultValue": "SentinelTicket",
-            "type": "String"
+	     "PlaybookName": {
+            "defaultValue": "Azure Sentinel Alerts",
+            "type": "string"
         },
-        "DeployserUserName": {
+        "UserName": {
             "defaultValue": "<username>@<domain>",
             "type": "string"
         },
-        "SentinelRG": {
-            "defaultValue": "<enter Sentinel Resource Group>",
-            "type": "String"
-        },
-        "SentinelWorkspace": {
-            "defaultValue": "<enter Sentinel Workspace>",
-            "type": "String"
-        },
-        "SentinelSubscriptionID": {
-            "defaultValue": "<enter sentinel subscription ID>",
-            "type": "String"
-        }
+		"SentinelRG": {
+            "defaultValue": "SentinelRG",
+            "type": "string"
+			
+		"SentinelWSName": {
+            "defaultValue": "SentinelWSName",
+            "type": "string"
+
+		"SentinelSubID": {
+            "defaultValue": "00000000-0000-0000-0000-000000000000",
+            "type": "string"			
+		
     },
     "variables": {
-		"AzureADConnectionName": "[concat('azuread-', parameters('PlaybookName'))]",
-        "o365ConnectionName": "[concat('o365-', parameters('PlaybookName'))]",
-        "AzureSentinelConnectionName": "[concat('azuresentinel-', parameters('PlaybookName'))]",
+	    "o365ConnectionName": "[concat('o365-', parameters('PlaybookName'))]",
         "azuremonitorlogsConnectionName": "[concat('azuremon-', parameters('PlaybookName'))]"
-    },
+	},
     "resources": [
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "[variables('AzureADConnectionName')]",
-            "location": "[resourceGroup().location]"
-			},
-			"dependsOn":[
-                "[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
-                "[resourceId('Microsoft.Web/connections', variables('AzureADConnectionName'))]"
-            ],
+            "name": "[parameters('PlaybookName')]",
+            "location": "[resourceGroup().location]",
             "properties": {
-                "state": "Enabled",
+                "state": "Disabled",
                 "definition": {
                     "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
                     "contentVersion": "1.0.0.0",
@@ -65,7 +58,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Active Directory Identity Protection\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Active Directory Identity Protection\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -75,9 +68,9 @@
                                 "path": "/queryData",
                                 "queries": {
                                     "resourcegroups": "[parameters('SentinelRG')]",
-                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcename": "[parameters('SentinelWSName')]",
                                     "resourcetype": "Log Analytics Workspace",
-                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "subscriptions": "[parameters('SentinelSubID')]",
                                     "timerange": "Set in query"
                                 }
                             }
@@ -86,7 +79,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Sentinel\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Sentinel\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -96,9 +89,9 @@
                                 "path": "/queryData",
                                 "queries": {
                                     "resourcegroups": "[parameters('SentinelRG')]",
-                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcename": "[parameters('SentinelWSName')]",
                                     "resourcetype": "Log Analytics Workspace",
-                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "subscriptions": "[parameters('SentinelSubID')]",
                                     "timerange": "Set in query"
                                 }
                             }
@@ -107,7 +100,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Defender Advanced Threat Protection\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Defender Advanced Threat Protection\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -117,9 +110,9 @@
                                 "path": "/queryData",
                                 "queries": {
                                     "resourcegroups": "[parameters('SentinelRG')]",
-                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcename": "[parameters('SentinelWSName')]",
                                     "resourcetype": "Log Analytics Workspace",
-                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "subscriptions": "[parameters('SentinelSubID')]",
                                     "timerange": "Set in query"
                                 }
                             }
@@ -136,8 +129,8 @@
                                                 "body": {
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each')?['Title']}<br>\n<br>\nStatus: @{items('For_each')?['Status']}<br>\n<br>\nPriority: @{items('For_each')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each')?['Description']}</p>",
                                                     "Importance": "High",
-                                                    "Subject": "Sentinel @{items('For_each')?['IncidentNumber']}",
-                                                    "To": "sharedmailbox@domain.co.nz"
+                                                    "Subject": "CompanyName - Sentinel @{items('For_each')?['IncidentNumber']}",
+                                                    "To": "soc@dommain"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -165,6 +158,26 @@
                                                         "Malicious activity by a user"
                                                     ]
                                                 }
+                                            },
+                                            {
+                                                "and": [
+                                                    {
+                                                        "equals": [
+                                                            "@items('For_each')?['Severity']",
+                                                            "Medium"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "or": [
+                                                            {
+                                                                "equals": [
+                                                                    "@items('For_each')?['Severity']",
+                                                                    "High"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
                                             }
                                         ]
                                     },
@@ -189,8 +202,8 @@
                                             "inputs": {
                                                 "body": {
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_2')?['Title']}<br>\n<br>\nStatus: @{items('For_each_2')?['Status']}<br>\n<br>\nPriority: @{items('For_each_2')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_2')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_2')?['Description']}</p>",
-                                                    "Subject": "Sentinel @{items('For_each_2')?['IncidentNumber']}",
-                                                    "To": "sharedmailbox@domain.co.nz"
+                                                    "Subject": "CompanyName - Sentinel @{items('For_each_2')?['IncidentNumber']}",
+                                                    "To": "soc@dommain"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -209,6 +222,26 @@
                                                 "equals": [
                                                     "@items('For_each_2')?['Status']",
                                                     "New"
+                                                ]
+                                            },
+                                            {
+                                                "and": [
+                                                    {
+                                                        "equals": [
+                                                            "@items('For_each_2')?['Severity']",
+                                                            "Medium"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "or": [
+                                                            {
+                                                                "equals": [
+                                                                    "@items('For_each_2')?['Severity']",
+                                                                    "High"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
                                                 ]
                                             }
                                         ]
@@ -235,8 +268,8 @@
                                                 "body": {
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_3')?['Title']}<br>\n<br>\nStatus: @{items('For_each_3')?['Status']}<br>\n<br>\nPriority: @{items('For_each_3')?['Severity']}<br>\n<br>\nAzure Sentinel ID: @{items('For_each_3')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_3')?['Description']}</p>",
                                                     "Importance": "High",
-                                                    "Subject": "Sentinel @{items('For_each_3')?['IncidentNumber']}",
-                                                    "To": "sharedmailbox@domain.co.nz"
+                                                    "Subject": "CompanyName - Sentinel @{items('For_each_3')?['IncidentNumber']}",
+                                                    "To": "soc@dommain"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -255,6 +288,26 @@
                                                 "equals": [
                                                     "@items('For_each_3')?['Status']",
                                                     "New"
+                                                ]
+                                            },
+                                            {
+                                                "and": [
+                                                    {
+                                                        "equals": [
+                                                            "@items('For_each_3')?['Severity']",
+                                                            "Medium"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "or": [
+                                                            {
+                                                                "equals": [
+                                                                    "@items('For_each_3')?['Severity']",
+                                                                    "High"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
                                                 ]
                                             }
                                         ]
@@ -280,8 +333,8 @@
                                             "inputs": {
                                                 "body": {
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_4')?['Title']}<br>\n<br>\nStatus: @{items('For_each_4')?['Status']}<br>\n<br>\nPriority: @{items('For_each_4')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_4')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_4')?['Description']}</p>",
-                                                    "Subject": "Sentinel @{items('For_each_4')?['IncidentNumber']}",
-                                                    "To": "sharedmailbox@domain.co.nz"
+                                                    "Subject": "CompanyName - Sentinel @{items('For_each_4')?['IncidentNumber']}",
+                                                    "To": "soc@dommain"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -300,6 +353,12 @@
                                                 "equals": [
                                                     "@items('For_each_4')?['Status']",
                                                     "New"
+                                                ]
+                                            },
+                                            {
+                                                "equals": [
+                                                    "@items('For_each_4')?['Severity']",
+                                                    "High"
                                                 ]
                                             }
                                         ]
@@ -325,8 +384,8 @@
                                             "inputs": {
                                                 "body": {
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_5')?['Title']}<br>\n<br>\nStatus: @{items('For_each_5')?['Status']}<br>\n<br>\nPriority: @{items('For_each_5')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_5')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_5')?['Description']}</p>",
-                                                    "Subject": "Sentinel @{items('For_each_5')?['IncidentNumber']}",
-                                                    "To": "sharedmailbox@domain.co.nz"
+                                                    "Subject": "CompanyName - Sentinel @{items('For_each_5')?['IncidentNumber']}",
+                                                    "To": "soc@dommain"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -346,6 +405,26 @@
                                                     "@items('For_each_5')?['Status']",
                                                     "New"
                                                 ]
+                                            },
+                                            {
+                                                "and": [
+                                                    {
+                                                        "equals": [
+                                                            "@items('For_each_5')?['Severity']",
+                                                            "Medium"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "or": [
+                                                            {
+                                                                "equals": [
+                                                                    "@items('For_each_5')?['Severity']",
+                                                                    "High"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
                                             }
                                         ]
                                     },
@@ -363,7 +442,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Cloud App Security\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Cloud App Security\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -373,9 +452,9 @@
                                 "path": "/queryData",
                                 "queries": {
                                     "resourcegroups": "[parameters('SentinelRG')]",
-                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                    "resourcename": "[parameters('SentinelWSName')]",
                                     "resourcetype": "Log Analytics Workspace",
-                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "subscriptions": "[parameters('SentinelSubID')]",
                                     "timerange": "Set in query"
                                 }
                             }
@@ -384,7 +463,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Advanced Threat Protection\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Advanced Threat Protection\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -393,10 +472,10 @@
                                 "method": "post",
                                 "path": "/queryData",
                                 "queries": {
-                                    "resourcegroups": "[parameters('SentinelRG')]",
-                                    "resourcename": "[parameters('SentinelWorkspace')]",
+                                  "resourcegroups": "[parameters('SentinelRG')]",
+                                    "resourcename": "[parameters('SentinelWSName')]",
                                     "resourcetype": "Log Analytics Workspace",
-                                    "subscriptions": "[parameters('SentinelSubscriptionID')]",
+                                    "subscriptions": "[parameters('SentinelSubID')]",
                                     "timerange": "Set in query"
                                 }
                             }
@@ -408,18 +487,19 @@
                     "$connections": {
                         "value": {
                             "azuremonitorlogs": {
-                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('AzureADConnectionName'))]",
-                                "connectionName": "[variables('AzureADConnectionName')]",
-                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuread')]"
+                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('azuremonitorlogsConnectionName'))]",
+                                "connectionName": "[variables('azuremonitorlogsConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuremonitorlogs')]"
                             },
                             "office365": {
-                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
-                                "connectionName": "[variables('AzureSentinelConnectionName')]",
-                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuread')]"
+                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('o365ConnectionName'))]",
+                                "connectionName": "[variables('o365ConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"
                             }
                         }
                     }
                 }
-           }       
-     ]
+            }
+        }
+    ]
 }
