@@ -2,6 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "metadata": {
+	"comments": "The logic app queries Azure Sentinel Log Analytics to identify detected security events on your Azure Sentinel instance. After identifying the relevant security event, the logic app sends an email to your dedicated ITSM tool to create a ticket.", 
     	"author": "Shivniel Gounder"
     },
     "parameters": {
