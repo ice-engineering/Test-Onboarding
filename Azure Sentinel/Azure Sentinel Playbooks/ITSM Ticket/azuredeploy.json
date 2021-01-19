@@ -14,7 +14,7 @@
             "defaultValue": "SentinelRG",
             "type": "string"
 		},
-        "DeployserUserName": {
+        "DeployUserName": {
             "defaultValue": "<username>@<domain>",
             "type": "string"
         },	
@@ -38,7 +38,7 @@
             "name": "[variables('o365ConnectionName')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "displayName": "[parameters('DeployserUserName')]",
+                "displayName": "[parameters('DeployUserName')]",
                 "customParameterValues": {},
                 "api": {
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"
@@ -51,7 +51,7 @@
             "name": "[variables('AzureMonitorLogsConnectionName')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "displayName": "[parameters('DeployserUserName')]",
+                "displayName": "[parameters('DeployUserName')]",
                 "customParameterValues": {},
                 "api": {
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuremonitorlogs')]"
