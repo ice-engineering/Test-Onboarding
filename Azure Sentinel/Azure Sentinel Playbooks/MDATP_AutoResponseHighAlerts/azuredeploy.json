@@ -1,26 +1,14 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "metadata": {
+	"author": "Shivniel Gounder"
+    },
     "parameters": {
 	    "PlaybookName": {
-            "defaultValue": "AzureSentinelAlerts",
+            "defaultValue": "MDATP_AutoResponseHighAlerts",
             "type": "string"
-        },
-		"SentinelRG": {
-            "defaultValue": "SentinelRG",
-            "type": "string"
-		},
-        "DeployUserName": {
-            "defaultValue": "<username>@<domain>",
-            "type": "string"
-        },	
-	    "SentinelWSName": {
-            "defaultValue": "SentinelWSName",
-            "type": "string"
-		},
-		"SentinelSubID": {
-            "defaultValue": "00000000-0000-0000-0000-000000000000",
-            "type": "string"			
+		
         },
         "VirusTotalAPIKey": {
             "defaultValue": "00000000-0000-0000-0000-000000000000",
