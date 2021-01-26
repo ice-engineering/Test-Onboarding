@@ -1,4 +1,12 @@
-Description:
+Description: Azure Sentinel playbook to automate high severity incidents by running AV scan, threat hunting malicious detected hashes, collect investigate package and disable Azure AD sign-in.
+
+Permissions required:
+•	Azure Sentinel playbook: Azure Sentinel Contributor 
+•	Managed Identity: Security Admin
+•	Service Account: User administrator to block AAD sign-ins
+•	App Registration: Microsoft graph User Read Access
+Windows Defender ATP: Delegated AdvancedQuery, Alerts, Machine, User permissions
+
 
 Author: Shivniel Gounder
 
