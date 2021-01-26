@@ -4177,12 +4177,12 @@
                         "value": {
                             "azuresentinel": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
-                                "connectionName": "AzureSentinelConnectionName",
+                                "connectionName": "[variables('AzureSentinelConnectionName')]",
                                 "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuresentinel')]"
                             },
                             "wdatp": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', variables('MDATPConnectionName'))]",
-                                "connectionName": "MDATPConnectionName",
+                                "connectionName": "[variables('MDATPConnectionName')]",
                                 "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/wdatp')]"
                             }
                         }
