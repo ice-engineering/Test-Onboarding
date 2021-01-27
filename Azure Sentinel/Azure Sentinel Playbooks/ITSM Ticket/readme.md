@@ -1,6 +1,6 @@
 Description: The logic app queries Azure Sentinel Log Analytics to identify detected security events on your Azure Sentinel instance. After identifying the relevant security event, the logic app sends an email to your dedicated ITSM tool to create a ticket.
 
-Replace Outlook module with the dedicated ITMS module (Fresh Service, Jira, ServiceNow, etc)
+Replace Outlook module with the dedicated ITSM module (Fresh Service, Jira, ServiceNow, etc)
 
 author: Shivniel Gounder
 
