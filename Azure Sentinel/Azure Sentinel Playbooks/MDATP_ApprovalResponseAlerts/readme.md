@@ -1,4 +1,4 @@
-Description: Azure Sentinel playbook to send approval request to the SOC team to approve the following actions:
+Description: Azure Sentinel playbook to send approval request to the SOC team to approve the following incident response actions:
 
 1. AV scan,
 
