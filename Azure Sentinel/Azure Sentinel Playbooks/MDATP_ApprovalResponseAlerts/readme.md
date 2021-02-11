@@ -1,10 +1,10 @@
 Description: Azure Sentinel playbook to send approval request to the SOC team to approve the following incident response actions:
 
-1. AV scan,
+1. AV scan
 
-2. Whois scan,
+2. Whois scan
 
-3. Disable Azure AD sign-in.
+3. Disable Azure AD sign-in
 
 4. Initiated automated response via Defender for Endpoint
 
