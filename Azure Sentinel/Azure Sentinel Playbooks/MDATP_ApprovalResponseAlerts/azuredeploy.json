@@ -4753,7 +4753,7 @@
                         "value": {
                             "azuread": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', variables('AADConnectionName'))]",
-                                "connectionName": "azuread",
+                                "connectionName": "[variables('AADConnectionName')]",
                                 "id":"[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuread')]"
                                 
                             },
