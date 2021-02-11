@@ -2,9 +2,15 @@ Description: Azure Sentinel playbook to send approval request to the SOC team to
 
 1. AV scan,
 
-2. Collect investigate package,
+2. Whois scan,
 
 3. Disable Azure AD sign-in.
+
+4. Initiated automated response via Defender for Endpoint
+
+5. Threat hunt files across the tenant
+
+6. Review VirusTotal results for identified hashes.
 
 Permissions required:
 
