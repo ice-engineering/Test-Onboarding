@@ -16,6 +16,11 @@
             "type": "string"  
 
         },
+        "IPQualityScoreAPI": {
+            "defaultValue": "00000000-0000-0000-0000-000000000000",
+            "type": "string"  
+
+        },
         "DeployUserName": {
             "defaultValue": "<username>@<domain>",
             "type": "string"
@@ -118,7 +123,7 @@
                                 },
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
                                     }
                                 },
                                 "path": "/subscribe"
@@ -136,11 +141,32 @@
                             "inputs": {
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['wdatp']['connectionId']"
+                                        "name": "@parameters('$connections')['wdatp_1']['connectionId']"
                                     }
                                 },
                                 "method": "get",
                                 "path": "/api/investigations/@{encodeURIComponent(body('Alerts_-_Get_single_alert')?['investigationId'])}"
+                            }
+                        },
+                        "Add_comment_to_incident_(V3)_2": {
+                            "runAfter": {
+                                "Condition": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "incidentArmId": "@body('Alert_-_Get_incident')?['id']",
+                                    "message": "<p><strong>MDATP Results:</strong><br>\n<br>\nThe hash values were detected on the following devices (Device name, Device ID):<br>\n<br>\n@{variables('MDATPVulnDev')}<br>\n<br>\n<strong>Virus Total Results of the hash value (Total positive detection, Total AV Scan):</strong><br>\n<br>\n@{variables('VTPositive')} / @{variables('VTTotal')}<br>\n<br>\n<strong>IP Health Score:</strong><br>\n<br>\nIP: &nbsp;@{variables('IP')}<br>\n<br>\nISP: @{variables('IPISP')}<br>\n<br>\nCity: @{variables('IPCity')}<br>\n<br>\nOrganisation: @{variables('IPOrg')}<br>\n<br>\nFraud Score: @{variables('IPFraudScore')}<br>\n</p>"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/Incidents/Comment"
                             }
                         },
                         "Alert_-_Get_incident": {
@@ -149,7 +175,7 @@
                             "inputs": {
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
                                     }
                                 },
                                 "method": "get",
@@ -166,7 +192,7 @@
                             "inputs": {
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['wdatp']['connectionId']"
+                                        "name": "@parameters('$connections')['wdatp_1']['connectionId']"
                                     }
                                 },
                                 "method": "get",
@@ -178,27 +204,6 @@
                                 "For_each": {
                                     "foreach": "@body('Entities_-_Get_FileHashes')?['Filehashes']",
                                     "actions": {
-                                        "Add_comment_to_incident_(V3)": {
-                                            "runAfter": {
-                                                "Advanced_Hunting": [
-                                                    "Succeeded"
-                                                ]
-                                            },
-                                            "type": "ApiConnection",
-                                            "inputs": {
-                                                "body": {
-                                                    "incidentArmId": "@body('Alert_-_Get_incident')?['id']",
-                                                    "message": "<p>@{body('Advanced_Hunting')?['Results']}</p>"
-                                                },
-                                                "host": {
-                                                    "connection": {
-                                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
-                                                    }
-                                                },
-                                                "method": "post",
-                                                "path": "/Incidents/Comment"
-                                            }
-                                        },
                                         "Advanced_Hunting": {
                                             "runAfter": {},
                                             "type": "ApiConnection",
@@ -208,7 +213,7 @@
                                                 },
                                                 "host": {
                                                     "connection": {
-                                                        "name": "@parameters('$connections')['wdatp']['connectionId']"
+                                                        "name": "@parameters('$connections')['wdatp_1']['connectionId']"
                                                     }
                                                 },
                                                 "method": "post",
@@ -218,6 +223,47 @@
                                         "For_each_2": {
                                             "foreach": "@body('Entities_-_Get_FileHashes')?['Filehashes']",
                                             "actions": {
+                                                "Actions_-_Run_antivirus_scan_2": {
+                                                    "runAfter": {
+                                                        "Actions_-_Start_automated_investigation_on_a_machine": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "ApiConnection",
+                                                    "inputs": {
+                                                        "body": {
+                                                            "Comment": "Azure Sentinel: @{body('Alert_-_Get_incident')?['properties']?['incidentNumber']}",
+                                                            "ScanType": "Quick"
+                                                        },
+                                                        "host": {
+                                                            "connection": {
+                                                                "name": "@parameters('$connections')['wdatp_1']['connectionId']"
+                                                            }
+                                                        },
+                                                        "method": "post",
+                                                        "path": "/api/machines/@{encodeURIComponent(variables('MDATPVulnDev'))}/runAntiVirusScan"
+                                                    }
+                                                },
+                                                "Actions_-_Start_automated_investigation_on_a_machine": {
+                                                    "runAfter": {
+                                                        "SetVTTotal": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "ApiConnection",
+                                                    "inputs": {
+                                                        "body": {
+                                                            "Comment": "Azure Sentinel: @{body('Alert_-_Get_incident')?['properties']?['incidentNumber']}"
+                                                        },
+                                                        "host": {
+                                                            "connection": {
+                                                                "name": "@parameters('$connections')['wdatp_1']['connectionId']"
+                                                            }
+                                                        },
+                                                        "method": "post",
+                                                        "path": "/api/machines/@{encodeURIComponent(variables('MDATPVulnDev'))}/startInvestigation"
+                                                    }
+                                                },
                                                 "Condition_2": {
                                                     "actions": {
                                                         "Send_approval_email": {
@@ -226,7 +272,7 @@
                                                             "inputs": {
                                                                 "body": {
                                                                     "Message": {
-                                                                        "Body": "MDATP Results:\n\nThe hash values were detected on the following devices (Device name, Device ID):\n\n@{variables('MDATPVulnDev')}\n\nVirus Total Results of the hash value (Total positive detection, Total AV Scan):\n\n@{variables('VTPositive')} / @{variables('VTTotal')}\n\nTo disable the Azure AD Sign in for the user and Isolate the device from the network. Please Approve the action, otherwise select reject. ",
+                                                                        "Body": "MDATP Results:\n\nThe hash values were detected on the following devices (Device name, Device ID):\n\n@{variables('MDATPVulnDev')}\n\nVirus Total Results of the hash value (Total positive detection, Total AV Scan):\n\n@{variables('VTPositive')} / @{variables('VTTotal')}\n\nIP Health Score:\n\nIP:  @{variables('IP')}\n\nISP: @{variables('IPISP')}\n\nCity: @{variables('IPCity')}\n\nOrganisation: @{variables('IPOrg')}\n\nFraud Score: @{variables('IPFraudScore')}\n\nTo disable the Azure AD Sign in for the user. Please Approve the action, otherwise select reject. ",
                                                                         "HideHTMLMessage": false,
                                                                         "Importance": "Normal",
                                                                         "Options": "Approve, Reject",
@@ -238,7 +284,7 @@
                                                                 },
                                                                 "host": {
                                                                     "connection": {
-                                                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                                                        "name": "@parameters('$connections')['office365_1']['connectionId']"
                                                                     }
                                                                 },
                                                                 "path": "/approvalmail/$subscriptions"
@@ -246,7 +292,7 @@
                                                         }
                                                     },
                                                     "runAfter": {
-                                                        "SetVTTotal": [
+                                                        "Actions_-_Run_antivirus_scan_2": [
                                                             "Succeeded"
                                                         ]
                                                     },
@@ -254,7 +300,7 @@
                                                         "and": [
                                                             {
                                                                 "equals": [
-                                                                    "@outputs('HTTP')['statusCode']",
+                                                                    "",
                                                                     200
                                                                 ]
                                                             }
@@ -264,45 +310,7 @@
                                                 },
                                                 "Condition_3": {
                                                     "actions": {
-                                                        "Actions_-_Isolate_machine": {
-                                                            "runAfter": {
-                                                                "For_each_3": [
-                                                                    "Succeeded"
-                                                                ]
-                                                            },
-                                                            "type": "ApiConnection",
-                                                            "inputs": {
-                                                                "body": {
-                                                                    "Comment": "Azure Sentinel: @{body('Alert_-_Get_incident')?['properties']?['incidentNumber']}",
-                                                                    "IsolationType": "Full"
-                                                                },
-                                                                "host": {
-                                                                    "connection": {
-                                                                        "name": "@parameters('$connections')['wdatp']['connectionId']"
-                                                                    }
-                                                                },
-                                                                "method": "post",
-                                                                "path": "/api/machines/@{encodeURIComponent(variables('MDATPVulnDev'))}/isolate"
-                                                            }
-                                                        },
-                                                        "Actions_-_Run_antivirus_scan": {
-                                                            "runAfter": {},
-                                                            "type": "ApiConnection",
-                                                            "inputs": {
-                                                                "body": {
-                                                                    "Comment": "Azure Sentinel: @{body('Alert_-_Get_incident')?['properties']?['incidentNumber']}",
-                                                                    "ScanType": "Quick"
-                                                                },
-                                                                "host": {
-                                                                    "connection": {
-                                                                        "name": "@parameters('$connections')['wdatp']['connectionId']"
-                                                                    }
-                                                                },
-                                                                "method": "post",
-                                                                "path": "/api/machines/@{encodeURIComponent(variables('MDATPVulnDev'))}/runAntiVirusScan"
-                                                            }
-                                                        },
-                                                        "For_each_3": {
+                                                        "Disable_User": {
                                                             "foreach": "@body('Entities_-_Get_Accounts')?['Accounts']",
                                                             "actions": {
                                                                 "Update_user": {
@@ -314,19 +322,15 @@
                                                                         },
                                                                         "host": {
                                                                             "connection": {
-                                                                                "name": "@parameters('$connections')['azuread']['connectionId']"
+                                                                                "name": "@parameters('$connections')['azuread_1']['connectionId']"
                                                                             }
                                                                         },
                                                                         "method": "patch",
-                                                                        "path": "/v1.0/users/@{encodeURIComponent(items('For_each_3')?['AadUserId'])}"
+                                                                        "path": "/v1.0/users/@{encodeURIComponent(items('Disable_User')?['AadUserId'])}"
                                                                     }
                                                                 }
                                                             },
-                                                            "runAfter": {
-                                                                "Actions_-_Run_antivirus_scan": [
-                                                                    "Succeeded"
-                                                                ]
-                                                            },
+                                                            "runAfter": {},
                                                             "type": "Foreach"
                                                         }
                                                     },
@@ -347,7 +351,31 @@
                                                     },
                                                     "type": "If"
                                                 },
-                                                "HTTP": {
+                                                "SetVTPositive": {
+                                                    "runAfter": {
+                                                        "VTParse_JSON": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "VTPositive",
+                                                        "value": "@{body('VTParse_JSON')?['schema']?['properties']?['positives']}"
+                                                    }
+                                                },
+                                                "SetVTTotal": {
+                                                    "runAfter": {
+                                                        "SetVTPositive": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "VTTotal",
+                                                        "value": "@{body('VTParse_JSON')?['schema']?['properties']?['total']}"
+                                                    }
+                                                },
+                                                "VTHTTP": {
                                                     "runAfter": {},
                                                     "type": "Http",
                                                     "inputs": {
@@ -355,15 +383,15 @@
                                                         "uri": "https://www.virustotal.com/vtapi/v2/file/report?apikey=@{variables('VTAPIKey')}&resource=@{items('For_each_2')?['Value']}"
                                                     }
                                                 },
-                                                "Parse_JSON": {
+                                                "VTParse_JSON": {
                                                     "runAfter": {
-                                                        "HTTP": [
+                                                        "VTHTTP": [
                                                             "Succeeded"
                                                         ]
                                                     },
                                                     "type": "ParseJson",
                                                     "inputs": {
-                                                        "content": "@body('HTTP')",
+                                                        "content": "@body('VTHTTP')",
                                                         "schema": {
                                                             "properties": {
                                                                 "content": {
@@ -4083,30 +4111,6 @@
                                                             "type": "object"
                                                         }
                                                     }
-                                                },
-                                                "SetVTPositive": {
-                                                    "runAfter": {
-                                                        "Parse_JSON": [
-                                                            "Succeeded"
-                                                        ]
-                                                    },
-                                                    "type": "SetVariable",
-                                                    "inputs": {
-                                                        "name": "VTPositive",
-                                                        "value": "@{body('Parse_JSON')?['schema']?['properties']?['positives']}"
-                                                    }
-                                                },
-                                                "SetVTTotal": {
-                                                    "runAfter": {
-                                                        "SetVTPositive": [
-                                                            "Succeeded"
-                                                        ]
-                                                    },
-                                                    "type": "SetVariable",
-                                                    "inputs": {
-                                                        "name": "VTTotal",
-                                                        "value": "@{body('Parse_JSON')?['schema']?['properties']?['total']}"
-                                                    }
                                                 }
                                             },
                                             "runAfter": {
@@ -4118,7 +4122,7 @@
                                         },
                                         "SetDevice": {
                                             "runAfter": {
-                                                "Add_comment_to_incident_(V3)": [
+                                                "Advanced_Hunting": [
                                                     "Succeeded"
                                                 ]
                                             },
@@ -4134,23 +4138,19 @@
                                 }
                             },
                             "runAfter": {
-                                "MDATPVulnDev": [
+                                "For_each_3": [
                                     "Succeeded"
                                 ]
                             },
                             "expression": {
                                 "and": [
                                     {
-                                        "equals": [
-                                            "@triggerBody()?['Severity']",
-                                            "Medium"
-                                        ]
-                                    },
-                                    {
-                                        "equals": [
-                                            "@triggerBody()?['Severity']",
-                                            "Low"
-                                        ]
+                                        "not": {
+                                            "equals": [
+                                                "@triggerBody()?['Severity']",
+                                                "Informational"
+                                            ]
+                                        }
                                     }
                                 ]
                             },
@@ -4167,7 +4167,7 @@
                                 "body": "@triggerBody()?['Entities']",
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
                                     }
                                 },
                                 "method": "post",
@@ -4185,16 +4185,504 @@
                                 "body": "@triggerBody()?['Entities']",
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
                                     }
                                 },
                                 "method": "post",
                                 "path": "/entities/filehash"
                             }
                         },
-                        "MDATPVulnDev": {
+                        "For_each_3": {
+                            "foreach": "@body('IPArrayJSON')",
+                            "actions": {
+                                "HTTP": {
+                                    "runAfter": {},
+                                    "type": "Http",
+                                    "inputs": {
+                                        "method": "GET",
+                                        "uri": "https://ipqualityscore.com/api/json/ip/@{variables('IPQualityScoreAPI')}/@{items('For_each_3')?['LastExternalIpAddress']}/?strictness=0&allow_public_access_points=true&fast=true&lighter_penalties=true&mobile=true"
+                                    }
+                                },
+                                "IPQualityJSON": {
+                                    "runAfter": {
+                                        "HTTP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('HTTP')",
+                                        "schema": {
+                                            "properties": {
+                                                "ASN": {
+                                                    "type": "integer"
+                                                },
+                                                "ISP": {
+                                                    "type": "string"
+                                                },
+                                                "abuse_velocity": {
+                                                    "type": "string"
+                                                },
+                                                "active_tor": {
+                                                    "type": "boolean"
+                                                },
+                                                "active_vpn": {
+                                                    "type": "boolean"
+                                                },
+                                                "bot_status": {
+                                                    "type": "boolean"
+                                                },
+                                                "city": {
+                                                    "type": "string"
+                                                },
+                                                "connection_type": {
+                                                    "type": "string"
+                                                },
+                                                "country_code": {
+                                                    "type": "string"
+                                                },
+                                                "fraud_score": {
+                                                    "type": "integer"
+                                                },
+                                                "host": {
+                                                    "type": "string"
+                                                },
+                                                "is_crawler": {
+                                                    "type": "boolean"
+                                                },
+                                                "latitude": {
+                                                    "type": "number"
+                                                },
+                                                "longitude": {
+                                                    "type": "number"
+                                                },
+                                                "message": {
+                                                    "type": "string"
+                                                },
+                                                "mobile": {
+                                                    "type": "boolean"
+                                                },
+                                                "organization": {
+                                                    "type": "string"
+                                                },
+                                                "proxy": {
+                                                    "type": "boolean"
+                                                },
+                                                "recent_abuse": {
+                                                    "type": "boolean"
+                                                },
+                                                "region": {
+                                                    "type": "string"
+                                                },
+                                                "request_id": {
+                                                    "type": "string"
+                                                },
+                                                "success": {
+                                                    "type": "boolean"
+                                                },
+                                                "timezone": {
+                                                    "type": "string"
+                                                },
+                                                "tor": {
+                                                    "type": "boolean"
+                                                },
+                                                "vpn": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "SetIP": {
+                                    "runAfter": {
+                                        "SetIPOrg": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "IP",
+                                        "value": "@items('For_each_3')?['LastExternalIpAddress']"
+                                    }
+                                },
+                                "SetIPCity": {
+                                    "runAfter": {
+                                        "SetIPFraudScore": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "IPCity",
+                                        "value": "@body('IPQualityJSON')?['city']"
+                                    }
+                                },
+                                "SetIPFraudScore": {
+                                    "runAfter": {
+                                        "SetIPISP": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "IPFraudScore",
+                                        "value": "@{body('IPQualityJSON')?['fraud_score']}"
+                                    }
+                                },
+                                "SetIPISP": {
+                                    "runAfter": {
+                                        "IPQualityJSON": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "IPISP",
+                                        "value": "@body('IPQualityJSON')?['ISP']"
+                                    }
+                                },
+                                "SetIPOrg": {
+                                    "runAfter": {
+                                        "SetIPCity": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "IPOrg",
+                                        "value": "@body('IPQualityJSON')?['organization']"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "IPArrayJSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "IP": {
                             "runAfter": {
                                 "VTTotal": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IP",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "IPArray": {
+                            "runAfter": {
+                                "IPQualityScoreAPI": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IPArray",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "IPArrayJSON": {
+                            "runAfter": {
+                                "IPArray": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@variables('IPArray')",
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "$id": {
+                                                "type": "string"
+                                            },
+                                            "$ref": {
+                                                "type": "string"
+                                            },
+                                            "AadDeviceId": {},
+                                            "CommandLine": {
+                                                "type": "string"
+                                            },
+                                            "CreatedTimeUtc": {
+                                                "type": "string"
+                                            },
+                                            "CreationTimeUtc": {
+                                                "type": "string"
+                                            },
+                                            "ElevationToken": {
+                                                "type": "string"
+                                            },
+                                            "FQDN": {
+                                                "type": "string"
+                                            },
+                                            "HealthStatus": {
+                                                "type": "string"
+                                            },
+                                            "HostName": {
+                                                "type": "string"
+                                            },
+                                            "ImageFile": {
+                                                "properties": {
+                                                    "$id": {
+                                                        "type": "string"
+                                                    },
+                                                    "CreatedTimeUtc": {
+                                                        "type": "string"
+                                                    },
+                                                    "Directory": {
+                                                        "type": "string"
+                                                    },
+                                                    "FileHashes": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "$id": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Algorithm": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Type": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Value": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "$id",
+                                                                "Algorithm",
+                                                                "Value",
+                                                                "Type"
+                                                            ],
+                                                            "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "Name": {
+                                                        "type": "string"
+                                                    },
+                                                    "Type": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "IsDomainJoined": {
+                                                "type": "boolean"
+                                            },
+                                            "LastExternalIpAddress": {
+                                                "type": "string"
+                                            },
+                                            "LastIpAddress": {
+                                                "type": "string"
+                                            },
+                                            "LastSeen": {
+                                                "type": "string"
+                                            },
+                                            "MdatpDeviceId": {
+                                                "type": "string"
+                                            },
+                                            "NTDomain": {
+                                                "type": "string"
+                                            },
+                                            "Name": {
+                                                "type": "string"
+                                            },
+                                            "OSFamily": {
+                                                "type": "string"
+                                            },
+                                            "OSVersion": {
+                                                "type": "string"
+                                            },
+                                            "ParentProcess": {
+                                                "properties": {
+                                                    "$id": {
+                                                        "type": "string"
+                                                    },
+                                                    "CommandLine": {
+                                                        "type": "string"
+                                                    },
+                                                    "CreatedTimeUtc": {
+                                                        "type": "string"
+                                                    },
+                                                    "CreationTimeUtc": {
+                                                        "type": "string"
+                                                    },
+                                                    "ImageFile": {
+                                                        "properties": {
+                                                            "$id": {
+                                                                "type": "string"
+                                                            },
+                                                            "CreatedTimeUtc": {
+                                                                "type": "string"
+                                                            },
+                                                            "Directory": {
+                                                                "type": "string"
+                                                            },
+                                                            "FileHashes": {
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "$id": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "Algorithm": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "Type": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "Value": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "$id",
+                                                                        "Algorithm",
+                                                                        "Value",
+                                                                        "Type"
+                                                                    ],
+                                                                    "type": "object"
+                                                                },
+                                                                "type": "array"
+                                                            },
+                                                            "Name": {
+                                                                "type": "string"
+                                                            },
+                                                            "Type": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "ProcessId": {
+                                                        "type": "string"
+                                                    },
+                                                    "Type": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "ProcessId": {
+                                                "type": "string"
+                                            },
+                                            "RiskScore": {
+                                                "type": "string"
+                                            },
+                                            "Sid": {
+                                                "type": "string"
+                                            },
+                                            "Tags": {
+                                                "type": "array"
+                                            },
+                                            "Type": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        },
+                        "IPCity": {
+                            "runAfter": {
+                                "IPOrg": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IPCity",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "IPFraudScore": {
+                            "runAfter": {
+                                "MDATPVulnDev": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IPFraudScore",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "IPISP": {
+                            "runAfter": {
+                                "IPCity": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IPISP",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "IPOrg": {
+                            "runAfter": {
+                                "IP": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IPOrg",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "IPQualityScoreAPI": {
+                            "runAfter": {
+                                "IPFraudScore": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "IPQualityScoreAPI",
+                                        "type": "string",
+                                        "value": "[parameters('IPQualityScoreAPI')]"
+                                    }
+                                ]
+                            }
+                        },
+                        "MDATPVulnDev": {
+                            "runAfter": {
+                                "IPISP": [
                                     "Succeeded"
                                 ]
                             },
