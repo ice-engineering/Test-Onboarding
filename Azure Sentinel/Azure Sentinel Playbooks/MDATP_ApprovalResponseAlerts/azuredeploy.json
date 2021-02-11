@@ -123,7 +123,7 @@
                                 },
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
                                     }
                                 },
                                 "path": "/subscribe"
@@ -141,7 +141,7 @@
                             "inputs": {
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['wdatp_1']['connectionId']"
+                                        "name": "@parameters('$connections')['wdatp']['connectionId']"
                                     }
                                 },
                                 "method": "get",
@@ -162,7 +162,7 @@
                                 },
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
                                     }
                                 },
                                 "method": "post",
@@ -175,7 +175,7 @@
                             "inputs": {
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
                                     }
                                 },
                                 "method": "get",
@@ -192,7 +192,7 @@
                             "inputs": {
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['wdatp_1']['connectionId']"
+                                        "name": "@parameters('$connections')['wdatp']['connectionId']"
                                     }
                                 },
                                 "method": "get",
@@ -213,7 +213,7 @@
                                                 },
                                                 "host": {
                                                     "connection": {
-                                                        "name": "@parameters('$connections')['wdatp_1']['connectionId']"
+                                                        "name": "@parameters('$connections')['wdatp']['connectionId']"
                                                     }
                                                 },
                                                 "method": "post",
@@ -237,7 +237,7 @@
                                                         },
                                                         "host": {
                                                             "connection": {
-                                                                "name": "@parameters('$connections')['wdatp_1']['connectionId']"
+                                                                "name": "@parameters('$connections')['wdatp']['connectionId']"
                                                             }
                                                         },
                                                         "method": "post",
@@ -257,7 +257,7 @@
                                                         },
                                                         "host": {
                                                             "connection": {
-                                                                "name": "@parameters('$connections')['wdatp_1']['connectionId']"
+                                                                "name": "@parameters('$connections')['wdatp']['connectionId']"
                                                             }
                                                         },
                                                         "method": "post",
@@ -284,7 +284,7 @@
                                                                 },
                                                                 "host": {
                                                                     "connection": {
-                                                                        "name": "@parameters('$connections')['office365_1']['connectionId']"
+                                                                        "name": "@parameters('$connections')['office365']['connectionId']"
                                                                     }
                                                                 },
                                                                 "path": "/approvalmail/$subscriptions"
@@ -322,7 +322,7 @@
                                                                         },
                                                                         "host": {
                                                                             "connection": {
-                                                                                "name": "@parameters('$connections')['azuread_1']['connectionId']"
+                                                                                "name": "@parameters('$connections')['azuread']['connectionId']"
                                                                             }
                                                                         },
                                                                         "method": "patch",
@@ -4167,7 +4167,7 @@
                                 "body": "@triggerBody()?['Entities']",
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
                                     }
                                 },
                                 "method": "post",
@@ -4185,7 +4185,7 @@
                                 "body": "@triggerBody()?['Entities']",
                                 "host": {
                                     "connection": {
-                                        "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
+                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
                                     }
                                 },
                                 "method": "post",
