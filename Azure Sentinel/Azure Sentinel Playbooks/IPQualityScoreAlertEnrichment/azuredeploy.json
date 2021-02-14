@@ -7,7 +7,7 @@
     },
     "parameters": {
 	    "PlaybookName": {
-            "defaultValue": "IPQualityScore",
+            "defaultValue": "IPQualityScoreAlertEnrichment",
             "type": "string"
 		
         },
