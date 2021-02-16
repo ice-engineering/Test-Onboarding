@@ -1,9 +1,8 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "metadata": {
-	"comments": "The logic app queries Azure Sentinel Log Analytics to identify detected security events on your Azure Sentinel instance. After identifying the relevant security event, the logic app sends an email to your dedicated ITSM tool to create a ticket.", 
-    	"author": "Shivniel Gounder"
+	"metadata": {
+        "author": "Shivniel Gounder"
     },
     "parameters": {
 	    "PlaybookName": {
@@ -14,10 +13,14 @@
             "defaultValue": "SentinelRG",
             "type": "string"
 		},
-        "DeployUserName": {
+        "DeployserUserName": {
             "defaultValue": "<username>@<domain>",
             "type": "string"
-        },	
+        },
+        "SOCEmailAddress": {
+        "defaultValue": "<username>@<domain>",
+        "type": "string"
+        },		
 	    "SentinelWSName": {
             "defaultValue": "SentinelWSName",
             "type": "string"
@@ -38,7 +41,7 @@
             "name": "[variables('o365ConnectionName')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "displayName": "[parameters('DeployUserName')]",
+                "displayName": "[parameters('DeployserUserName')]",
                 "customParameterValues": {},
                 "api": {
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"
@@ -51,7 +54,7 @@
             "name": "[variables('AzureMonitorLogsConnectionName')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "displayName": "[parameters('DeployUserName')]",
+                "displayName": "[parameters('DeployserUserName')]",
                 "customParameterValues": {},
                 "api": {
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuremonitorlogs')]"
@@ -95,7 +98,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Active Directory Identity Protection\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Active Directory Identity Protection\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -116,7 +119,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Sentinel\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Sentinel\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -137,7 +140,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Defender Advanced Threat Protection\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Defender Advanced Threat Protection\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -167,7 +170,7 @@
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each')?['Title']}<br>\n<br>\nStatus: @{items('For_each')?['Status']}<br>\n<br>\nPriority: @{items('For_each')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each')?['Description']}</p>",
                                                     "Importance": "High",
                                                     "Subject": "CompanyName - Sentinel @{items('For_each')?['IncidentNumber']}",
-                                                    "To": "soc@dommain"
+                                                    "To": "[parameters('SOCEmailAddress')]"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -187,14 +190,6 @@
                                                     "@items('For_each')?['Status']",
                                                     "New"
                                                 ]
-                                            },
-                                            {
-                                                "not": {
-                                                    "equals": [
-                                                        "@items('For_each')?['Title']",
-                                                        "Malicious activity by a user"
-                                                    ]
-                                                }
                                             },
                                             {
                                                 "and": [
@@ -240,7 +235,7 @@
                                                 "body": {
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_2')?['Title']}<br>\n<br>\nStatus: @{items('For_each_2')?['Status']}<br>\n<br>\nPriority: @{items('For_each_2')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_2')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_2')?['Description']}</p>",
                                                     "Subject": "CompanyName - Sentinel @{items('For_each_2')?['IncidentNumber']}",
-                                                    "To": "soc@dommain"
+                                                    "To": "[parameters('SOCEmailAddress')]"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -306,7 +301,7 @@
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_3')?['Title']}<br>\n<br>\nStatus: @{items('For_each_3')?['Status']}<br>\n<br>\nPriority: @{items('For_each_3')?['Severity']}<br>\n<br>\nAzure Sentinel ID: @{items('For_each_3')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_3')?['Description']}</p>",
                                                     "Importance": "High",
                                                     "Subject": "CompanyName - Sentinel @{items('For_each_3')?['IncidentNumber']}",
-                                                    "To": "soc@dommain"
+                                                    "To": "[parameters('SOCEmailAddress')]"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -371,7 +366,7 @@
                                                 "body": {
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_4')?['Title']}<br>\n<br>\nStatus: @{items('For_each_4')?['Status']}<br>\n<br>\nPriority: @{items('For_each_4')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_4')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_4')?['Description']}</p>",
                                                     "Subject": "CompanyName - Sentinel @{items('For_each_4')?['IncidentNumber']}",
-                                                    "To": "soc@dommain"
+                                                    "To": "[parameters('SOCEmailAddress')]"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -422,7 +417,7 @@
                                                 "body": {
                                                     "Body": "<p>Azure Sentinel Alert:<br>\n<br>\nTItle: @{items('For_each_5')?['Title']}<br>\n<br>\nStatus: @{items('For_each_5')?['Status']}<br>\n<br>\nPriority: @{items('For_each_5')?['Severity']}<br>\n<br>\nAzure Sentinel ID:@{items('For_each_5')?['IncidentNumber']}<br>\n<br>\nSource: Azure Sentinel<br>\n<br>\nAlert Details:<br>\n<br>\nDescription: @{items('For_each_5')?['Description']}</p>",
                                                     "Subject": "CompanyName - Sentinel @{items('For_each_5')?['IncidentNumber']}",
-                                                    "To": "soc@dommain"
+                                                    "To": "[parameters('SOCEmailAddress')]"
                                                 },
                                                 "host": {
                                                     "connection": {
@@ -479,7 +474,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Cloud App Security\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Microsoft Cloud App Security\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -500,7 +495,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Advanced Threat Protection\"",
+                                "body": "let timeframe = 5m;\nSecurityIncident\n| where TimeGenerated >= ago(timeframe)\n| extend Tool = tostring(parse_json(AdditionalData)['alertProductNames'])\n| extend Product = tostring(parse_json(Tool)[0])\n| where Product == \"Azure Advanced Threat Protection\"",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
@@ -540,7 +535,3 @@
         }
     ]
 }
-
-
-
-
