@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "metadata": {
     "comments" : "Azure Sentinel playbook to automate the initial incident response",
-	"author": "Debac Manikandan and Shivniel Gounder"
+	"author": "Shivniel Gounder and Debac Manikandan"
     },
     "parameters": {
 	    "PlaybookName": {
