@@ -1,4 +1,12 @@
-Description: Azure Sentinel playbook to automate the initial incident response.
+Description: Azure Sentinel playbook to automate the initial incident response:
+
+• Identity if the IP address were previously used throughout the cloud tenant
+• Request Virus Total Check for the IP address
+• Review Azure Sentinel Entity Behaviour Analytics
+• Request IP Quality Score
+• Request HIBP results for the email address
+
+SOC team will be sent an email to approve or reject the email to close the Sentinel incident if identified as False Positive.
 
 Permissions required:
 
