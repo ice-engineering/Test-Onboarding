@@ -7,7 +7,7 @@
     },
     "parameters": {
 	    "PlaybookName": {
-            "defaultValue": "MDATP_ApprovalResponseAlerts",
+            "defaultValue": "InitialTriage",
             "type": "string"
 		
         },
