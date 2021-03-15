@@ -1,4 +1,4 @@
-Description: Azure Sentinel playbook to automate the initial incident response via approval email:
+Description: Azure Sentinel playbook to automate the initial incident response and post the results as comments:
 
 • Identity if the IP address were previously used throughout the cloud tenant
 
@@ -7,8 +7,6 @@ Description: Azure Sentinel playbook to automate the initial incident response v
 • Review Azure Sentinel Entity Behaviour Analytics
 
 • Request HIBP results for the email address
-
-SOC team will be sent an email to approve or reject the email to close the Sentinel incident if identified as False Positive.
 
 Permissions required:
 
