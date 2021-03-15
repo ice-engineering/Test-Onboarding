@@ -1,4 +1,4 @@
-Description: Azure Sentinel playbook to automate the initial incident response:
+Description: Azure Sentinel playbook to automate the initial incident response via approval email:
 
 • Identity if the IP address were previously used throughout the cloud tenant
 
