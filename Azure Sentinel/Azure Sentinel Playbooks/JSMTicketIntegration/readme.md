@@ -2,7 +2,7 @@ Description: Azure Sentinel playbook to integrate JSM.
 
 Permissions required:
 
-• Azure Sentinel playbook: Azure Sentinel Contributor
+• Azure Sentinel playbook: Azure Sentinel Reader and Azure Sentinel Automation Contributor
 
 Author: Shivniel Gounder
 
