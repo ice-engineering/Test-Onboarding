@@ -263,7 +263,7 @@
         },
         {
             "condition": "[parameters('enableMVPAlerts')]",
-            "name": "enableScheduledAlerts",
+            "name": "enableMVPAlerts",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "dependsOn": [
