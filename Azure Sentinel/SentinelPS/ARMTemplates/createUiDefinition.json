@@ -190,6 +190,17 @@
                         "visible": true
                     },
                     {
+                        "name": "enableMVPAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable MVP Scheduled alert rules for selected connectors?",
+                        "toolTip": "Select to enable MVP scheduled analytics rules for selected connectors",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Enables MVP Scheduled rules matching any of the selected connectors"
+                        },
+                        "visible": true
+                    },
+                    {
                         "name": "enableMicrosoftAlerts",
                         "type": "Microsoft.Common.CheckBox",
                         "label": "Enable Microsoft alert rules for selected connectors?",
@@ -213,17 +224,6 @@
                     },
                     {
                         "name": "enableScheduledAlerts",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable Scheduled alert rules for selected connectors?",
-                        "toolTip": "Select to enable scheduled analytics rules for selected connectors",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "enableMVPAlerts",
                         "type": "Microsoft.Common.CheckBox",
                         "label": "Enable Scheduled alert rules for selected connectors?",
                         "toolTip": "Select to enable scheduled analytics rules for selected connectors",
