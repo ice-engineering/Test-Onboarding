@@ -241,7 +241,57 @@
                 "customDetails": null,
                 "entityMappings": null
             }
-        }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/ea40d5c6-fca6-430f-ad32-e03e0deec329')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/ea40d5c6-fca6-430f-ad32-e03e0deec329')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "location": "[parameters('location')]",
+            "kind": "Scheduled",
+            "apiVersion": "2021-03-01-preview",
+            "properties": {
+                "displayName": "Brute force attack against Azure Portal",
+                "description": "Identifies evidence of brute force activity against Azure Portal by highlighting multiple authentication failures \nand by a successful authentication within a given time window. \n(The query does not enforce any sequence - eg requiring the successful authentication to occur last.)\nDefault Failure count is 5, Default Success count is 1 and default Time Window is 20 minutes.\nReferences: https://docs.microsoft.com/azure/active-directory/reports-monitoring/reference-sign-ins-error-codes.",
+                "severity": "Medium",
+                "enabled": false,
+                "query": "let failureCountThreshold = 10;\nlet successCountThreshold = 1;\nlet timeRange = 1d;\nlet authenticationWindow = 20m;\nSigninLogs\n| where TimeGenerated >= ago(timeRange)\n| extend OS = DeviceDetail.operatingSystem, Browser = DeviceDetail.browser\n| extend StatusCode = tostring(Status.errorCode), StatusDetails = tostring(Status.additionalDetails)\n| extend State = tostring(LocationDetails.state), City = tostring(LocationDetails.city)\n| where AppDisplayName contains \"Azure Portal\"\n// Split out failure versus non-failure types\n| extend FailureOrSuccess = iff(ResultType in (\"0\", \"50125\", \"50140\", \"70043\", \"70044\"), \"Success\", \"Failure\")\n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), IPAddress = makeset(IPAddress), makeset(OS), makeset(Browser), makeset(City), \nmakeset(ResultType), FailureCount = countif(FailureOrSuccess==\"Failure\"), SuccessCount = countif(FailureOrSuccess==\"Success\") \nby bin(TimeGenerated, authenticationWindow), UserDisplayName, UserPrincipalName, AppDisplayName\n| where FailureCount >= failureCountThreshold and SuccessCount >= successCountThreshold\n| mvexpand IPAddress\n| extend IPAddress = tostring(IPAddress)\n| extend timestamp = StartTimeUtc, AccountCustomEntity = UserPrincipalName, IPCustomEntity = IPAddress",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT1H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "CredentialAccess"
+                ],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [
+                            "Account",
+                            "IP",
+                            "Host",
+                            "URL"
+                        ],
+                        "groupByAlertDetails": null,
+                        "groupByCustomDetails": null
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": null
+            }
+        }    
+        
     ],
     "outputs": {
         "ruleId": {
