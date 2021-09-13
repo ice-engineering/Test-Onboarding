@@ -221,6 +221,17 @@
                             "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "enableMVPAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable Scheduled alert rules for selected connectors?",
+                        "toolTip": "Select to enable scheduled analytics rules for selected connectors",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
+                        },
+                        "visible": true
                     }
                 ]
             }
@@ -236,7 +247,8 @@
             "enableFusionAlert": "[steps('analyticsRules').enableFusionAlert]",
             "enableMicrosoftAlerts": "[steps('analyticsRules').enableMicrosoftAlerts]",
             "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
-            "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]"
+            "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
+            "enableMVPAlerts": "[steps('analyticsRules').enableMVPAlerts]"
         }
     }
 }
