@@ -155,7 +155,7 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftDefenderAdvancedThreatProtection'),parameters('enableMicrosoftAlerts'))]",
+            "condition": "[parameters('enableFusionAlert')]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/771d0c55-31a8-448d-9ee7-9e32d8d9a6d2')]",
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/771d0c55-31a8-448d-9ee7-9e32d8d9a6d2')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
