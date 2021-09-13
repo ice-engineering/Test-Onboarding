@@ -155,6 +155,54 @@
             }
         },
         {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/771d0c55-31a8-448d-9ee7-9e32d8d9a6d2')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/771d0c55-31a8-448d-9ee7-9e32d8d9a6d2')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-03-01-preview",
+            "properties": {
+                "displayName": "Anomalous sign-in location by user account and authenticating application",
+                "description": "This query over Azure Active Directory sign-in considers all user sign-ins for each Azure Active \nDirectory application and picks out the most anomalous change in location profile for a user within an \nindividual application. An alert is generated for recent sign-ins that have location counts that are anomalous\nover last day but also over the last 7-day and 14-day periods.",
+                "severity": "Medium",
+                "enabled": false,
+                "productFilter": "Microsoft Defender Advanced Threat Protection",
+                "query": "let lookBack_long = 14d;\nlet lookBack_med = 7d;\nlet lookBack = 1d;\nSigninLogs\n| where TimeGenerated >= startofday(ago(lookBack_long))\n| extend locationString = strcat(tostring(LocationDetails[\"countryOrRegion\"]), \"/\", tostring(LocationDetails[\"state\"]), \"/\", tostring(LocationDetails[\"city\"]), \";\") \n| project TimeGenerated, AppDisplayName , UserPrincipalName, locationString \n// Create time series \n| make-series dLocationCount = dcount(locationString) on TimeGenerated in range(startofday(ago(lookBack_long)),now(), 1d) \nby UserPrincipalName, AppDisplayName \n// Compute best fit line for each entry \n| extend (RSquare,Slope,Variance,RVariance,Interception,LineFit)=series_fit_line(dLocationCount) \n// Chart the 3 most interesting lines  \n// A 0-value slope corresponds to an account being completely stable over time for a given Azure Active Directory application\n| where Slope > 0.3\n| top 50 by Slope desc\n| join kind = leftsemi (\nSigninLogs\n| where TimeGenerated >= startofday(ago(lookBack_med))\n| extend locationString = strcat(tostring(LocationDetails[\"countryOrRegion\"]), \"/\", tostring(LocationDetails[\"state\"]), \"/\", tostring(LocationDetails[\"city\"]), \";\") \n| project TimeGenerated, AppDisplayName , UserPrincipalName, locationString \n| make-series dLocationCount = dcount(locationString) on TimeGenerated in range(startofday(ago(lookBack_med)) ,now(), 1d) \nby UserPrincipalName, AppDisplayName \n| extend (RSquare,Slope,Variance,RVariance,Interception,LineFit)=series_fit_line(dLocationCount) \n| top 50 by Slope desc\n| where Slope > 0.3\n) on UserPrincipalName, AppDisplayName\n| join kind = leftsemi (\nSigninLogs\n| where TimeGenerated >= startofday(ago(lookBack))\n| extend locationString = strcat(tostring(LocationDetails[\"countryOrRegion\"]), \"/\", tostring(LocationDetails[\"state\"]), \"/\", tostring(LocationDetails[\"city\"]), \";\") \n| project TimeGenerated, AppDisplayName , UserPrincipalName, locationString \n| make-series dLocationCount = dcount(locationString) on TimeGenerated in range(startofday(ago(lookBack)) ,now(), 1d) \nby UserPrincipalName, AppDisplayName \n| extend (RSquare,Slope,Variance,RVariance,Interception,LineFit)=series_fit_line(dLocationCount) \n| top 50 by Slope desc\n// Higher threshold requirement on last day anomaly\n| where Slope > 5\n) on UserPrincipalName, AppDisplayName\n| extend timestamp = TimeGenerated, AccountCustomEntity = UserPrincipalName",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P14D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT1H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "InitialAccess"
+                ],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [
+                            "Account",
+                            "IP",
+                            "Host",
+                            "URL"
+                        ],
+                        "groupByAlertDetails": null,
+                        "groupByCustomDetails": null
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": null
+            }
+        },
+        {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Syslog'),parameters('enableMLAlerts'))]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaSshRuleId'))]",
