@@ -148,10 +148,10 @@
                         "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity'), true, false)]"
                     },
                     {
-                        "name": "enableNewAlerts",
+                        "name": "Office365Logs",
                         "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable NewAlerts Discovery Logs?",
-                        "toolTip": "Select to bring NewAlerts  logs into Sentinel. These logs are billed.",
+                        "label": "Enable Office 365 Logs?",
+                        "toolTip": "Select to Office 365 logs into Sentinel. These logs are billed.",
                         "constraints": {
                             "required": false,
                             "validationMessage": "Please select"
@@ -243,6 +243,17 @@
                             "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "enableAZScheduledAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable AZ alert rules for selected connectors?",
+                        "toolTip": "Select to enable AZ analytics rules for selected connectors",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Enables AZ Scheduled rules matching any of the selected connectors"
+                        },
+                        "visible": true
                     }
                 ]
             }
@@ -254,13 +265,14 @@
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
             "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
             "mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
-            "enableNewAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
+            "Office365Logs": "[steps('dataConnectors').Office365Logs]",
+            "azureDiscoveryLogs": "[steps('analyticsRules').enableAZScheduledAlerts]",
             "location": "[location()]",
             "enableFusionAlert": "[steps('analyticsRules').enableFusionAlert]",
-            "enableMVPAlert": "[steps('analyticsRules').enableMVPAlert]",
             "enableMicrosoftAlerts": "[steps('analyticsRules').enableMicrosoftAlerts]",
             "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
-            "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]"
+            "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
+            "enableAZScheduledAlerts": "[steps('analyticsRules').enableAZScheduledAlerts]"
         }
     }
 }
