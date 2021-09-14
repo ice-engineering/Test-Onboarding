@@ -93,6 +93,13 @@
             },
             "defaultValue": false
         },
+        "enableMVPAlert": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable MVP Scheduled analytics rules"
+            },
+            "defaultValue": false
+        },
         "mcasDiscoveryLogs": {
             "type": "bool",
             "metadata": {
@@ -202,7 +209,7 @@
             }
         },
         {
-            "condition": "[or(parameters('enableFusionAlert'),parameters('enableMicrosoftAlerts'),parameters('enableMLAlerts'))]",
+            "condition": "[or(parameters('enableFusionAlert'),parameters('enableMicrosoftAlerts'),parameters('enableMVPAlert'),parameters('enableMLAlerts'))]",
             "name": "enableAlerts",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -236,7 +243,7 @@
                     }
                 }
             }
-        }, //enableMVPAlert
+        },
         {
             "condition": "[parameters('enableScheduledAlerts')]",
             "name": "enableScheduledAlerts",
