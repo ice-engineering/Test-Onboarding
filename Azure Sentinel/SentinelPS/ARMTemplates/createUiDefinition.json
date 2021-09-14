@@ -148,6 +148,17 @@
                         "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity'), true, false)]"
                     },
                     {
+                        "name": "enableNewAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable NewAlerts Discovery Logs?",
+                        "toolTip": "Select to bring NewAlerts  logs into Sentinel. These logs are billed.",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Please select"
+                        },
+                        "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity'), true, false)]"
+                    },
+                    {
                         "name": "securityCollectionTier",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Security Events to stream into Sentinel ",
@@ -187,7 +198,7 @@
                             "required": false,
                             "validationMessage": "Enables MVP Scheduled rules matching any of the selected connectors"
                         },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'Syslog'),contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents')), true, false)]"
+                        "visible": true
                     },
                     {
                         "name": "enableFusionAlert",
@@ -243,6 +254,7 @@
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
             "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
             "mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
+            "enableNewAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
             "location": "[location()]",
             "enableFusionAlert": "[steps('analyticsRules').enableFusionAlert]",
             "enableMVPAlert": "[steps('analyticsRules').enableMVPAlert]",
