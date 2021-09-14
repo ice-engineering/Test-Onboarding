@@ -93,6 +93,13 @@
             },
             "defaultValue": false
         },
+        "enableMVPAlerts": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable Scheduled MVP analytics rules"
+            },
+            "defaultValue": false
+        },
         "mcasDiscoveryLogs": {
             "type": "bool",
             "metadata": {
@@ -249,6 +256,30 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "dataConnectorsList":{
+                        "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[parameters('enableMVPAlerts')]",
+            "name": "enableMVPAlerts",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments/', 'enableAlerts')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/MVP.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
