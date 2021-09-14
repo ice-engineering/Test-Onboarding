@@ -148,17 +148,6 @@
                         "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity'), true, false)]"
                     },
                     {
-                        "name": "Office365Logs",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable Office 365 Logs?",
-                        "toolTip": "Select to Office 365 logs into Sentinel. These logs are billed.",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Please select"
-                        },
-                        "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity'), true, false)]"
-                    },
-                    {
                         "name": "securityCollectionTier",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Security Events to stream into Sentinel ",
@@ -189,17 +178,6 @@
                 "name": "analyticsRules",
                 "label": "Analytics Rules",
                 "elements": [
-                    {
-                        "name": "enableMVPAlert",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable MVP Scheduled alert rules for selected connectors?",
-                        "toolTip": "Select to enable MVP scheduled analytics rules for selected connectors",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Enables MVP Scheduled rules matching any of the selected connectors"
-                        },
-                        "visible": true
-                    },
                     {
                         "name": "enableFusionAlert",
                         "type": "Microsoft.Common.CheckBox",
@@ -243,17 +221,6 @@
                             "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
                         },
                         "visible": true
-                    },
-                    {
-                        "name": "enableAZScheduledAlerts",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable AZ alert rules for selected connectors?",
-                        "toolTip": "Select to enable AZ analytics rules for selected connectors",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Enables AZ Scheduled rules matching any of the selected connectors"
-                        },
-                        "visible": true
                     }
                 ]
             }
@@ -265,14 +232,11 @@
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
             "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
             "mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
-            "Office365Logs": "[steps('dataConnectors').Office365Logs]",
-            "azureDiscoveryLogs": "[steps('analyticsRules').enableAZScheduledAlerts]",
             "location": "[location()]",
             "enableFusionAlert": "[steps('analyticsRules').enableFusionAlert]",
             "enableMicrosoftAlerts": "[steps('analyticsRules').enableMicrosoftAlerts]",
             "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
-            "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
-            "enableAZScheduledAlerts": "[steps('analyticsRules').enableAZScheduledAlerts]"
+            "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]"
         }
     }
 }
