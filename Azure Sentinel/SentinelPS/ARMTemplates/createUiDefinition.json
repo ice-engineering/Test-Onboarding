@@ -187,7 +187,7 @@
                             "required": false,
                             "validationMessage": "Enables MVP Scheduled rules matching any of the selected connectors"
                         },
-                        "visible": true
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'Syslog'),contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents')), true, false)]"
                     },
                     {
                         "name": "enableFusionAlert",
