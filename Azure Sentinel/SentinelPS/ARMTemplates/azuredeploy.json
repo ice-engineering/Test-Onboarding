@@ -93,6 +93,13 @@
             },
             "defaultValue": false
         },
+        "enableAZScheduledAlerts": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable Scheduled analytics rules"
+            },
+            "defaultValue": false
+        },
         "enableMVPAlert": {
             "type": "bool",
             "metadata": {
