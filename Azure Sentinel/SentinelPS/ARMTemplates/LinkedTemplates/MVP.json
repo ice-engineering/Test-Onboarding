@@ -2,9 +2,26 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workspace": {
-            "type": "String"
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the Log Analytics workspace"
+            }
+        },
+        "dataConnectorsList": {
+            "type": "string",
+            "metadata": {
+                "description": "Comma separated enabled connectors: AzureActivityLog,SecurityEvents,WindowsFirewall,DnsAnalytics. Reference: https://docs.microsoft.com/azure/templates/microsoft.operationalinsights/2020-03-01-preview/workspaces/datasources#microsoftoperationalinsightsworkspacesdatasources-object"
+            }
+        },
+        "roleGuid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]"
         }
+    },
+    "functions": [],
+    "variables": {
+        "identityName": "[concat('userIdentity',uniqueString(resourceGroup().id))]"
     },
     "resources": [
         {
@@ -1063,4 +1080,5 @@
             }
         }
     ]
+    "outputs": {}
 }
