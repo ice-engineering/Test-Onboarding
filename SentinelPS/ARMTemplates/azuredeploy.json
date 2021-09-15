@@ -112,7 +112,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/Shivniel/Azure/SentinelPS/"
+            "defaultValue": "https://raw.githubusercontent.com/Shivniel/Azure/Azure%20Sentinel/SentinelPS/main"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -180,7 +180,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/Shivniel/Azure/master/SentinelPS/ARMTemplates/LinkedTemplates/dataConnectors.json",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/dataConnectors.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -219,7 +219,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/Shivniel/Azure/master/SentinelPS/ARMTemplates/LinkedTemplates/alertRules.json",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/alertRules.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -255,7 +255,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/Shivniel/Azure/master/SentinelPS/ARMTemplates/LinkedTemplates/scheduledAlerts.json",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -279,7 +279,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/Shivniel/Azure/master/SentinelPS/ARMTemplates/LinkedTemplates/MVP.json",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/MVP.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
