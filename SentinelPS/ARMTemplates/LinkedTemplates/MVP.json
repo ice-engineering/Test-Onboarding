@@ -2,28 +2,46 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workspaceName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name for the Log Analytics workspace"
-            }
-        },
-        "dataConnectorsList": {
-            "type": "string",
-            "metadata": {
-                "description": "Comma separated enabled connectors: AzureActivityLog,SecurityEvents,WindowsFirewall,DnsAnalytics. Reference: https://docs.microsoft.com/azure/templates/microsoft.operationalinsights/2020-03-01-preview/workspaces/datasources#microsoftoperationalinsightsworkspacesdatasources-object"
-            }
-        },
-        "roleGuid": {
-            "type": "string",
-            "defaultValue": "[newGuid()]"
-        },
         "location": {
             "type": "string",
+            "minLength": 1,
+            "defaultValue": "[resourceGroup().location]",
             "metadata": {
-                "description": "Location for all resources."
-            },
-            "defaultValue": "[resourceGroup().location]"
+                "description": "Resource group to deploy solution resources"
+            }
+        },
+        "workspaceName": {
+            "defaultValue": "<Enter Log Analytics Workspace name>",
+            "type": "string",
+            "metadata": {
+                "description": "Workspace name for Log Analytics where Sentinel is setup"
+            }
+        },
+        "dataConnectorsKind": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "The kind of data connectors to enable"
+            }
+        },
+        "ruleGuid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]",
+            "metadata": {
+                "description": "The unique guid for this scheduled alert rule"
+            }
+        },
+        "enableFusionAlert": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "enableMicrosoftAlerts": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "enableMLAlerts": {
+            "type": "bool",
+            "defaultValue": false
         }
     },
     "functions": [],
