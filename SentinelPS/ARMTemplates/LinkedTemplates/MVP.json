@@ -2,60 +2,16 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string",
-            "minLength": 1,
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "Resource group to deploy solution resources"
-            }
-        },
-        "workspaceName": {
-            "defaultValue": "<Enter Log Analytics Workspace name>",
-            "type": "string",
-            "metadata": {
-                "description": "Workspace name for Log Analytics where Sentinel is setup"
-            }
-        },
-        "dataConnectorsKind": {
-            "type": "array",
-            "defaultValue": [],
-            "metadata": {
-                "description": "The kind of data connectors to enable"
-            }
-        },
-        "ruleGuid": {
-            "type": "string",
-            "defaultValue": "[newGuid()]",
-            "metadata": {
-                "description": "The unique guid for this scheduled alert rule"
-            }
-        },
-        "enableFusionAlert": {
-            "type": "bool",
-            "defaultValue": false
-        },
-        "enableMicrosoftAlerts": {
-            "type": "bool",
-            "defaultValue": false
-        },
-        "enableMLAlerts": {
-            "type": "bool",
-            "defaultValue": false
+        "workspace": {
+            "type": "String"
         }
-    },
-    "functions": [],
-    "variables": {
-        "identityName": "[concat('userIdentity',uniqueString(resourceGroup().id))]"
     },
     "resources": [
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/2f120180-76dd-4aad-b593-54c5800b2265')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/2f120180-76dd-4aad-b593-54c5800b2265')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Anomalous sign-in location by user account and authenticating application",
@@ -104,12 +60,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Attempts to sign in to disabled accounts",
@@ -167,12 +121,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/1242c584-c4ff-49c1-9132-4b6f48cb3aa9')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/1242c584-c4ff-49c1-9132-4b6f48cb3aa9')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Brute force attack against Azure Portal",
@@ -230,12 +182,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/da605188-f97b-4dcd-9da4-44ebea5e6511')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/da605188-f97b-4dcd-9da4-44ebea5e6511')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Exchange AuditLog disabled",
@@ -293,12 +243,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Mail redirect via ExO transport rule",
@@ -357,12 +305,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/24c4f2c3-1425-4e46-94d3-cb54264a6683')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/24c4f2c3-1425-4e46-94d3-cb54264a6683')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Malicious Inbox Rule",
@@ -430,12 +376,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/870060be-8cb6-402a-9542-515335a98a6a')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/870060be-8cb6-402a-9542-515335a98a6a')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "MFA disabled for a user",
@@ -493,12 +437,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/d66d1519-dc52-4a5d-82c1-04396c18fee3')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/d66d1519-dc52-4a5d-82c1-04396c18fee3')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Multiple users email forwarded to same destination",
@@ -557,12 +499,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/baa8bf10-5fb9-4ab4-a594-e1087f7a44b9')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/baa8bf10-5fb9-4ab4-a594-e1087f7a44b9')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Office policy tampering",
@@ -621,12 +561,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/a7456c6c-ba04-4798-af08-8ab339372c34')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/a7456c6c-ba04-4798-af08-8ab339372c34')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Rare application consent",
@@ -695,12 +633,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/643ce40d-6cca-42cf-8fd6-25dbe14f4464')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/643ce40d-6cca-42cf-8fd6-25dbe14f4464')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Attempt to bypass conditional access rule in Azure AD",
@@ -759,12 +695,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/be0347ba-3903-4f30-bcc1-fadb02db9363')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/be0347ba-3903-4f30-bcc1-fadb02db9363')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Attempt to bypass conditional access rule in Azure AD",
@@ -823,12 +757,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/84593d16-aba6-4b7f-b4a9-fae7abee859f')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/84593d16-aba6-4b7f-b4a9-fae7abee859f')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Distributed Password cracking attempts in AzureAD",
@@ -886,12 +818,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/20304aa0-ad9f-4093-b73c-a2755a49a447')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/20304aa0-ad9f-4093-b73c-a2755a49a447')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "New executable via Office FileUploaded Operation",
@@ -958,12 +888,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/3083bfa8-a992-46de-b14b-198064e9db43')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/3083bfa8-a992-46de-b14b-198064e9db43')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Password spray attack against Azure AD application",
@@ -1012,12 +940,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/aed6981d-0ded-4f5a-85e8-30656df794a8')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/aed6981d-0ded-4f5a-85e8-30656df794a8')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Rare and potentially high-risk Office operations",
@@ -1076,12 +1002,10 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity'),parameters('enableMVPAlerts'))]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/dbb8f384-80a0-4fb7-b033-bd631d5877ee')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/dbb8f384-80a0-4fb7-b033-bd631d5877ee')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Suspicious Resource deployment",
