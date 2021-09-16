@@ -112,7 +112,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/Shivniel/Azure/SentinelPS/master/"
+            "defaultValue": "https://raw.githubusercontent.com/Shivniel/master/Azure/SentinelPS/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
