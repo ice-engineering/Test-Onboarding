@@ -245,45 +245,6 @@
             }
         },
         {
-            "condition": "[parameters('enableMVPAlerts')]",
-            "name": "enableMVPAlerts",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-05-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/MVP.json', parameters('_artifactsLocationSasToken')))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "dataConnectorsKind": {
-                        "value": "[parameters('enableDataConnectorsKind')]"
-                    },
-                    "workspaceName": {
-                        "value": "[parameters('workspaceName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "enableFusionAlert":{
-                        "value": "[parameters('enableFusionAlert')]"
-                    },
-                    "enableMicrosoftAlerts":{
-                        "value": "[parameters('enableMicrosoftAlerts')]"
-                    },
-                    "enableMVPAlerts":{
-                        "value": "[parameters('enableMVPAlerts')]"
-                    },
-                    "enableMLAlerts":{
-                        "value": "[parameters('enableMLAlerts')]"
-                    }
-                }
-            }
-        },
-        {
             "condition": "[parameters('enableScheduledAlerts')]",
             "name": "enableScheduledAlerts",
             "type": "Microsoft.Resources/deployments",
@@ -295,6 +256,30 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "dataConnectorsList":{
+                        "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[parameters('enableMVPAlerts')]",
+            "name": "enableMVPAlerts",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments/', 'enableAlerts')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/MVP.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
