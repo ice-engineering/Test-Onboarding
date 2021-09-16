@@ -2,10 +2,19 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "location": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Resource group to deploy solution resources"
+            }
+        },
         "workspaceName": {
+            "defaultValue": "<Enter Log Analytics Workspace name>",
             "type": "string",
             "metadata": {
-                "description": "Name for the Log Analytics workspace"
+                "description": "Workspace name for Log Analytics where Sentinel is setup"
             }
         },
     "resources": [
