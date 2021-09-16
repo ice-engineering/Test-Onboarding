@@ -17,6 +17,13 @@
         "roleGuid": {
             "type": "string",
             "defaultValue": "[newGuid()]"
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            },
+            "defaultValue": "[resourceGroup().location]"
         }
     },
     "functions": [],
