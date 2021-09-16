@@ -285,7 +285,7 @@
                 "parameters": {
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
-                    },
+                    }
                 }
             }
         }
