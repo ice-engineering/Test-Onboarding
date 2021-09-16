@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workspace": {
+        "workspaceName": {
             "type": "String"
         }
     },
@@ -10,7 +10,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-10-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/BuiltInFusion')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/BuiltInFusion')]",
             "kind": "Fusion",
             "properties": {
                 "enabled": true,
@@ -136,7 +136,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/cb2a4c15-f768-4448-8f7b-03cabccf81da')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/cb2a4c15-f768-4448-8f7b-03cabccf81da')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Monitor Malicious IPs - Cloud",
@@ -184,7 +184,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/771d0c55-31a8-448d-9ee7-9e32d8d9a6d2')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/771d0c55-31a8-448d-9ee7-9e32d8d9a6d2')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Anomalous sign-in location by user account and authenticating application",
@@ -231,7 +231,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/1caa67f7-9807-4f83-854e-79b464a48b4d')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/1caa67f7-9807-4f83-854e-79b464a48b4d')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Attempts to sign in to disabled accounts",
@@ -278,7 +278,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/ea40d5c6-fca6-430f-ad32-e03e0deec329')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/ea40d5c6-fca6-430f-ad32-e03e0deec329')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Brute force attack against Azure Portal",
@@ -325,7 +325,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/a28e656a-7f97-41b2-952c-7790c89341b0')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/a28e656a-7f97-41b2-952c-7790c89341b0')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Exchange AuditLog disabled",
@@ -372,7 +372,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/d66164be-2b51-4a25-a9a5-268a22b38571')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/d66164be-2b51-4a25-a9a5-268a22b38571')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Mail redirect via ExO transport rule",
@@ -420,7 +420,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/45025cb7-c929-405b-bc5c-48ef5c41eb75')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/45025cb7-c929-405b-bc5c-48ef5c41eb75')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Malicious Inbox Rule",
@@ -468,7 +468,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/e0fa4670-64aa-4869-985c-5c86db666e09')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/e0fa4670-64aa-4869-985c-5c86db666e09')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "MFA disabled for a user",
@@ -515,7 +515,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/7c98f7c0-8199-4d90-b72b-bc14ac0ebe06')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/7c98f7c0-8199-4d90-b72b-bc14ac0ebe06')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Multiple users email forwarded to same destination",
@@ -563,7 +563,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/b855fb90-1a4b-4a9f-b806-6e638b031c11')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/b855fb90-1a4b-4a9f-b806-6e638b031c11')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Office policy tampering",
@@ -611,7 +611,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/d8f59c46-89c5-454f-9afe-39880d969abe')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/d8f59c46-89c5-454f-9afe-39880d969abe')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Rare application consent",
@@ -660,7 +660,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/3c5cf9a5-4e9b-4535-870a-d92b7530116b')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/3c5cf9a5-4e9b-4535-870a-d92b7530116b')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Attempt to bypass conditional access rule in Azure AD",
@@ -708,7 +708,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/d3424b06-40ca-46de-b12e-7a8a1993550b')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/d3424b06-40ca-46de-b12e-7a8a1993550b')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Distributed Password cracking attempts in AzureAD",
@@ -755,7 +755,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/dffedc57-eefe-42fa-8a67-8ebc57c7fc74')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/dffedc57-eefe-42fa-8a67-8ebc57c7fc74')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "New executable via Office FileUploaded Operation",
@@ -802,7 +802,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/9885aeb6-00f8-4f61-aab0-5b60d541aeaf')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/9885aeb6-00f8-4f61-aab0-5b60d541aeaf')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Password spray attack against Azure AD application",
@@ -849,7 +849,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/b35c6dad-20a8-4b2b-817e-2cde63701daa')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/b35c6dad-20a8-4b2b-817e-2cde63701daa')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Rare and potentially high-risk Office operations",
@@ -897,7 +897,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/5408a778-e5b2-4f86-8805-6527c21a93ee')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/5408a778-e5b2-4f86-8805-6527c21a93ee')]",
             "kind": "Scheduled",
             "properties": {
                 "displayName": "Suspicious Resource deployment",
@@ -944,7 +944,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f209187f-1d17-4431-94af-c141bf5f23db')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/f209187f-1d17-4431-94af-c141bf5f23db')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "f209187f-1d17-4431-94af-c141bf5f23db",
@@ -984,7 +984,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/2d3e33c6-d8e6-4b51-92d6-dbe8bd9efb05')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/2d3e33c6-d8e6-4b51-92d6-dbe8bd9efb05')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "2d3e33c6-d8e6-4b51-92d6-dbe8bd9efb05",
@@ -1067,7 +1067,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8595d264-2f64-442d-b293-4e16dffc9882')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/8595d264-2f64-442d-b293-4e16dffc9882')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "8595d264-2f64-442d-b293-4e16dffc9882",
@@ -1107,7 +1107,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/2bb167bf-3951-435b-a932-8b03bfde0a2b')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/2bb167bf-3951-435b-a932-8b03bfde0a2b')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "2bb167bf-3951-435b-a932-8b03bfde0a2b",
@@ -1203,7 +1203,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/bb32dc8a-4f6b-4274-a28f-50f3400070b4')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/bb32dc8a-4f6b-4274-a28f-50f3400070b4')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "bb32dc8a-4f6b-4274-a28f-50f3400070b4",
@@ -1243,7 +1243,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/16d55bbb-8c54-4c1d-8537-521824e76bb6')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/16d55bbb-8c54-4c1d-8537-521824e76bb6')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "16d55bbb-8c54-4c1d-8537-521824e76bb6",
@@ -1325,7 +1325,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8a12afde-ed27-46ac-a5ef-392e3d4f071f')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/8a12afde-ed27-46ac-a5ef-392e3d4f071f')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "8a12afde-ed27-46ac-a5ef-392e3d4f071f",
@@ -1423,7 +1423,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/edc946ae-cba8-419f-8e90-309966895956')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/edc946ae-cba8-419f-8e90-309966895956')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "edc946ae-cba8-419f-8e90-309966895956",
@@ -1497,7 +1497,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8a602940-4153-4045-a741-3bf15591ae29')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/8a602940-4153-4045-a741-3bf15591ae29')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "8a602940-4153-4045-a741-3bf15591ae29",
@@ -1537,7 +1537,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/ffe3625d-a933-4f63-b192-7e6ebf3be5fb')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/ffe3625d-a933-4f63-b192-7e6ebf3be5fb')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "ffe3625d-a933-4f63-b192-7e6ebf3be5fb",
@@ -1577,7 +1577,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/93c4b361-ea7d-40f4-9ca6-e501cdef9c53')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/93c4b361-ea7d-40f4-9ca6-e501cdef9c53')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "93c4b361-ea7d-40f4-9ca6-e501cdef9c53",
@@ -1646,7 +1646,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/c097bfdb-8b4b-4a98-b74d-1871ffd50a03')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/c097bfdb-8b4b-4a98-b74d-1871ffd50a03')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "c097bfdb-8b4b-4a98-b74d-1871ffd50a03",
@@ -1717,7 +1717,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/622844c2-fc11-4efc-91e6-c05b06ab3008')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/622844c2-fc11-4efc-91e6-c05b06ab3008')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "622844c2-fc11-4efc-91e6-c05b06ab3008",
@@ -1796,7 +1796,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/b783df9c-4088-452e-a791-0c4fca47a109')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/b783df9c-4088-452e-a791-0c4fca47a109')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "b783df9c-4088-452e-a791-0c4fca47a109",
@@ -1846,7 +1846,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/d4f9d54b-6dec-4655-8631-0fa8d4954fea')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/d4f9d54b-6dec-4655-8631-0fa8d4954fea')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "d4f9d54b-6dec-4655-8631-0fa8d4954fea",
@@ -1886,7 +1886,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/23850aa1-37d3-4b4b-9f39-4ebf5feb59fd')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/23850aa1-37d3-4b4b-9f39-4ebf5feb59fd')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "23850aa1-37d3-4b4b-9f39-4ebf5feb59fd",
@@ -1964,7 +1964,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/06107abb-1b68-4fdc-841b-8a1ff9301467')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/06107abb-1b68-4fdc-841b-8a1ff9301467')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "06107abb-1b68-4fdc-841b-8a1ff9301467",
@@ -2009,7 +2009,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/d0bd9611-2fc1-42cb-af4e-793b6f28ba92')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/d0bd9611-2fc1-42cb-af4e-793b6f28ba92')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "d0bd9611-2fc1-42cb-af4e-793b6f28ba92",
@@ -2054,7 +2054,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8546330c-e1fb-422a-9388-5c09e9a8f4ca')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/8546330c-e1fb-422a-9388-5c09e9a8f4ca')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "8546330c-e1fb-422a-9388-5c09e9a8f4ca",
@@ -2105,7 +2105,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/03401f05-5c45-4f2d-9295-092764090e02')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/03401f05-5c45-4f2d-9295-092764090e02')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "03401f05-5c45-4f2d-9295-092764090e02",
@@ -2159,7 +2159,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/25bf2f45-1cf0-47d2-b394-a7b331d707b3')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/25bf2f45-1cf0-47d2-b394-a7b331d707b3')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "25bf2f45-1cf0-47d2-b394-a7b331d707b3",
@@ -2215,7 +2215,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/543c9254-eb6f-4fdd-858d-783e0e3d5cb9')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/543c9254-eb6f-4fdd-858d-783e0e3d5cb9')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "543c9254-eb6f-4fdd-858d-783e0e3d5cb9",
@@ -2269,7 +2269,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/30dea201-74da-4141-8d21-8a18f0861d60')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/30dea201-74da-4141-8d21-8a18f0861d60')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "30dea201-74da-4141-8d21-8a18f0861d60",
@@ -2309,7 +2309,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/b40a7a5b-5d39-46fe-a79e-2acdb38e1ce7')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/b40a7a5b-5d39-46fe-a79e-2acdb38e1ce7')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "b40a7a5b-5d39-46fe-a79e-2acdb38e1ce7",
@@ -2349,7 +2349,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/e7277475-4e31-41c7-9997-0b8b3d7f00cd')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/e7277475-4e31-41c7-9997-0b8b3d7f00cd')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "e7277475-4e31-41c7-9997-0b8b3d7f00cd",
@@ -2389,7 +2389,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/9c712bb2-08dc-44d3-b66b-af154dfc1c4f')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/9c712bb2-08dc-44d3-b66b-af154dfc1c4f')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "9c712bb2-08dc-44d3-b66b-af154dfc1c4f",
@@ -2429,7 +2429,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/9c27cee8-0a33-4abe-8683-212c0a98fc28')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/9c27cee8-0a33-4abe-8683-212c0a98fc28')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "9c27cee8-0a33-4abe-8683-212c0a98fc28",
@@ -2469,7 +2469,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/200f05a2-db6e-4ff7-be83-bbc30b44755f')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/200f05a2-db6e-4ff7-be83-bbc30b44755f')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "200f05a2-db6e-4ff7-be83-bbc30b44755f",
@@ -2509,7 +2509,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/29094df8-e0c7-4475-a74c-bda74a07affb')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/29094df8-e0c7-4475-a74c-bda74a07affb')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "29094df8-e0c7-4475-a74c-bda74a07affb",
@@ -2549,7 +2549,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/a3863d8b-8be1-4f52-8ba2-d6cec98b606b')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/a3863d8b-8be1-4f52-8ba2-d6cec98b606b')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "a3863d8b-8be1-4f52-8ba2-d6cec98b606b",
@@ -2589,7 +2589,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/213252f1-497c-4124-91da-6cb43902d5b1')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/213252f1-497c-4124-91da-6cb43902d5b1')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "213252f1-497c-4124-91da-6cb43902d5b1",
@@ -2634,7 +2634,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "apiVersion": "2021-03-01-preview",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/fc1b7e7a-bc24-42c3-ad67-5c76c8fcb2d6')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/fc1b7e7a-bc24-42c3-ad67-5c76c8fcb2d6')]",
             "kind": "Anomaly",
             "properties": {
                 "alertRuleTemplateName": "fc1b7e7a-bc24-42c3-ad67-5c76c8fcb2d6",
