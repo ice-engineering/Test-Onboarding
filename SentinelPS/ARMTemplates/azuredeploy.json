@@ -274,6 +274,9 @@
                     "enableMicrosoftAlerts":{
                         "value": "[parameters('enableMicrosoftAlerts')]"
                     },
+                    "enableMVPAlerts":{
+                        "value": "[parameters('enableMVPAlerts')]"
+                    },
                     "enableMLAlerts":{
                         "value": "[parameters('enableMLAlerts')]"
                     }
