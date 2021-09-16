@@ -112,7 +112,8 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/"
+            //"defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/"
+              "defaultValue": "https://raw.githubusercontent.com/Shivniel/Azure/master/SentinelPS/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
