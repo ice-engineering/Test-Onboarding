@@ -285,6 +285,9 @@
                 "parameters": {
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
+                    },
+                    "dataConnectorsList":{
+                        "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
                     }
                 }
             }
