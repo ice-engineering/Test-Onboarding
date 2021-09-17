@@ -93,35 +93,14 @@
             },
             "defaultValue": false
         },
-        "enableAZScheduledAlerts": {
+        "enableMVPAlerts": {
             "type": "bool",
             "metadata": {
-                "description": "Enable Scheduled analytics rules"
-            },
-            "defaultValue": false
-        },
-        "enableMVPAlert": {
-            "type": "bool",
-            "metadata": {
-                "description": "Enable MVP Scheduled analytics rules"
+                "description": "Enable Scheduled MVP analytics rules"
             },
             "defaultValue": false
         },
         "mcasDiscoveryLogs": {
-            "type": "bool",
-            "metadata": {
-                "description": "Enable MCAS Discovery Logs"
-            },
-            "defaultValue": false
-        },
-        "azureDiscoveryLogs": {
-            "type": "bool",
-            "metadata": {
-                "description": "Enable Azure Discovery Logs"
-            },
-            "defaultValue": false
-        },
-        "Office365Logs": {
             "type": "bool",
             "metadata": {
                 "description": "Enable MCAS Discovery Logs"
@@ -133,7 +112,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Tools/Sentinel-All-In-One/"
+            "defaultValue": "https://raw.githubusercontent.com/Shivniel/Azure/master/SentinelPS/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -223,9 +202,6 @@
                     "mcasDiscoveryLogs": {
                         "value": "[parameters('mcasDiscoveryLogs')]"
                     },
-                    "azureDiscoveryLogs": {
-                        "value": "[parameters('azureDiscoveryLogs')]"
-                    },
                     "location": {
                         "value": "[parameters('location')]"
                     }
@@ -233,7 +209,7 @@
             }
         },
         {
-            "condition": "[or(parameters('enableFusionAlert'),parameters('enableMicrosoftAlerts'),parameters('enableMVPAlert'),parameters('enableMLAlerts'))]",
+            "condition": "[or(parameters('enableFusionAlert'),parameters('enableMicrosoftAlerts'),parameters('enableMLAlerts'))]",
             "name": "enableAlerts",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -293,8 +269,8 @@
             }
         },
         {
-            "condition": "[parameters('enableAZScheduledAlerts')]",
-            "name": "enableAZScheduledAlerts",
+            "condition": "[parameters('enableMVPAlerts')]",
+            "name": "enableMVPAlerts",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "dependsOn": [
@@ -309,9 +285,6 @@
                 "parameters": {
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
-                    },
-                    "dataConnectorsList":{
-                        "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
                     }
                 }
             }
