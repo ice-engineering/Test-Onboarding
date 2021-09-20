@@ -237,7 +237,6 @@
             "enableMicrosoftAlerts": "[steps('analyticsRules').enableMicrosoftAlerts]",
             "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
             "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
-            "enableMVPAlerts": "[steps('analyticsRules').enableMVPAlerts]"
         }
     }
 }
