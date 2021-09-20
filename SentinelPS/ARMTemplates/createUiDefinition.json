@@ -6,7 +6,7 @@
         "config": {
             "isWizard": true,
             "basics": {
-                "description": "**Azure Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/Azure/Azure-Sentinel/Tools/Sentinel-All-In-One/).",
+                "description": "Streamline Azure Sentinel Deployment",
                 "location": {
                     "label": "Location",
                     "toolTip": "Location for all resources",
@@ -198,7 +198,7 @@
                             "required": false,
                             "validationMessage": "Enables rules coming from selected Microsoft security products"
                         },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'Office365'),contains(steps('dataConnectors').enableDataConnectorsKind,'AzureActiveDirectoryIdentityProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftDefenderAdvancedThreatProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'AzureSecurityCenter'),contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity')), true, false)]"
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'AzureAdvancedThreatProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'AzureActiveDirectoryIdentityProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftDefenderAdvancedThreatProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'AzureSecurityCenter'),contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity')), true, false)]"
                     },
                     {
                         "name": "enableMLAlerts",
