@@ -221,17 +221,6 @@
                             "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
                         },
                         "visible": true
-                    },
-                    {
-                        "name": "enableMVPAlerts",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable MVP Scheduled alert rules for selected connectors?",
-                        "toolTip": "Select to enable MVP scheduled analytics rules for selected connectors",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Enables Scheduled MVP rules matching any of the selected connectors"
-                        },
-                        "visible": true
                     }
                 ]
             }
