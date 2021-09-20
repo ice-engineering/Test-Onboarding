@@ -6,7 +6,7 @@
         "config": {
             "isWizard": true,
             "basics": {
-                "description": "Streamline Azure Sentinel Deployment",
+                "description": "**Streamline Azure Sentinel Deployment**",
                 "location": {
                     "label": "Location",
                     "toolTip": "Location for all resources",
