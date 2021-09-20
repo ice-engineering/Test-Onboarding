@@ -182,8 +182,8 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftDefenderAdvancedThreatProtection'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/2f120180-76dd-4aad-b593-54c5800b2265')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/2f120180-76dd-4aad-b593-54c5800b2265')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/2f120180-76dd-4aad-b593-54c5800b2265')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/2f120180-76dd-4aad-b593-54c5800b2265')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2021-03-01-preview",
@@ -235,8 +235,8 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'MicrosoftDefenderAdvancedThreatProtection'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2021-03-01-preview",
