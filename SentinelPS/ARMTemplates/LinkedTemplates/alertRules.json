@@ -298,7 +298,7 @@
         {
             "condition": "[parameters('enableMVPAlerts')]",
             "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2021-03-01-preview",
