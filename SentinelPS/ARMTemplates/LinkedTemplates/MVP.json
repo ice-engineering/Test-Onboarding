@@ -39,6 +39,10 @@
             "type": "bool",
             "defaultValue": false
         },
+        "enableMVPAlerts": {
+            "type": "bool",
+            "defaultValue": false
+        },
         "enableMLAlerts": {
             "type": "bool",
             "defaultValue": false
