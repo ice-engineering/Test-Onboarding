@@ -270,7 +270,7 @@
         },
         {
             "condition": "[or(parameters('enableFusionAlert'),parameters('enableMVPAlerts'),parameters('enableMLAlerts'))]",
-            "name": "enableAlerts",
+            "name": "enableAlertsMVP",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "dependsOn": [
