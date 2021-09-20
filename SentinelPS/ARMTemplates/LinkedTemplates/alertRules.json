@@ -88,8 +88,8 @@
             "dependsOn": [],
             "properties": {
                 "alertRuleTemplateName": "90586451-7ba8-4c1e-9904-7d1b7c3cc4d6",
-                "description": "Create incidents based on Azure Security Center alerts",
-                "displayName": "Create incidents based on all alerts generated in Azure Security Center",
+                "description": "Create incidents based on Azure Defender alerts",
+                "displayName": "Create incidents based on all alerts generated in Azure Defender",
                 "enabled": true,
                 "productFilter": "Azure Security Center"
             }
@@ -104,8 +104,8 @@
             "dependsOn": [],
             "properties": {
                 "alertRuleTemplateName": "40ba9493-4183-4eee-974f-87fe39c8f267",
-                "description": "Create incidents based on Azure Advanced Threat Protection alerts",
-                "displayName": "Create incidents based on all alerts generated in Azure Advanced Threat Protection",
+                "description": "Create incidents based on all alerts generated in Microsoft Defender for Identity",
+                "displayName": "Create incidents based on Microsoft Defender for Identity alerts",
                 "enabled": true,
                 "productFilter": "Azure Advanced Threat Protection"
             }
@@ -152,8 +152,8 @@
             "dependsOn": [],
             "properties": {
                 "alertRuleTemplateName": "327cd4ed-ca42-454b-887c-54e1c91363c6",
-                "description": "Create incidents based on Microsoft Defender Advanced Threat Protection alerts",
-                "displayName": "Create incidents based on all alerts generated in Microsoft Defender Advanced Threat Protection",
+                "description": "Create incidents based on Microsoft Defender for Endpoint alerts",
+                "displayName": "Create incidents based on all alerts generated in Microsoft Defender for Endpoint",
                 "enabled": true,
                 "productFilter": "Microsoft Defender Advanced Threat Protection"
             }
