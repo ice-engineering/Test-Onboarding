@@ -76,7 +76,7 @@
                 "displayName": "Create incidents based on all alerts generated in Azure Active Directory Identity Protection",
                 "enabled": true,
                 "productFilter": "Azure Active Directory Identity Protection",
-                "severity": [
+                "severitiesFilter": [
                     "High",
                     "Medium"
                 ]
@@ -96,7 +96,7 @@
                 "displayName": "Create incidents based on all alerts generated in Azure Defender",
                 "enabled": true,
                 "productFilter": "Azure Security Center",
-                "severity": [
+                "severitiesFilter": [
                     "High"
                 ]
             }
@@ -115,7 +115,7 @@
                 "displayName": "Create incidents based on Microsoft Defender for Identity alerts",
                 "enabled": true,
                 "productFilter": "Azure Advanced Threat Protection",
-                "severity": [
+                "severitiesFilter": [
                     "High",
                     "Medium",
                     "Low"
@@ -136,7 +136,7 @@
                 "displayName": "Create incidents based on all alerts generated in Microsoft Cloud App Security",
                 "enabled": true,
                 "productFilter": "Microsoft Cloud App Security",
-                "severity": [
+                "severitiesFilter": [
                     "High",
                     "Medium"
                 ]
@@ -156,7 +156,7 @@
                 "description": "Create incidents based on all alerts generated in Microsoft Defender for Office 365",
                 "enabled": true,
                 "productFilter": "Office 365 Advanced Threat Protection",
-                "severity": [
+                "severitiesFilter": [
                     "High",
                     "Medium"
                 ]
@@ -176,7 +176,7 @@
                 "displayName": "Create incidents based on all alerts generated in Microsoft Defender for Endpoint",
                 "enabled": true,
                 "productFilter": "Microsoft Defender Advanced Threat Protection",
-                "severity": [
+                "severitiesFilter": [
                     "High",
                     "Medium",
                     "Low"
