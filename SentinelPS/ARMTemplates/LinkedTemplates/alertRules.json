@@ -75,7 +75,11 @@
                 "description": "Create incidents based on Azure Active Directory Identity Protection alerts",
                 "displayName": "Create incidents based on all alerts generated in Azure Active Directory Identity Protection",
                 "enabled": true,
-                "productFilter": "Azure Active Directory Identity Protection"
+                "productFilter": "Azure Active Directory Identity Protection",
+                "severity": [
+                    "High",
+                    "Medium"
+                ]
             }
         },
         {
@@ -91,7 +95,10 @@
                 "description": "Create incidents based on Azure Defender alerts",
                 "displayName": "Create incidents based on all alerts generated in Azure Defender",
                 "enabled": true,
-                "productFilter": "Azure Security Center"
+                "productFilter": "Azure Security Center",
+                "severity": [
+                    "High"
+                ]
             }
         },
         {
@@ -107,7 +114,12 @@
                 "description": "Create incidents based on all alerts generated in Microsoft Defender for Identity",
                 "displayName": "Create incidents based on Microsoft Defender for Identity alerts",
                 "enabled": true,
-                "productFilter": "Azure Advanced Threat Protection"
+                "productFilter": "Azure Advanced Threat Protection",
+                "severity": [
+                    "High",
+                    "Medium",
+                    "Low"
+                ]
             }
         },
         {
@@ -123,7 +135,11 @@
                 "description": "Create incidents based on Microsoft Cloud App Security alerts",
                 "displayName": "Create incidents based on all alerts generated in Microsoft Cloud App Security",
                 "enabled": true,
-                "productFilter": "Microsoft Cloud App Security"
+                "productFilter": "Microsoft Cloud App Security",
+                "severity": [
+                    "High",
+                    "Medium"
+                ]
             }
         },
         {
@@ -139,7 +155,11 @@
                 "displayName": "Create incidents based on Microsoft Defender for Office 365 alerts",
                 "description": "Create incidents based on all alerts generated in Microsoft Defender for Office 365",
                 "enabled": true,
-                "productFilter": "Office 365 Advanced Threat Protection"
+                "productFilter": "Office 365 Advanced Threat Protection",
+                "severity": [
+                    "High",
+                    "Medium"
+                ]
             }
         },
         {
@@ -155,7 +175,12 @@
                 "description": "Create incidents based on Microsoft Defender for Endpoint alerts",
                 "displayName": "Create incidents based on all alerts generated in Microsoft Defender for Endpoint",
                 "enabled": true,
-                "productFilter": "Microsoft Defender Advanced Threat Protection"
+                "productFilter": "Microsoft Defender Advanced Threat Protection",
+                "severity": [
+                    "High",
+                    "Medium",
+                    "Low"
+                ]
             }
         },
         {
