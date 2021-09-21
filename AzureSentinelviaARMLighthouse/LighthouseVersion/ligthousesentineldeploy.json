@@ -150,7 +150,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/Shivniel/Azure/master/AzureSentinelviaARMLighthouse/LighthouseVersion/"
+            "defaultValue": "https://raw.githubusercontent.com/Shivniel/Azure/master/AzureSentinelviaARMLighthouse/"
         }
     },
     "variables": {
@@ -176,7 +176,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), 'AzureSentinelviaARMLighthouse/LighthouseVersion/LinkedTemplates/workspace.json')]",
+                    "uri": "[uri(parameters('_artifactsLocation'), 'LighthouseVersion/LinkedTemplates/workspace.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -214,7 +214,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), 'AzureSentinelviaARMLighthouse/LighthouseVersion/LinkedTemplates/dataConnectors.json')]",
+                    "uri": "[uri(parameters('_artifactsLocation'), 'LighthouseVersion/LinkedTemplates/dataConnectors.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -255,7 +255,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), 'AzureSentinelviaARMLighthouse/LighthouseVersion/LinkedTemplates/alertRules.json')]",
+                    "uri": "[uri(parameters('_artifactsLocation'), 'LighthouseVersion/LinkedTemplates/alertRules.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -293,7 +293,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), 'AzureSentinelviaARMLighthouse/LighthouseVersion/LinkedTemplates/scheduledAlerts.json')]",
+                    "uri": "[uri(parameters('_artifactsLocation'), 'LighthouseVersion/LinkedTemplates/scheduledAlerts.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
