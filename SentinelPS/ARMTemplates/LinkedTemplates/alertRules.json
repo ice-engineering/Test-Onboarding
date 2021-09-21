@@ -187,11 +187,170 @@
         // Azure Sentinel MVP Analytics
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/2f120180-76dd-4aad-b593-54c5800b2265')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/2f120180-76dd-4aad-b593-54c5800b2265')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/e3d4eb7b-bb9a-4beb-b45a-f8b899b5459e')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/e3d4eb7b-bb9a-4beb-b45a-f8b899b5459e')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
+            "apiVersion": "2021-03-01-preview",
+            "properties": {
+                "displayName": "Probable AdFind Recon Tool Usage",
+                "description": "Identifies the host and account that executed AdFind by hash and filename in addition to common and unique flags that are used by many threat actors in discovery.",
+                "severity": "High",
+                "enabled": true,
+                "query": "let args = dynamic([\"objectcategory\",\"domainlist\",\"dcmodes\",\"adinfo\",\"trustdmp\",\"computers_pwdnotreqd\",\"Domain Admins\", \"objectcategory=person\", \"objectcategory=computer\", \"objectcategory=*\",\"dclist\"]);\nlet parentProcesses = dynamic([\"pwsh.exe\",\"powershell.exe\",\"cmd.exe\"]);\nDeviceProcessEvents\n//looks for execution from a shell\n| where InitiatingProcessFileName in (parentProcesses)\n// main filter\n| where FileName =~ \"AdFind.exe\" or SHA256 == \"c92c158d7c37fea795114fa6491fe5f145ad2f8c08776b18ae79db811e8e36a3\"\n   // AdFind common Flags to check for from various threat actor TTPs\n    or ProcessCommandLine has_any (args)\n| extend AccountCustomEntity = AccountName, HostCustomEntity = DeviceName, ProcessCustomEntity = InitiatingProcessFileName, FileHashCustomEntity = SHA256",
+                "queryFrequency": "PT1H",
+                "queryPeriod": "PT1H",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "Discovery"
+                ],
+                "alertRuleTemplateName": "c63ae777-d5e0-4113-8c9a-c2c9d3d09fcd",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Host",
+                        "fieldMappings": [
+                            {
+                                "identifier": "HostName",
+                                "columnName": "HostCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Process",
+                        "fieldMappings": [
+                            {
+                                "identifier": "ProcessId",
+                                "columnName": "ProcessCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "FileHash",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Algorithm",
+                                "columnName": "SHA256"
+                            },
+                            {
+                                "identifier": "Value",
+                                "columnName": "FileHashCustomEntity"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/5a2cb0c0-e0ee-436e-af46-913fa4d04752')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/5a2cb0c0-e0ee-436e-af46-913fa4d04752')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-03-01-preview",
+            "properties": {
+                "displayName": "TEARDROP memory-only dropper",
+                "description": "Identifies SolarWinds TEARDROP memory-only dropper IOCs in Window's defender Exploit Guard activity\nReferences:\n- https://www.fireeye.com/blog/threat-research/2020/12/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor.html\n- https://gist.github.com/olafhartong/71ffdd4cab4b6acd5cbcd1a0691ff82f",
+                "severity": "High",
+                "enabled": true,
+                "query": "DeviceEvents\n| where ActionType has \"ExploitGuardNonMicrosoftSignedBlocked\"\n| where InitiatingProcessFileName contains \"svchost.exe\" and FileName contains \"NetSetupSvc.dll\"\n| extend timestamp = TimeGenerated, AccountCustomEntity = iff(isnotempty(InitiatingProcessAccountUpn), InitiatingProcessAccountUpn, InitiatingProcessAccountName),\nHostCustomEntity = DeviceName, FileHashCustomEntity = InitiatingProcessSHA1, FileHashType = \"SHA1\"",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "Execution",
+                    "Persistence"
+                ],
+                "alertRuleTemplateName": "738702fd-0a66-42c7-8586-e30f0583f8fe",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Host",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "HostCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "FileHash",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Algorithm",
+                                "columnName": "FileHashType"
+                            },
+                            {
+                                "identifier": "Value",
+                                "columnName": "FileHashCustomEntity"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/2f120180-76dd-4aad-b593-54c5800b2265')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/2f120180-76dd-4aad-b593-54c5800b2265')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Anomalous sign-in location by user account and authenticating application",
@@ -241,11 +400,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/9e7dbd35-22e2-4809-b6e3-370f13831b1c')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Attempts to sign in to disabled accounts",
@@ -264,7 +422,7 @@
                 ],
                 "alertRuleTemplateName": "75ea5c39-93e5-489b-b1e1-68fa6c9d2d04",
                 "incidentConfiguration": {
-                    "createIncident": true,
+                    "createIncident": false,
                     "groupingConfiguration": {
                         "enabled": true,
                         "reopenClosedIncident": false,
@@ -304,11 +462,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/1242c584-c4ff-49c1-9132-4b6f48cb3aa9')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/1242c584-c4ff-49c1-9132-4b6f48cb3aa9')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/1242c584-c4ff-49c1-9132-4b6f48cb3aa9')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/1242c584-c4ff-49c1-9132-4b6f48cb3aa9')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Brute force attack against Azure Portal",
@@ -332,6 +489,72 @@
                         "enabled": true,
                         "reopenClosedIncident": false,
                         "lookbackDuration": "PT5H",
+                        "matchingMethod": "Selected",
+                        "groupByEntities": [
+                            "IP"
+                        ],
+                        "groupByAlertDetails": [
+                            "Severity"
+                        ],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "IPCustomEntity"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/d2b8aeeb-0879-4aaa-84a2-97fd71eb2510')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/d2b8aeeb-0879-4aaa-84a2-97fd71eb2510')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-03-01-preview",
+            "properties": {
+                "displayName": "Credential added after admin consented to Application",
+                "description": "This query will identify instances where Service Principal credentials were added to an application by one user after the application was granted admin consent rights by another user.\n If a threat actor obtains access to an account with sufficient privileges and adds the alternate authentication material triggering this event, the threat actor can now authenticate as the Application or Service Principal using this credential.\n Additional information on OAuth Credential Grants can be found in RFC 6749 Section 4.4 or https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow.\n For further information on AuditLogs please see https://docs.microsoft.com/azure/active-directory/reports-monitoring/reference-audit-activities",
+                "severity": "Medium",
+                "enabled": true,
+                "query": "let auditLookbackStart = 2d;\nlet auditLookbackEnd = 1d;\nAuditLogs\n| where TimeGenerated >= ago(auditLookbackStart)\n| where OperationName =~ \"Consent to application\" \n| where Result =~ \"success\"\n| mv-expand target = TargetResources\n| extend targetResourceName = tostring(target.displayName)\n| extend targetResourceID = tostring(target.id)\n| extend targetResourceType = tostring(target.type)\n| extend targetModifiedProp = TargetResources[0].modifiedProperties\n| extend isAdminConsent = targetModifiedProp[0].newValue\n| extend Consent_ServicePrincipalNames = targetModifiedProp[5].newValue\n| extend Consent_Permissions = targetModifiedProp[4].newValue\n| extend Consent_InitiatingUserOrApp = iff(isnotempty(InitiatedBy.user.userPrincipalName),tostring(InitiatedBy.user.userPrincipalName), tostring(InitiatedBy.app.displayName))\n| extend Consent_InitiatingIpAddress = iff(isnotempty(InitiatedBy.user.ipAddress), tostring(InitiatedBy.user.ipAddress), tostring(InitiatedBy.app.ipAddress))\n| join ( \nAuditLogs\n| where TimeGenerated  >= ago(auditLookbackEnd)\n| where OperationName =~ \"Add service principal credentials\"\n| where Result =~ \"success\"\n| mv-expand target = TargetResources\n| extend targetResourceName = tostring(target.displayName)\n| extend targetResourceID = tostring(target.id)\n| extend targetModifiedProp = TargetResources[0].modifiedProperties\n| extend Credential_KeyDescription = targetModifiedProp[0].newValue\n| extend UpdatedProperties = targetModifiedProp[1].newValue\n| extend Credential_ServicePrincipalNames = targetModifiedProp[2].newValue\n| extend Credential_InitiatingUserOrApp = iff(isnotempty(InitiatedBy.user.userPrincipalName),tostring(InitiatedBy.user.userPrincipalName), tostring(InitiatedBy.app.displayName))\n| extend Credential_InitiatingIpAddress = iff(isnotempty(InitiatedBy.user.ipAddress), tostring(InitiatedBy.user.ipAddress), tostring(InitiatedBy.app.ipAddress))\n) on targetResourceName, targetResourceID\n| extend TimeConsent = TimeGenerated, TimeCred = TimeGenerated1\n| where TimeConsent > TimeCred \n| project TimeConsent, TimeCred, Consent_InitiatingUserOrApp, Credential_InitiatingUserOrApp, targetResourceName, targetResourceType, isAdminConsent, Consent_ServicePrincipalNames, Credential_ServicePrincipalNames, Consent_Permissions, Credential_KeyDescription, Consent_InitiatingIpAddress, Credential_InitiatingIpAddress\n| extend timestamp = TimeConsent, AccountCustomEntity = Consent_InitiatingUserOrApp, IPCustomEntity = Consent_InitiatingIpAddress",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P2D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "CredentialAccess"
+                ],
+                "alertRuleTemplateName": "707494a5-8e44-486b-90f8-155d1797a8eb",
+                "incidentConfiguration": {
+                    "createIncident": false,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
                         "matchingMethod": "AllEntities",
                         "groupByEntities": [],
                         "groupByAlertDetails": [],
@@ -367,11 +590,76 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/da605188-f97b-4dcd-9da4-44ebea5e6511')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/da605188-f97b-4dcd-9da4-44ebea5e6511')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/84593d16-aba6-4b7f-b4a9-fae7abee859f')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/84593d16-aba6-4b7f-b4a9-fae7abee859f')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
+            "apiVersion": "2021-03-01-preview",
+            "properties": {
+                "displayName": "Distributed Password cracking attempts in AzureAD",
+                "description": "Identifies distributed password cracking attempts from the Azure Active Directory SigninLogs.\nThe query looks for unusually high number of failed password attempts coming from multiple locations for a user account.\nReferences: https://docs.microsoft.com/azure/active-directory/reports-monitoring/reference-sign-ins-error-codes\n50053   Account is locked because the user tried to sign in too many times with an incorrect user ID or password.\n50055   Invalid password, entered expired password.\n50056   Invalid or null password - Password does not exist in store for this user.\n50126   Invalid username or password, or invalid on-premises username or password.",
+                "severity": "Medium",
+                "enabled": true,
+                "query": "let s_threshold = 30;\nlet l_threshold = 3;\nlet aadFunc = (tableName:string){\ntable(tableName)\n| where OperationName =~ \"Sign-in activity\"\n// Error codes that we want to look at as they are related to the use of incorrect password.\n| where ResultType in (\"50126\", \"50053\" , \"50055\", \"50056\")\n| extend DeviceDetail = todynamic(DeviceDetail), Status = todynamic(DeviceDetail), LocationDetails = todynamic(LocationDetails)\n| extend OS = DeviceDetail.operatingSystem, Browser = DeviceDetail.browser\n| extend StatusCode = tostring(Status.errorCode), StatusDetails = tostring(Status.additionalDetails)\n| extend LocationString = strcat(tostring(LocationDetails.countryOrRegion), \"/\", tostring(LocationDetails.state), \"/\", tostring(LocationDetails.city))\n| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), LocationCount=dcount(LocationString), Location = make_set(LocationString), \nIPAddress = make_set(IPAddress), IPAddressCount = dcount(IPAddress), AppDisplayName = make_set(AppDisplayName), ResultDescription = make_set(ResultDescription), \nBrowser = make_set(Browser), OS = make_set(OS), SigninCount = count() by UserPrincipalName, Type                              \n// Setting a generic threshold - Can be different for different environment\n| where SigninCount > s_threshold and LocationCount >= l_threshold\n| extend tostring(Location), tostring(IPAddress), tostring(AppDisplayName), tostring(ResultDescription), tostring(Browser), tostring(OS)\n| distinct *\n| extend timestamp = StartTime, AccountCustomEntity = UserPrincipalName, IPCustomEntity = IPAddress\n};\nlet aadSignin = aadFunc(\"SigninLogs\");\nlet aadNonInt = aadFunc(\"AADNonInteractiveUserSignInLogs\");\nunion isfuzzy=true aadSignin, aadNonInt",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "CredentialAccess"
+                ],
+                "alertRuleTemplateName": "bfb1c90f-8006-4325-98be-c7fffbc254d6",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": true,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "Selected",
+                        "groupByEntities": [
+                            "IP"
+                        ],
+                        "groupByAlertDetails": [
+                            "Severity"
+                        ],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "IPCustomEntity"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/da605188-f97b-4dcd-9da4-44ebea5e6511')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/da605188-f97b-4dcd-9da4-44ebea5e6511')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Exchange AuditLog disabled",
@@ -430,11 +718,79 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/32c4eadf-329c-4478-a483-bbba196c3758')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/32c4eadf-329c-4478-a483-bbba196c3758')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
+            "apiVersion": "2021-03-01-preview",
+            "properties": {
+                "displayName": "Linked Malicious Storage Artifacts",
+                "description": "An IP address which uploaded malicious content to an Azure Blob or File Storage container (triggering a malware alert) also uploaded additional files.",
+                "severity": "Medium",
+                "enabled": true,
+                "query": "//Collect the alert events\nlet alertData = SecurityAlert \n| where DisplayName has \"Potential malware uploaded to\" \n| extend Entities = parse_json(Entities) \n| mv-expand Entities;\n//Parse the IP address data\nlet ipData = alertData \n| where Entities['Type'] =~ \"ip\" \n| extend AttackerIP = tostring(Entities['Address']), AttackerCountry = tostring(Entities['Location']['CountryName']);\n//Parse the file data\nlet FileData = alertData \n| where Entities['Type'] =~ \"file\" \n| extend MaliciousFileDirectory = tostring(Entities['Directory']), MaliciousFileName = tostring(Entities['Name']), MaliciousFileHashes = tostring(Entities['FileHashes']);\n//Combine the File and IP data together\nipData \n| join (FileData) on VendorOriginalId \n| summarize by TimeGenerated, AttackerIP, AttackerCountry, DisplayName, ResourceId, AlertType, MaliciousFileDirectory, MaliciousFileName, MaliciousFileHashes\n//Create a type column so we can track if it was a File storage or blobl storage upload \n| extend type = iff(DisplayName has \"file\", \"File\", \"Blob\") \n| join (\n  union\n  StorageFileLogs, \n  StorageBlobLogs \n  //File upload operations \n  | where OperationName =~ \"PutBlob\" or OperationName =~ \"PutRange\"\n  //Parse out the uploader IP \n  | extend ClientIP = tostring(split(CallerIpAddress, \":\", 0)[0])\n  //Extract the filename from the Uri \n  | extend FileName = extract(@\"\\/([\\w\\-. ]+)\\?\", 1, Uri)\n  //Base64 decode the MD5 filehash, we will encounter non-ascii hex so string operations don't work\n  //We can work around this by making it an array then converting it to hex from an int \n  | extend base64Char = base64_decode_toarray(ResponseMd5) \n  | mv-expand base64Char \n  | extend hexChar = tohex(toint(base64Char))\n  | extend hexChar = iff(strlen(hexChar) < 2, strcat(\"0\", hexChar), hexChar) \n  | extend SourceTable = iff(OperationName has \"range\", \"StorageFileLogs\", \"StorageBlobLogs\") \n  | summarize make_list(hexChar) by CorrelationId, ResponseMd5, FileName, AccountName, TimeGenerated, RequestBodySize, ClientIP, SourceTable \n  | extend Md5Hash = strcat_array(list_hexChar, \"\")\n  //Pack the file information the summarise into a ClientIP row \n  | extend p = pack(\"FileName\", FileName, \"FileSize\", RequestBodySize, \"Md5Hash\", Md5Hash, \"Time\", TimeGenerated, \"SourceTable\", SourceTable) \n  | summarize UploadedFileInfo=make_list(p), FilesUploaded=count() by ClientIP \n      | join kind=leftouter (\n        union\n        StorageFileLogs,\n        StorageBlobLogs               \n        | where OperationName =~ \"DeleteFile\" or OperationName =~ \"DeleteBlob\"         \n        | extend ClientIP = tostring(split(CallerIpAddress, \":\", 0)[0])         \n        | extend FileName = extract(@\"\\/([\\w\\-. ]+)\\?\", 1, Uri)         \n        | extend SourceTable = iff(OperationName has \"range\", \"StorageFileLogs\", \"StorageBlobLogs\")         \n        | extend p = pack(\"FileName\", FileName, \"Time\", TimeGenerated, \"SourceTable\", SourceTable)         \n        | summarize DeletedFileInfo=make_list(p), FilesDeleted=count() by ClientIP\n        ) on ClientIP\n  ) on $left.AttackerIP == $right.ClientIP \n| mvexpand UploadedFileInfo \n| extend LinkedMaliciousFileName = UploadedFileInfo.FileName \n| extend LinkedMaliciousFileHash = UploadedFileInfo.Md5Hash     \n| project AlertTimeGenerated = TimeGenerated, tostring(LinkedMaliciousFileName), tostring(LinkedMaliciousFileHash), AlertType, AttackerIP, AttackerCountry, MaliciousFileDirectory, MaliciousFileName, FilesUploaded, UploadedFileInfo \n| extend FileHashCustomEntity = LinkedMaliciousFileName, HashAlgorithm = \"MD5\", IPCustomEntity = AttackerIP",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "CommandAndControl",
+                    "Exfiltration"
+                ],
+                "alertRuleTemplateName": "b9e3b9f8-a406-4151-9891-e5ff1ddd8c1d",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": true,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "Selected",
+                        "groupByEntities": [
+                            "FileHash"
+                        ],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "IPCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "FileHash",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Algorithm",
+                                "columnName": "HashAlgorithm"
+                            },
+                            {
+                                "identifier": "Value",
+                                "columnName": "FileHashCustomEntity"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/16ecda7e-87a8-4163-8bb6-530fc6a84943')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Mail redirect via ExO transport rule",
@@ -494,11 +850,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/24c4f2c3-1425-4e46-94d3-cb54264a6683')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/24c4f2c3-1425-4e46-94d3-cb54264a6683')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/24c4f2c3-1425-4e46-94d3-cb54264a6683')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/24c4f2c3-1425-4e46-94d3-cb54264a6683')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Malicious Inbox Rule",
@@ -567,11 +922,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/870060be-8cb6-402a-9542-515335a98a6a')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/870060be-8cb6-402a-9542-515335a98a6a')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/870060be-8cb6-402a-9542-515335a98a6a')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/870060be-8cb6-402a-9542-515335a98a6a')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "MFA disabled for a user",
@@ -630,11 +984,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/d66d1519-dc52-4a5d-82c1-04396c18fee3')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/d66d1519-dc52-4a5d-82c1-04396c18fee3')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/d66d1519-dc52-4a5d-82c1-04396c18fee3')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/d66d1519-dc52-4a5d-82c1-04396c18fee3')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Multiple users email forwarded to same destination",
@@ -694,11 +1047,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/baa8bf10-5fb9-4ab4-a594-e1087f7a44b9')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/baa8bf10-5fb9-4ab4-a594-e1087f7a44b9')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/baa8bf10-5fb9-4ab4-a594-e1087f7a44b9')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/baa8bf10-5fb9-4ab4-a594-e1087f7a44b9')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Office policy tampering",
@@ -758,11 +1110,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/a7456c6c-ba04-4798-af08-8ab339372c34')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/a7456c6c-ba04-4798-af08-8ab339372c34')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/a7456c6c-ba04-4798-af08-8ab339372c34')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/a7456c6c-ba04-4798-af08-8ab339372c34')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Rare application consent",
@@ -832,11 +1183,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/643ce40d-6cca-42cf-8fd6-25dbe14f4464')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/643ce40d-6cca-42cf-8fd6-25dbe14f4464')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/643ce40d-6cca-42cf-8fd6-25dbe14f4464')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/643ce40d-6cca-42cf-8fd6-25dbe14f4464')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Attempt to bypass conditional access rule in Azure AD",
@@ -856,7 +1206,7 @@
                 ],
                 "alertRuleTemplateName": "3af9285d-bb98-4a35-ad29-5ea39ba0c628",
                 "incidentConfiguration": {
-                    "createIncident": true,
+                    "createIncident": false,
                     "groupingConfiguration": {
                         "enabled": true,
                         "reopenClosedIncident": false,
@@ -896,74 +1246,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/84593d16-aba6-4b7f-b4a9-fae7abee859f')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/84593d16-aba6-4b7f-b4a9-fae7abee859f')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/20304aa0-ad9f-4093-b73c-a2755a49a447')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/20304aa0-ad9f-4093-b73c-a2755a49a447')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
-            "apiVersion": "2021-03-01-preview",
-            "properties": {
-                "displayName": "Distributed Password cracking attempts in AzureAD",
-                "description": "Identifies distributed password cracking attempts from the Azure Active Directory SigninLogs.\nThe query looks for unusually high number of failed password attempts coming from multiple locations for a user account.\nReferences: https://docs.microsoft.com/azure/active-directory/reports-monitoring/reference-sign-ins-error-codes\n50053   Account is locked because the user tried to sign in too many times with an incorrect user ID or password.\n50055   Invalid password, entered expired password.\n50056   Invalid or null password - Password does not exist in store for this user.\n50126   Invalid username or password, or invalid on-premises username or password.",
-                "severity": "Low",
-                "enabled": true,
-                "query": "let s_threshold = 30;\nlet l_threshold = 3;\nlet aadFunc = (tableName:string){\ntable(tableName)\n| where OperationName =~ \"Sign-in activity\"\n// Error codes that we want to look at as they are related to the use of incorrect password.\n| where ResultType in (\"50126\", \"50053\" , \"50055\", \"50056\")\n| extend DeviceDetail = todynamic(DeviceDetail), Status = todynamic(DeviceDetail), LocationDetails = todynamic(LocationDetails)\n| extend OS = DeviceDetail.operatingSystem, Browser = DeviceDetail.browser\n| extend StatusCode = tostring(Status.errorCode), StatusDetails = tostring(Status.additionalDetails)\n| extend LocationString = strcat(tostring(LocationDetails.countryOrRegion), \"/\", tostring(LocationDetails.state), \"/\", tostring(LocationDetails.city))\n| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), LocationCount=dcount(LocationString), Location = make_set(LocationString), \nIPAddress = make_set(IPAddress), IPAddressCount = dcount(IPAddress), AppDisplayName = make_set(AppDisplayName), ResultDescription = make_set(ResultDescription), \nBrowser = make_set(Browser), OS = make_set(OS), SigninCount = count() by UserPrincipalName, Type                              \n// Setting a generic threshold - Can be different for different environment\n| where SigninCount > s_threshold and LocationCount >= l_threshold\n| extend tostring(Location), tostring(IPAddress), tostring(AppDisplayName), tostring(ResultDescription), tostring(Browser), tostring(OS)\n| distinct *\n| extend timestamp = StartTime, AccountCustomEntity = UserPrincipalName, IPCustomEntity = IPAddress\n};\nlet aadSignin = aadFunc(\"SigninLogs\");\nlet aadNonInt = aadFunc(\"AADNonInteractiveUserSignInLogs\");\nunion isfuzzy=true aadSignin, aadNonInt",
-                "queryFrequency": "P1D",
-                "queryPeriod": "P1D",
-                "triggerOperator": "GreaterThan",
-                "triggerThreshold": 0,
-                "suppressionDuration": "PT5H",
-                "suppressionEnabled": false,
-                "tactics": [
-                    "CredentialAccess"
-                ],
-                "alertRuleTemplateName": "bfb1c90f-8006-4325-98be-c7fffbc254d6",
-                "incidentConfiguration": {
-                    "createIncident": true,
-                    "groupingConfiguration": {
-                        "enabled": true,
-                        "reopenClosedIncident": false,
-                        "lookbackDuration": "PT5H",
-                        "matchingMethod": "AllEntities",
-                        "groupByEntities": [],
-                        "groupByAlertDetails": [],
-                        "groupByCustomDetails": []
-                    }
-                },
-                "eventGroupingSettings": {
-                    "aggregationKind": "SingleAlert"
-                },
-                "alertDetailsOverride": null,
-                "customDetails": null,
-                "entityMappings": [
-                    {
-                        "entityType": "Account",
-                        "fieldMappings": [
-                            {
-                                "identifier": "FullName",
-                                "columnName": "AccountCustomEntity"
-                            }
-                        ]
-                    },
-                    {
-                        "entityType": "IP",
-                        "fieldMappings": [
-                            {
-                                "identifier": "Address",
-                                "columnName": "IPCustomEntity"
-                            }
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/20304aa0-ad9f-4093-b73c-a2755a49a447')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/20304aa0-ad9f-4093-b73c-a2755a49a447')]",
-            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
-            "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "New executable via Office FileUploaded Operation",
@@ -982,7 +1268,7 @@
                 ],
                 "alertRuleTemplateName": "d722831e-88f5-4e25-b106-4ef6e29f8c13",
                 "incidentConfiguration": {
-                    "createIncident": true,
+                    "createIncident": false,
                     "groupingConfiguration": {
                         "enabled": true,
                         "reopenClosedIncident": false,
@@ -1031,11 +1317,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/3083bfa8-a992-46de-b14b-198064e9db43')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/3083bfa8-a992-46de-b14b-198064e9db43')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/3083bfa8-a992-46de-b14b-198064e9db43')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/3083bfa8-a992-46de-b14b-198064e9db43')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Password spray attack against Azure AD application",
@@ -1059,9 +1344,13 @@
                         "enabled": true,
                         "reopenClosedIncident": false,
                         "lookbackDuration": "PT5H",
-                        "matchingMethod": "AllEntities",
-                        "groupByEntities": [],
-                        "groupByAlertDetails": [],
+                        "matchingMethod": "Selected",
+                        "groupByEntities": [
+                            "IP"
+                        ],
+                        "groupByAlertDetails": [
+                            "Severity"
+                        ],
                         "groupByCustomDetails": []
                     }
                 },
@@ -1085,11 +1374,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/aed6981d-0ded-4f5a-85e8-30656df794a8')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/aed6981d-0ded-4f5a-85e8-30656df794a8')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/aed6981d-0ded-4f5a-85e8-30656df794a8')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/aed6981d-0ded-4f5a-85e8-30656df794a8')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Rare and potentially high-risk Office operations",
@@ -1109,7 +1397,7 @@
                 ],
                 "alertRuleTemplateName": "957cb240-f45d-4491-9ba5-93430a3c08be",
                 "incidentConfiguration": {
-                    "createIncident": true,
+                    "createIncident": false,
                     "groupingConfiguration": {
                         "enabled": true,
                         "reopenClosedIncident": false,
@@ -1149,11 +1437,10 @@
         },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.SecurityInsights'),'/alertRules/dbb8f384-80a0-4fb7-b033-bd631d5877ee')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/dbb8f384-80a0-4fb7-b033-bd631d5877ee')]",
+			"id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/dbb8f384-80a0-4fb7-b033-bd631d5877ee')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/dbb8f384-80a0-4fb7-b033-bd631d5877ee')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-03-01-preview",
             "properties": {
                 "displayName": "Suspicious Resource deployment",
@@ -1172,7 +1459,7 @@
                 ],
                 "alertRuleTemplateName": "9fb57e58-3ed8-4b89-afcf-c8e786508b1c",
                 "incidentConfiguration": {
-                    "createIncident": true,
+                    "createIncident": false,
                     "groupingConfiguration": {
                         "enabled": true,
                         "reopenClosedIncident": false,
@@ -1209,7 +1496,7 @@
                     }
                 ]
             }
-        },
+        },    
         {
             "condition": "[parameters('enableFusionAlert')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
