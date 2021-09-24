@@ -297,6 +297,13 @@
         ],
         "outputs": {
             "workspaceName": "[basics('workspaceName')]",
+            "ContributorAccessPrincipalID": "[basics('ContributorAccessPrincipalID')]",
+            "ContributorAccessDisplayName": "[basics('ContributorAccessDisplayName')]",
+            "ReaderAccessPrincipalID": "[basics('ReaderAccessPrincipalID')]",
+            "ReaderAccessDisplayName": "[basics('ReaderAccessDisplayName')]",
+            "mspOfferNameValue": "[basics('mspOfferNameValue')]",
+            "mspOfferDescriptionValue": "[basics('mspOfferDescriptionValue')]",
+            "managedByTenantIdValue": "[basics('managedByTenantIdValue')]",
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
