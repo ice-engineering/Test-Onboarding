@@ -9,13 +9,7 @@
             },
             "defaultValue": "<Enter the name of the offer from the Managed Service Provider>"
         },
-        "mspOfferDescription": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of the Managed Service Provider offering"
-            },
-            "defaultValue": "<Enter the name of the Managed Service Provider offering>"
-        },
+
         "managedByTenantId": {
             "type": "string",
             "metadata": {
@@ -52,6 +46,13 @@
             "metadata": {
                 "description": "Name for the Log Analytics workspace"
             }
+        },
+        "mspOfferDescription": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Managed Service Provider offering"
+            },
+            "defaultValue": "<Enter the name of the Managed Service Provider offering>"
         },
         "pricingTier": {
             "type": "string",
