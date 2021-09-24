@@ -70,6 +70,38 @@
                 "visible": true
             },
             {
+                "name": "ContributorAccessPrincipalID",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Contributor Access Principal ID",
+                "placeholder": "",
+                "defaultValue": "",
+                "visible": true
+            },
+            {
+                "name": "ContributorAccessDisplayName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Contributor Access Display Name",
+                "placeholder": "",
+                "defaultValue": "",
+                "visible": true
+            },
+            {
+                "name": "ReaderAccessPrincipalID",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Reader Access Principal ID",
+                "placeholder": "",
+                "defaultValue": "",
+                "visible": true
+            },
+            {
+                "name": "ReaderAccessDisplayName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Reader Access Display Name",
+                "placeholder": "",
+                "defaultValue": "",
+                "visible": true
+            },
+            {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
