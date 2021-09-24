@@ -2,26 +2,26 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "mspOfferNameValue": {
+        "mspOfferName": {
             "type": "string",
             "metadata": {
                 "description": "Specify the name of the offer from the Managed Service Provider"
             },
-            "defaultValue": "[parameters('mspOfferNameValue')]"
+            "defaultValue": "<Enter the name of the offer from the Managed Service Provider>"
         },
-        "mspOfferDescriptionValue": {
+        "mspOfferDescription": {
             "type": "string",
             "metadata": {
                 "description": "Name of the Managed Service Provider offering"
             },
-            "defaultValue": "[parameters('mspOfferDescriptionValueValue')]"
+            "defaultValue": "<Enter the name of the Managed Service Provider offering>"
         },
-        "managedByTenantIdValue": {
+        "managedByTenantId": {
             "type": "string",
             "metadata": {
                 "description": "Specify the tenant id of the Managed Service Provider"
             },
-            "defaultValue": "[parameters('managedByTenantIdValue')]"
+            "defaultValue": "<Enter the tenant id of the Managed Service Provider>"
         },
         "authorizations": {
             "type": "array",
@@ -30,13 +30,13 @@
             },
             "defaultValue": [
                 {
-                    "principalId": "[parameters('ContributorAccessPrincipalID')]",
-                    "principalIdDisplayName": "[parameters('ContributorAccessDisplayName')]",
+                    "principalId": "<Contributor Access - Enter AAD Grouo ID>",
+                    "principalIdDisplayName": "<Contributor Access - Enter AAD Group Name>",
                     "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
                 },
 {
-                    "principalId": "[parameters('ReaderAccessPrincipalID')]",
-                    "principalIdDisplayName": "[parameters('ReaderAccessDisplayName')]",
+                    "principalId": "<Reader Access - Enter AAD Grouo ID>",
+                    "principalIdDisplayName": "<Reader Access - Enter AAD Group Name>",
                     "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
                 }              
             ]
@@ -45,27 +45,6 @@
             "type": "string"
         },
         "location": {
-            "type": "string"
-        },
-        "ContributorAccessPrincipalID": {
-            "type": "string"
-        },
-                "ContributorAccessDisplayName": {
-            "type": "string"
-        },
-                "ReaderAccessPrincipalID": {
-            "type": "string"
-        },
-                "ReaderAccessDisplayName": {
-            "type": "string"
-        },
-                "mspOfferNameValue": {
-            "type": "string"
-        },
-                        "mspOfferDescriptionValueValue": {
-            "type": "string"
-        },
-                        "managedByTenantIdValue": {
             "type": "string"
         },
         "workspaceName": {
@@ -175,8 +154,8 @@
         }
     },
     "variables": {
-        "mspRegistrationName": "[guid(parameters('mspOfferNameValue'))]",
-        "mspAssignmentName": "[guid(parameters('mspOfferNameValue'))]"
+        "mspRegistrationName": "[guid(parameters('mspOfferName'))]",
+        "mspAssignmentName": "[guid(parameters('mspOfferName'))]"
     },
     "resources": [
         {
@@ -332,9 +311,9 @@
             "apiVersion": "2019-06-01",
             "name": "[variables('mspRegistrationName')]",
             "properties": {
-                "registrationDefinitionName": "[parameters('mspOfferNameValue')]",
-                "description": "[parameters('mspOfferDescriptionValue')]",
-                "managedByTenantIdValue": "[parameters('managedByTenantIdValue')]",
+                "registrationDefinitionName": "[parameters('mspOfferName')]",
+                "description": "[parameters('mspOfferDescription')]",
+                "managedByTenantId": "[parameters('managedByTenantId')]",
                 "authorizations": "[parameters('authorizations')]"
             }
         },
@@ -368,9 +347,9 @@
         }
     ],
     "outputs": {
-        "mspOfferNameValue": {
+        "mspOfferName": {
             "type": "string",
-            "value": "[concat('Managed by', ' ', parameters('mspOfferNameValue'))]"
+            "value": "[concat('Managed by', ' ', parameters('mspOfferName'))]"
         },
         "authorizations": {
             "type": "array",
@@ -379,34 +358,6 @@
         "workspaceName": {
             "type": "string",
             "value": "[parameters('workspaceName')]"
-        },
-        "ContributorAccessPrincipalID": {
-            "type": "string",
-            "value": "[parameters('ContributorAccessPrincipalID')]"
-        },
-                "ContributorAccessDisplayName": {
-            "type": "string",
-            "value": "[parameters('ContributorAccessDisplayName')]"
-        },
-                "ReaderAccessPrincipalID": {
-            "type": "string",
-            "value": "[parameters('ReaderAccessPrincipalID')]"
-        },
-                "ReaderAccessDisplayName": {
-            "type": "string",
-            "value": "[parameters('ReaderAccessDisplayName')]"
-        },
-                "mspOfferNameValue": {
-            "type": "string",
-            "value": "[parameters('mspOfferNameValue')]"
-        },
-                "mspOfferDescriptionValueValue": {
-            "type": "string",
-            "value": "[parameters('mspOfferDescriptionValueValue')]"
-        },
-                "managedByTenantIdValue": {
-            "type": "string",
-            "value": "[parameters('managedByTenantIdValue')]"
         },
         "dataConnectorsList": {
             "type": "string",
