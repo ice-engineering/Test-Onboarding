@@ -2,39 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "mspOfferName": {
-            "type": "string",
-            "metadata": {
-                "description": "Specify the name of the offer from the Managed Service Provider"
-            },
-            "defaultValue": "<Enter the name of the offer from the Managed Service Provider>"
-        },
-
-        "managedByTenantId": {
-            "type": "string",
-            "metadata": {
-                "description": "Specify the tenant id of the Managed Service Provider"
-            },
-            "defaultValue": "<Enter the tenant id of the Managed Service Provider>"
-        },
-        "authorizations": {
-            "type": "array",
-            "metadata": {
-                "description": "Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider's Active Directory and the principalIdDisplayName is visible to customers."
-            },
-            "defaultValue": [
-                {
-                    "principalId": "<Contributor Access - Enter AAD Grouo ID>",
-                    "principalIdDisplayName": "<Contributor Access - Enter AAD Group Name>",
-                    "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
-                },
-{
-                    "principalId": "<Reader Access - Enter AAD Grouo ID>",
-                    "principalIdDisplayName": "<Reader Access - Enter AAD Group Name>",
-                    "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
-                }              
-            ]
-        },
         "rgName": {
             "type": "string"
         },
@@ -46,13 +13,6 @@
             "metadata": {
                 "description": "Name for the Log Analytics workspace"
             }
-        },
-        "mspOfferDescription": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of the Managed Service Provider offering"
-            },
-            "defaultValue": "<Enter the name of the Managed Service Provider offering>"
         },
         "pricingTier": {
             "type": "string",
@@ -90,6 +50,45 @@
                 "description": "If set to true when changing retention to 30 days, older data will be immediately deleted. Use this with extreme caution. This only applies when retention is being set to 30 days."
             },
             "defaultValue": true
+        },
+        "mspOfferName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the name of the offer from the Managed Service Provider"
+            },
+            "defaultValue": "<Enter the name of the offer from the Managed Service Provider>"
+        },
+        "mspOfferDescription": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Managed Service Provider offering"
+            },
+            "defaultValue": "<Enter the name of the Managed Service Provider offering>"
+        },
+        "managedByTenantId": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the tenant id of the Managed Service Provider"
+            },
+            "defaultValue": "<Enter the tenant id of the Managed Service Provider>"
+        },
+        "authorizations": {
+            "type": "array",
+            "metadata": {
+                "description": "Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider's Active Directory and the principalIdDisplayName is visible to customers."
+            },
+            "defaultValue": [
+                {
+                    "principalId": "<Contributor Access - Enter AAD Grouo ID>",
+                    "principalIdDisplayName": "<Contributor Access - Enter AAD Group Name>",
+                    "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+                },
+{
+                    "principalId": "<Reader Access - Enter AAD Grouo ID>",
+                    "principalIdDisplayName": "<Reader Access - Enter AAD Group Name>",
+                    "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+                }              
+            ]
         },
         "securityCollectionTier": {
             "type": "string",
