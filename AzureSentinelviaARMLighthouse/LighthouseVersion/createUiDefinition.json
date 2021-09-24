@@ -46,6 +46,30 @@
                 "visible": true
             },
             {
+                "name": "mspOfferName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "mspOffer Name Value",
+                "placeholder": "",
+                "defaultValue": "",
+                "visible": true
+            },
+            {
+                "name": "mspOfferDescription",
+                "type": "Microsoft.Common.TextBox",
+                "label": "mspOffer Description Value",
+                "placeholder": "",
+                "defaultValue": "",
+                "visible": true
+            },
+                        {
+                "name": "managedByTenantId",
+                "type": "Microsoft.Common.TextBox",
+                "label": "managedBy TenantId Value",
+                "placeholder": "",
+                "defaultValue": "",
+                "visible": true
+            },
+            {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
