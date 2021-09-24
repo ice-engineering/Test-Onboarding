@@ -380,6 +380,34 @@
             "type": "string",
             "value": "[parameters('workspaceName')]"
         },
+        "ContributorAccessPrincipalID": {
+            "type": "string",
+            "value": "[parameters('ContributorAccessPrincipalID')]"
+        },
+                "ContributorAccessDisplayName": {
+            "type": "string",
+            "value": "[parameters('ContributorAccessDisplayName')]"
+        },
+                "ReaderAccessPrincipalID": {
+            "type": "string",
+            "value": "[parameters('ReaderAccessPrincipalID')]"
+        },
+                "ReaderAccessDisplayName": {
+            "type": "string",
+            "value": "[parameters('ReaderAccessDisplayName')]"
+        },
+                "mspOfferNameValue": {
+            "type": "string",
+            "value": "[parameters('mspOfferNameValue')]"
+        },
+                "mspOfferDescriptionValue": {
+            "type": "string",
+            "value": "[parameters('mspOfferDescriptionValue')]"
+        },
+                "managedByTenantIdValue": {
+            "type": "string",
+            "value": "[parameters('managedByTenantIdValue')]"
+        },
         "dataConnectorsList": {
             "type": "string",
             "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
