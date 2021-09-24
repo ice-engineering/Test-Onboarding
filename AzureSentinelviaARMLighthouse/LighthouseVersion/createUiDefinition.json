@@ -72,62 +72,6 @@
                     "validationMessage": "Retention must be between 30 and 730 days."
                 },
                 "visible": true
-            },
-            {
-                "name": "ContributorAccessPrincipalID",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Contributor Access Principal ID",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
-                "name": "ContributorAccessDisplayName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Contributor Access Display Name",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
-                "name": "ReaderAccessPrincipalID",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Reader Access Principal ID",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
-                "name": "ReaderAccessDisplayName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Reader Access Display Name",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
-                "name": "mspOfferNameValue",
-                "type": "Microsoft.Common.TextBox",
-                "label": "mspOffer Name Value",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
-                "name": "mspOfferDescriptionValue",
-                "type": "Microsoft.Common.TextBox",
-                "label": "mspOffer Description Value",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-                        {
-                "name": "managedByTenantIdValue",
-                "type": "Microsoft.Common.TextBox",
-                "label": "managedBy TenantId Value",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
             }
         ],
         "steps": [
@@ -297,13 +241,6 @@
         ],
         "outputs": {
             "workspaceName": "[basics('workspaceName')]",
-            "ContributorAccessPrincipalID": "[basics('ContributorAccessPrincipalID')]",
-            "ContributorAccessDisplayName": "[basics('ContributorAccessDisplayName')]",
-            "ReaderAccessPrincipalID": "[basics('ReaderAccessPrincipalID')]",
-            "ReaderAccessDisplayName": "[basics('ReaderAccessDisplayName')]",
-            "mspOfferNameValue": "[basics('mspOfferNameValue')]",
-            "mspOfferDescriptionValue": "[basics('mspOfferDescriptionValue')]",
-            "managedByTenantIdValue": "[basics('managedByTenantIdValue')]",
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
