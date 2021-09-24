@@ -23,6 +23,18 @@
             },
             "defaultValue": "<Enter the tenant id of the Managed Service Provider>"
         },
+        "ContributorAccessPrincipalID": {
+            "type": "string"
+        },
+                "ContributorAccessDisplayName": {
+            "type": "string"
+        },
+                "ReaderAccessPrincipalID": {
+            "type": "string"
+        },
+                "ReaderAccessDisplayName": {
+            "type": "string"
+        },
         "authorizations": {
             "type": "array",
             "metadata": {
@@ -30,7 +42,7 @@
             },
             "defaultValue": [
                 {
-                    "principalId": "[parameters('ContributorAccessPrincipalID')]",
+                    "principalId": "[parameters('mspOfferName')]",
                     "principalIdDisplayName": "[parameters('ContributorAccessDisplayName')]",
                     "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
                 },
