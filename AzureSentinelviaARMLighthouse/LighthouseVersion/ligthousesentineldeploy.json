@@ -47,6 +47,27 @@
         "location": {
             "type": "string"
         },
+        "ContributorAccessPrincipalID": {
+            "type": "string"
+        },
+                "ContributorAccessDisplayName": {
+            "type": "string"
+        },
+                "ReaderAccessPrincipalID": {
+            "type": "string"
+        },
+                "ReaderAccessDisplayName": {
+            "type": "string"
+        },
+                "mspOfferNameValue": {
+            "type": "string"
+        },
+                        "mspOfferDescriptionValue": {
+            "type": "string"
+        },
+                        "managedByTenantIdValue": {
+            "type": "string"
+        },
         "workspaceName": {
             "type": "string",
             "metadata": {
