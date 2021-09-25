@@ -307,6 +307,13 @@
             "enableMicrosoftAlerts": "[steps('analyticsRules').enableMicrosoftAlerts]",
             "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
             "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
+            "ContributorAccessPrincipalID": "[basics('ContributorAccessPrincipalID')]",
+            "ContributorAccessDisplayName": "[basics('ContributorAccessDisplayName')]",
+            "ReaderAccessPrincipalID": "[basics('ReaderAccessPrincipalID')]",
+            "ReaderAccessDisplayName": "[basics('ReaderAccessDisplayName')]",
+            "mspOfferNameValue": "[basics('mspOfferNameValue')]",
+            "mspOfferDescriptionValue": "[basics('mspOfferDescriptionValue')]",
+            "managedByTenantIdValue": "[basics('managedByTenantIdValue')]",
             "rgName": "[basics('rgName')]"
         }
     }
