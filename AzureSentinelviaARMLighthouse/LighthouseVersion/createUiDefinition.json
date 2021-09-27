@@ -297,6 +297,9 @@
         ],
         "outputs": {
             "workspaceName": "[basics('workspaceName')]",
+            "mspOfferName": "[basics('mspOfferName')]",
+            "mspOfferDescription": "[basics('mspOfferDescription')]",
+            "managedByTenantId": "[basics('managedByTenantId')]",
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
