@@ -311,7 +311,7 @@
             "ContributorAccessDisplayName": "[basics('ContributorAccessDisplayName')]",
             "ReaderAccessPrincipalID": "[basics('ReaderAccessPrincipalID')]",
             "ReaderAccessDisplayName": "[basics('ReaderAccessDisplayName')]",
-            "mspOfferNameValue": "[basics('mspOfferNameValue')]",
+            "mspOfferName": "[basics('mspOfferName')]",
             "mspOfferDescriptionValue": "[basics('mspOfferDescriptionValue')]",
             "managedByTenantIdValue": "[basics('managedByTenantIdValue')]",
             "rgName": "[basics('rgName')]"
