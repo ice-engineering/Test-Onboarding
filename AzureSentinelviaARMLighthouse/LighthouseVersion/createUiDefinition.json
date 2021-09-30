@@ -46,31 +46,27 @@
                 "visible": true
             },
             {
-                "name": "dailyQuota",
+                "name": "mspOfferName",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
+                "label": "mspOffer Name Value",
                 "placeholder": "",
-                "defaultValue": "0",
-                "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[0-9]{1,4}$",
-                    "validationMessage": "Only numbers allowed, and the value must be 1-4 characters long."
-                },
+                "defaultValue": "",
                 "visible": true
             },
             {
-                "name": "dataRetention",
+                "name": "mspOfferDescription",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Number of days of retention",
+                "label": "mspOffer Description Value",
                 "placeholder": "",
-                "defaultValue": "90",
-                "toolTip": "Only numbers allowed",
-                "constraints": {
-                    "required": true,
-                    "regex": "([3-8][0-9]|9[0-9]|[1-6][0-9]{2}|7[0-2][0-9]|730)",
-                    "validationMessage": "Retention must be between 30 and 730 days."
-                },
+                "defaultValue": "",
+                "visible": true
+            },
+                        {
+                "name": "managedByTenantId",
+                "type": "Microsoft.Common.TextBox",
+                "label": "managedBy TenantId Value",
+                "placeholder": "",
+                "defaultValue": "",
                 "visible": true
             },
             {
@@ -106,27 +102,31 @@
                 "visible": true
             },
             {
-                "name": "mspOfferNameValue",
+                "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
-                "label": "mspOffer Name Value",
+                "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
                 "placeholder": "",
-                "defaultValue": "",
+                "defaultValue": "0",
+                "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[0-9]{1,4}$",
+                    "validationMessage": "Only numbers allowed, and the value must be 1-4 characters long."
+                },
                 "visible": true
             },
             {
-                "name": "mspOfferDescriptionValue",
+                "name": "dataRetention",
                 "type": "Microsoft.Common.TextBox",
-                "label": "mspOffer Description Value",
+                "label": "Number of days of retention",
                 "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-                        {
-                "name": "managedByTenantIdValue",
-                "type": "Microsoft.Common.TextBox",
-                "label": "managedBy TenantId Value",
-                "placeholder": "",
-                "defaultValue": "",
+                "defaultValue": "90",
+                "toolTip": "Only numbers allowed",
+                "constraints": {
+                    "required": true,
+                    "regex": "([3-8][0-9]|9[0-9]|[1-6][0-9]{2}|7[0-2][0-9]|730)",
+                    "validationMessage": "Retention must be between 30 and 730 days."
+                },
                 "visible": true
             }
         ],
