@@ -301,7 +301,7 @@
             "ContributorAccessDisplayName": "[basics('ContributorAccessDisplayName')]",
             "ReaderAccessPrincipalID": "[basics('ReaderAccessPrincipalID')]",
             "ReaderAccessDisplayName": "[basics('ReaderAccessDisplayName')]",
-            "mspOfferName": "[basics('mspOfferNameValue')]",
+            "mspOfferName": "[basics('mspOfferName')]",
             "mspOfferDescription": "[basics('mspOfferDescriptionValue')]",
             "managedByTenantId": "[basics('managedByTenantIdValue')]",
             "dailyQuota": "[basics('dailyQuota')]",
