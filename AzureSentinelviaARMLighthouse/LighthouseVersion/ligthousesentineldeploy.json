@@ -363,6 +363,31 @@
             "type": "string",
             "value": "[concat('Managed by', ' ', parameters('mspOfferName'))]"
         },
+                "ContributorAccessPrincipalID": {
+            "type": "string",
+            "value": "[parameters('ContributorAccessPrincipalID')]"
+        },
+                "ContributorAccessDisplayName": {
+            "type": "string",
+            "value": "[parameters('ContributorAccessDisplayName')]"
+        },
+                "ReaderAccessPrincipalID": {
+            "type": "string",
+            "value": "[parameters('ReaderAccessPrincipalID')]"
+        },
+                "ReaderAccessDisplayName": {
+            "type": "string",
+            "value": "[parameters('ReaderAccessDisplayName')]"
+        },
+
+                "mspOfferDescription": {
+            "type": "string",
+            "value": "[parameters('mspOfferDescriptionValue')]"
+        },
+                "managedByTenantId": {
+            "type": "string",
+            "value": "[parameters('managedByTenantIdValue')]"
+        },
         "authorizations": {
             "type": "array",
             "value": "[parameters('authorizations')]"
