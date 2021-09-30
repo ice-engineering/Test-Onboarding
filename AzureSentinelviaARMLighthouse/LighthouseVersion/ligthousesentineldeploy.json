@@ -382,11 +382,11 @@
 
                 "mspOfferDescription": {
             "type": "string",
-            "value": "[parameters('mspOfferDescriptionValue')]"
+            "value": "[parameters('mspOfferDescription')]"
         },
                 "managedByTenantId": {
             "type": "string",
-            "value": "[parameters('managedByTenantIdValue')]"
+            "value": "[parameters('managedByTenantId')]"
         },
         "authorizations": {
             "type": "array",
