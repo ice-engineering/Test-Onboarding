@@ -25,7 +25,9 @@
                 "defaultValue": "",
                 "toolTip": "Enter a resource group name.",
                 "constraints": {
-                    "required": true
+                    "required": true,
+                    "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+                    "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
                 },
                 "visible": true  
             },
