@@ -112,14 +112,6 @@
                                     "value": "MicrosoftCloudAppSecurity"
                                 },
                                 {
-                                    "label": "Azure Activity",
-                                    "value": "AzureActivity"
-                                },
-                                {
-                                    "label": "Security Events",
-                                    "value": "SecurityEvents"
-                                },
-                                {
                                     "label": "Windows Firewall",
                                     "value": "WindowsFirewall"
                                 },
