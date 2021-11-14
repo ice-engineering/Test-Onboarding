@@ -65,20 +65,6 @@
             },
             "defaultValue": []
         },
-        "TagEnviromentName": {
-            "type": "string",
-            "metadata": {
-                "description": "Enviroment value for the Enviroment Name parameter"
-            },
-            "defaultValue": []
-        },
-        "TagProjectName": {
-            "type": "string",
-            "metadata": {
-                "description": "Enviroment value for the Project Name parameter"
-            },
-            "defaultValue": []
-        },
         "enableFusionAlert": {
             "type": "bool",
             "metadata": {
@@ -136,9 +122,10 @@
             "defaultValue": ""
         },
         "resourceTags": {
-            "type": "string",
+            "type": "object",
             "defaultValue": {
-              "Environment": "[parameters('TagEnviromentName')]"
+              "Environment": "Production",
+              "Project": "Security Operations"
             }
           },
         "location": {
