@@ -124,8 +124,8 @@
         "resourceTags": {
             "type": "object",
             "defaultValue": {
-              "Environment": "Production",
-              "Project": "Security Operations"
+              "Environment": "[parameters('TagEnviromentName')]",
+              "Project": "[parameters('TagProjectValue')]"
             }
           },
         "location": {
