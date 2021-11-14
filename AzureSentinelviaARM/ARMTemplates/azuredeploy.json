@@ -121,20 +121,13 @@
             },
             "defaultValue": ""
         },
-		"TagName":{
-		   "type": "securestring",
-            "metadata": {
-                "description": "Tag names are case-insensitive and are limited to 512 characters."
-            },
-            "defaultValue": ""
-        },
-		"TagValue": {
-		   "type": "securestring",
-            "metadata": {
-                "description": "Tag names are case-insensitive and are limited to 512 characters."
-            },
-            "defaultValue": ""
-        },
+        "resourceTags": {
+            "type": "object",
+            "defaultValue": {
+              "Environment": "Dev",
+              "Project": "Tutorial"
+            }
+          },
         "location": {
             "type": "string",
             "metadata": {
@@ -154,9 +147,7 @@
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
-            "tags": {
-                "[parameters('TagNameName')]",: "[parameters('TagValue')]",
-            },			
+            "tags": "[parameters('resourceTags')]",			
             "properties": {
                 "retentionInDays": "[parameters('dataRetention')]",
                 "workspaceCapping": "[if(equals(parameters('dailyQuota'),0), json('null'), variables('quoatSetting'))]",
