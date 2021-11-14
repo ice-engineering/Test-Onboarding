@@ -121,14 +121,14 @@
             },
             "defaultValue": ""
         },
-		"TagName": 
+		"TagName":{
 		   "type": "securestring",
             "metadata": {
                 "description": "Tag names are case-insensitive and are limited to 512 characters."
             },
             "defaultValue": ""
         },
-		"TagValue": 
+		"TagValue": {
 		   "type": "securestring",
             "metadata": {
                 "description": "Tag names are case-insensitive and are limited to 512 characters."
