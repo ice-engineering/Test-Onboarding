@@ -56,6 +56,13 @@
         "rgName": {
             "type": "string"
         },
+        "resourceTags": {
+            "type": "object",
+            "defaultValue": {
+              "Environment": "Production",
+              "Project": "Security Operations"
+            }
+          },
         "location": {
             "type": "string"
         },
@@ -180,6 +187,7 @@
         {
             "name": "workspaceCreation",
             "type": "Microsoft.Resources/deployments",
+            "tags": "[parameters('resourceTags')]",			
             "apiVersion": "2020-06-01",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/resourceGroups',parameters('rgName'))]"
