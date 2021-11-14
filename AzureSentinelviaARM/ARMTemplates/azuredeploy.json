@@ -136,7 +136,7 @@
             "defaultValue": ""
         },
         "resourceTags": {
-            "type": "object",
+            "type": "string",
             "defaultValue": {
               "Environment": "[parameters('TagEnviromentName')]",
               "Project": "[parameters('TagProjectValue')]"
