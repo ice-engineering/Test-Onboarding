@@ -8,6 +8,7 @@
                 "description": "Name for the Log Analytics workspace"
             }
         },
+        
         "pricingTier": {
             "type": "string",
             "metadata": {
@@ -121,17 +122,24 @@
             },
             "defaultValue": ""
         },
-        "resourceTags": {
-            "type": "object",
-            "defaultValue": {
-              "Environment": "Production",
-              "Project": "Security Operations"
-            }
-          },
         "location": {
             "type": "string",
             "metadata": {
                 "description": "Location for all resources."
+            },
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "TagEnviromentName": {
+            "type": "string",
+            "metadata": {
+                "description": "TagEnviromentName."
+            },
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "TagProjectName": {
+            "type": "string",
+            "metadata": {
+                "description": "TagEnviromentName."
             },
             "defaultValue": "[resourceGroup().location]"
         }
@@ -147,7 +155,6 @@
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
-            "tags": "[parameters('resourceTags')]",			
             "properties": {
                 "retentionInDays": "[parameters('dataRetention')]",
                 "workspaceCapping": "[if(equals(parameters('dailyQuota'),0), json('null'), variables('quoatSetting'))]",
