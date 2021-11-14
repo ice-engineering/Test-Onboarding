@@ -65,6 +65,20 @@
             },
             "defaultValue": []
         },
+        "TagEnviromentName": {
+            "type": "string",
+            "metadata": {
+                "description": "Enviroment value for the Enviroment Name parameter"
+            },
+            "defaultValue": []
+        },
+        "TagProjectName": {
+            "type": "string",
+            "metadata": {
+                "description": "Enviroment value for the Project Name parameter"
+            },
+            "defaultValue": []
+        },
         "enableFusionAlert": {
             "type": "bool",
             "metadata": {
