@@ -34,7 +34,7 @@
             {
                 "name": "TagEnviromentName",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Workspace Name",
+                "label": "Tag Enviroment Name",
                 "placeholder": "",
                 "defaultValue": "",
                 "toolTip": "The Tag name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
@@ -48,7 +48,7 @@
             {
                 "name": "TagProjectName",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Workspace Name",
+                "label": "Tag Project Name",
                 "placeholder": "",
                 "defaultValue": "",
                 "toolTip": "The Project name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
