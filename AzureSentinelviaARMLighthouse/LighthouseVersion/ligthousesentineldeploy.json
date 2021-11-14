@@ -23,6 +23,30 @@
             },
             "defaultValue": "<Enter the tenant id of the Managed Service Provider>"
         },
+        "authorizations": {
+            "type": "array",
+            "metadata": {
+                "description": "Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider's Active Directory and the principalIdDisplayName is visible to customers."
+            },
+            "defaultValue": [
+                {
+                    "principalId": "<Contributor Access - Enter AAD Grouo ID>",
+                    "principalIdDisplayName": "<Contributor Access - Enter AAD Group Name>",
+                    "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+                },
+{
+                    "principalId": "<Reader Access - Enter AAD Grouo ID>",
+                    "principalIdDisplayName": "<Reader Access - Enter AAD Group Name>",
+                    "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+                }              
+            ]
+        },
+        "rgName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
         "ContributorAccessPrincipalID": {
             "type": "string"
         },
@@ -35,35 +59,13 @@
                 "ReaderAccessDisplayName": {
             "type": "string"
         },
-        "authorizations": {
-            "type": "array",
-            "metadata": {
-                "description": "Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider's Active Directory and the principalIdDisplayName is visible to customers."
-            },
-            "defaultValue": [
-                {
-                    "principalId": "[parameters('ContributorAccessPrincipalID')]",
-                    "principalIdDisplayName": "[parameters('ContributorAccessDisplayName')]",
-                    "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
-                },
-{
-                    "principalId": "[parameters('ReaderAccessPrincipalID')]",
-                    "principalIdDisplayName": "[parameters('ReaderAccessDisplayName')]",
-                    "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
-                }              
-            ]
-        },
-        "rgName": {
+                "mspOfferNameValue": {
             "type": "string"
         },
-        "resourceTags": {
-            "type": "object",
-            "defaultValue": {
-              "Environment": "Production",
-              "Project": "Security Operations"
-            }
-          },
-        "location": {
+                        "mspOfferDescriptionValue": {
+            "type": "string"
+        },
+                        "managedByTenantIdValue": {
             "type": "string"
         },
         "workspaceName": {
@@ -182,7 +184,6 @@
             "apiVersion": "2020-06-01",
             "name": "[parameters('rgName')]",
             "location": "[parameters('location')]",
-            "tags": "[parameters('resourceTags')]",			
             "properties": {}
         },
         {
@@ -370,31 +371,6 @@
         "mspOfferName": {
             "type": "string",
             "value": "[concat('Managed by', ' ', parameters('mspOfferName'))]"
-        },
-                "ContributorAccessPrincipalID": {
-            "type": "string",
-            "value": "[parameters('ContributorAccessPrincipalID')]"
-        },
-                "ContributorAccessDisplayName": {
-            "type": "string",
-            "value": "[parameters('ContributorAccessDisplayName')]"
-        },
-                "ReaderAccessPrincipalID": {
-            "type": "string",
-            "value": "[parameters('ReaderAccessPrincipalID')]"
-        },
-                "ReaderAccessDisplayName": {
-            "type": "string",
-            "value": "[parameters('ReaderAccessDisplayName')]"
-        },
-
-                "mspOfferDescription": {
-            "type": "string",
-            "value": "[parameters('mspOfferDescription')]"
-        },
-                "managedByTenantId": {
-            "type": "string",
-            "value": "[parameters('managedByTenantId')]"
         },
         "authorizations": {
             "type": "array",
