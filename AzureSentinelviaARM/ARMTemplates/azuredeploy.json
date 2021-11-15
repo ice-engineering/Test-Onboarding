@@ -125,7 +125,7 @@
             "type": "object",
             "defaultValue": {
                 "Createdby": "Shivniel Gounder",
-                "Environment": "[parameters('TagEnviromentName')]",
+                "Environment": "Prod",
                 "Project": "Tutorial",
                 "Owner": "Shivniel Gounder"                
               }
