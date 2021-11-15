@@ -131,10 +131,9 @@
         "resourceTags": {
             "type": "object",
             "defaultValue": {
-                "CreatedBy": "DEFEND",
                 "Environment": "Production",
                 "Project": "Security Operations",
-                "Owner": "[parameters('CreatedBy')]"          
+                "CreatedBy": "[parameters('CreatedBy')]"          
               }
         },
         "location": {
