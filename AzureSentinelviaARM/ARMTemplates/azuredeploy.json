@@ -23,6 +23,10 @@
             ],
             "defaultValue": "PerGB2018"
         },
+        "utcShort": {
+            "type": "string",
+            "defaultValue": "[utcNow('d')]"
+          },
         "dailyQuota": {
             "type": "int",
             "metadata": {
@@ -149,7 +153,11 @@
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
-            "tags": "[parameters('resourceTags')]",
+            "tags": {
+                "Dept": "Finance",
+                "Environment": "Production",
+                "LastDeployed": "[parameters('utcShort')]"
+              },
             "properties": {
                 "retentionInDays": "[parameters('dataRetention')]",
                 "workspaceCapping": "[if(equals(parameters('dailyQuota'),0), json('null'), variables('quoatSetting'))]",
