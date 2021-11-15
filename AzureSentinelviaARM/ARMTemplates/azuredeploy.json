@@ -152,7 +152,9 @@
             "type": "object",
             "defaultValue": {
               "Environment": "[parameters('TagEnviromentName')]",
-              "Project": "[parameters('TagProjectName')]"
+              "Project": "[parameters('TagProjectName')]",
+              "Owner": "Shivniel Gounder",
+              "CreatedBy": "Shivniel Gounder"
             }
         }
     },
