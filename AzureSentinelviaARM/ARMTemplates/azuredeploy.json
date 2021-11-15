@@ -8,7 +8,6 @@
                 "description": "Name for the Log Analytics workspace"
             }
         },
-        
         "pricingTier": {
             "type": "string",
             "metadata": {
@@ -122,37 +121,21 @@
             },
             "defaultValue": ""
         },
+        "resourceTags": {
+            "type": "object",
+            "defaultValue": {
+              "Environment": "Dev",
+              "Project": "Tutorial"
+            }
+        },
         "location": {
             "type": "string",
             "metadata": {
                 "description": "Location for all resources."
             },
             "defaultValue": "[resourceGroup().location]"
-        },
-        "TagEnviromentName": {
-            "type": "string",
-            "metadata": {
-                "description": "TagEnviromentName."
-            },
-            "defaultValue": ""
-        },
-        "TagProjectName": {
-            "type": "string",
-            "metadata": {
-                "description": "TagEnviromentName."
-            },
-            "defaultValue": ""
-        },
-        "resourceTags": {
-            "type": "object",
-            "defaultValue": {
-              "Environment": "Production",
-              "Project": "Tutorial",
-              "Owner": "Shivniel Gounder",
-              "Createdby": "Shivniel Gounder"
-            }
-          }
-        },
+        }
+    },
     "variables": {
         "quoatSetting": {
             "dailyQuotaGb": "[parameters('dailyQuota')]"
