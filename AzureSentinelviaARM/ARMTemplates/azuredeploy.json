@@ -157,7 +157,7 @@
             "location": "[parameters('location')]",
 			"tags": {
 				"Dept": "[resourceGroup().tags['Dept']]",
-				"Environment": "[resourceGroup().tags['Environment']]"
+				"Environment": "[resourceGroup().tags['Environment']]",
 				"CreatedBy": "[parameters('CreatedBy')]"
 			  },
             "properties": {
