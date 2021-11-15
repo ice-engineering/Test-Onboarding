@@ -126,7 +126,7 @@
             "defaultValue": {
                 "CreatedBy": "DEFEND",
                 "Environment": "Production",
-                "Project": "[parameters('dailyQuota')]",
+                "Project": "Security Operations",
                 "Owner": "Shivniel Gounder"                
               }
         },
