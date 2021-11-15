@@ -13,7 +13,7 @@
             "metadata": {
                 "description": "Created By Name" 
             },
-            "defaultValue": ""
+            "defaultValue": "Shivniel Gounder"
         },
         "pricingTier": {
             "type": "string",
