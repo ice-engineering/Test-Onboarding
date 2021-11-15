@@ -127,7 +127,7 @@
                 "CreatedBy": "DEFEND",
                 "Environment": "Production",
                 "Project": "Security Operations",
-                "Owner": "Shivniel Gounder"                
+                "Owner": "[parameters('location')]"          
               }
         },
         "location": {
