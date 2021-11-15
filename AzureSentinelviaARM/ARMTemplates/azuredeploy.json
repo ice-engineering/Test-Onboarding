@@ -11,8 +11,9 @@
         "CreatedBy": {
             "type": "string",
             "metadata": {
-                "description": "Name for the Log Analytics workspace" 
-            }
+                "description": "Created By Name" 
+            },
+            "defaultValue": ""
         },
         "pricingTier": {
             "type": "string",
