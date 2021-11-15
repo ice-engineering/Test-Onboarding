@@ -129,7 +129,7 @@
             "defaultValue": ""
         },
         "resourceTags": {
-            "type": "object",
+            "type": "string",
             "defaultValue": {
                 "Environment": "Production",
                 "Project": "Security Operations",
