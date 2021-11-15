@@ -130,14 +130,14 @@
             "defaultValue": "[resourceGroup().location]"
         },
         "TagEnviromentName": {
-            "type": "string",
+            "type": "object",
             "metadata": {
                 "description": "TagEnviromentName."
             },
             "defaultValue": "[resourceGroup().location]"
         },
         "TagProjectName": {
-            "type": "string",
+            "type": "object",
             "metadata": {
                 "description": "TagEnviromentName."
             },
@@ -149,7 +149,7 @@
             "dailyQuotaGb": "[parameters('dailyQuota')]"
         },
         "resourceTags": {
-            "type": "string",
+            "type": "object",
             "defaultValue": {
               "Environment": "[parameters('TagEnviromentName')]",
               "Project": "[parameters('TagProjectName')]"
