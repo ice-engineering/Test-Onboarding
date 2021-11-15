@@ -32,14 +32,6 @@
                 "visible": true
             },
             {
-                "name": "CreatedBy",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Created By Tag",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
