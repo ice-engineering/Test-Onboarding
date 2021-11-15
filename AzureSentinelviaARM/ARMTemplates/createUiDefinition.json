@@ -32,6 +32,14 @@
                 "visible": true
             },
             {
+                "name": "CreatedBy",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Created By Tag",
+                "placeholder": "",
+                "defaultValue": "",
+                "visible": true
+            },
+            {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
@@ -228,6 +236,7 @@
         "outputs": {
             "workspaceName": "[basics('workspaceName')]",
             "dailyQuota": "[basics('dailyQuota')]",
+            "CreatedBy": "[basics('CreatedBy')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
             "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
