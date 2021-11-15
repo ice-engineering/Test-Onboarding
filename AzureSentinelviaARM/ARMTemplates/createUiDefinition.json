@@ -228,7 +228,6 @@
         "outputs": {
             "workspaceName": "[basics('workspaceName')]",
             "dailyQuota": "[basics('dailyQuota')]",
-            "CreatedBy": "[basics('CreatedBy')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
             "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
