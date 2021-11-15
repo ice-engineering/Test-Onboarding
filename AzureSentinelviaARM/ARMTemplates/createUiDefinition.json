@@ -32,14 +32,6 @@
                 "visible": true
             },
             {
-                "name": "utcShort",
-                "type": "Microsoft.Common.TextBox",
-                "label": "WorksutcShort",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
                 "name": "TagEnviromentName",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Tag Enviroment Name",
