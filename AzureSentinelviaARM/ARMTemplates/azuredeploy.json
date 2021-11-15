@@ -148,7 +148,7 @@
             "defaultValue": {
               "Environment": "Production",
               "Project": "Tutorial",
-              "Owner": "Shivniel Gounder"
+              "Owner": "Shivniel Gounder",
               "Createdby": "Shivniel Gounder"
             }
           }
