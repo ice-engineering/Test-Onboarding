@@ -144,15 +144,15 @@
             "defaultValue": ""
         },
         "resourceTags": {
-            "type": "string",
+            "type": "object",
             "defaultValue": {
-              "Environment": "[parameters('TagEnviromentName')]",
-              "Project": "[parameters('TagProjectName')]",
-              "Owner": "Shivniel Gounder",
-              "CreatedBy": "Shivniel Gounder"
+              "Environment": "Production",
+              "Project": "Tutorial",
+              "Owner": "Shivniel Gounder"
+              "Createdby": "Shivniel Gounder"
             }
-        }
-    },
+          }
+        },
     "variables": {
         "quoatSetting": {
             "dailyQuotaGb": "[parameters('dailyQuota')]"
@@ -164,7 +164,7 @@
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
-            //"tags": "[parameters('resourceTags')]", 
+            "tags": "[parameters('resourceTags')]",
             "properties": {
                 "retentionInDays": "[parameters('dataRetention')]",
                 "workspaceCapping": "[if(equals(parameters('dailyQuota'),0), json('null'), variables('quoatSetting'))]",
