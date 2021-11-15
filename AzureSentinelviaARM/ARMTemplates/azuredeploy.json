@@ -124,10 +124,10 @@
         "resourceTags": {
             "type": "object",
             "defaultValue": {
+                "Createdby": "Shivniel Gounder",
                 "Environment": "Production",
                 "Project": "Tutorial",
-                "Owner": "Shivniel Gounder",
-                "Createdby": "Shivniel Gounder"
+                "Owner": "Shivniel Gounder"                
               }
         },
         "location": {
