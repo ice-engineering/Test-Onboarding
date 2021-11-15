@@ -147,6 +147,13 @@
     "variables": {
         "quoatSetting": {
             "dailyQuotaGb": "[parameters('dailyQuota')]"
+        },
+        "resourceTags": {
+            "type": "object",
+            "defaultValue": {
+              "Environment": "[parameters('TagEnviromentName')]",
+              "Project": "[parameters('TagProjectName')]"
+            }
         }
     },
     "resources": [
@@ -155,7 +162,7 @@
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
-            "tags": "[parameters('resourceTags')]",
+            "tags": "[variable('resourceTags')]",
             "properties": {
                 "retentionInDays": "[parameters('dataRetention')]",
                 "workspaceCapping": "[if(equals(parameters('dailyQuota'),0), json('null'), variables('quoatSetting'))]",
