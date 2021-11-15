@@ -8,13 +8,6 @@
                 "description": "Name for the Log Analytics workspace" 
             }
         },
-        "CreatedBy": {
-            "type": "object",
-            "metadata": {
-               "description": "Created By Name" 
-            },
-           "defaultValue": "Shivniel Gounder"
-        },
         "pricingTier": {
             "type": "string",
             "metadata": {
