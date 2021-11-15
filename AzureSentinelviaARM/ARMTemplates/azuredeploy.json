@@ -8,12 +8,12 @@
                 "description": "Name for the Log Analytics workspace" 
             }
         },
-        //"CreatedBy": {
-           // "type": "object",
-           // "metadata": {
-               // "description": "Created By Name" 
-         //   },
-          //  "defaultValue": "Shivniel Gounder"
+        "CreatedBy": {
+            "type": "object",
+            "metadata": {
+               "description": "Created By Name" 
+            },
+           "defaultValue": "Shivniel Gounder"
         },
         "pricingTier": {
             "type": "string",
@@ -148,7 +148,7 @@
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
             "tags": {
-                //"Createdby": "[parameters('CreatedBy')]",
+                "Createdby": "Shivniel Gounder",
                 "Environment": "Production",
                 "Project": "Security Operations"
             },
