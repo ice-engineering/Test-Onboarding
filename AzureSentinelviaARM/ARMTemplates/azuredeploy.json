@@ -130,18 +130,18 @@
             "defaultValue": "[resourceGroup().location]"
         },
         "TagEnviromentName": {
-            "type": "object",
+            "type": "string",
             "metadata": {
                 "description": "TagEnviromentName."
             },
-            "defaultValue": "[resourceGroup().location]"
+            "defaultValue": ""
         },
         "TagProjectName": {
-            "type": "object",
+            "type": "string",
             "metadata": {
                 "description": "TagEnviromentName."
             },
-            "defaultValue": "[resourceGroup().location]"
+            "defaultValue": ""
         }
     },
     "variables": {
@@ -162,7 +162,7 @@
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
-            "tags": "[parameters('workspaceName')]",
+            "tags": "[variables('resourceTags')]", 
             "properties": {
                 "retentionInDays": "[parameters('dataRetention')]",
                 "workspaceCapping": "[if(equals(parameters('dailyQuota'),0), json('null'), variables('quoatSetting'))]",
