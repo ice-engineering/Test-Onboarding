@@ -130,21 +130,21 @@
             "defaultValue": "[resourceGroup().location]"
         },
         "TagEnviromentName": {
-            "type": "object",
+            "type": "string",
             "metadata": {
                 "description": "TagEnviromentName."
             },
             "defaultValue": ""
         },
         "TagProjectName": {
-            "type": "object",
+            "type": "string",
             "metadata": {
                 "description": "TagEnviromentName."
             },
             "defaultValue": ""
         },
         "resourceTags": {
-            "type": "object",
+            "type": "string",
             "defaultValue": {
               "Environment": "[parameters('TagEnviromentName')]",
               "Project": "[parameters('TagProjectName')]",
