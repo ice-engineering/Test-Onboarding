@@ -124,7 +124,7 @@
         "resourceTags": {
             "type": "object",
             "defaultValue": {
-                "Createdby": "DEFEND",
+                "CreatedBy": "DEFEND",
                 "Environment": "Production",
                 "Project": "Security Operations",
                 "Owner": "Shivniel Gounder"                
