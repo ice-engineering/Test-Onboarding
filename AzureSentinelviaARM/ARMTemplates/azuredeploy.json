@@ -9,7 +9,7 @@
             }
         },
         "CreatedBy": {
-            "type": "string",
+            "type": "object",
             "metadata": {
                 "description": "Created By Name" 
             },
