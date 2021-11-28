@@ -45,6 +45,14 @@
             },
             "defaultValue": true
         },
+        "resourceTags": {
+            "type": "object",
+            "defaultValue": {
+                "CreatedBy": "DEFEND",
+                "Environment": "Production",
+                "Project": "Security Operations"       
+              }
+        },
         "location": {
             "type": "string",
             "metadata": {
@@ -64,6 +72,7 @@
             "name": "[parameters('workspaceName')]",
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
+            "tags": "[parameters('resourceTags')]",
             "location": "[parameters('location')]",
             "properties": {
                 "retentionInDays": "[parameters('dataRetention')]",
