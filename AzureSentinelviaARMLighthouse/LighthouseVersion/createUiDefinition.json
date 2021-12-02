@@ -162,7 +162,7 @@
                                     "value": "Office365"
                                 },
                                 {
-                                    "label": "Azure ATP",
+                                    "label": "Microsoft Defender for Identity",
                                     "value": "AzureAdvancedThreatProtection"
                                 },
                                 {
@@ -170,15 +170,15 @@
                                     "value": "AzureActiveDirectory"
                                 },
                                 {
-                                    "label": "Microsoft Defender ATP",
+                                    "label": "Microsoft Defender for Endpoint",
                                     "value": "MicrosoftDefenderAdvancedThreatProtection"
                                 },
                                 {
-                                    "label": "Azure Security Center",
+                                    "label": "Microsoft Defender for Cloud",
                                     "value": "AzureSecurityCenter"
                                 },
                                 {
-                                    "label": "Microsoft Cloud App Security",
+                                    "label": "Microsoft Defender for Cloud Apps",
                                     "value": "MicrosoftCloudAppSecurity"
                                 },
                                 {
