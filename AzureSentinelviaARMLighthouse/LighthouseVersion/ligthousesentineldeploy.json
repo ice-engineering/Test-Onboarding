@@ -35,18 +35,6 @@
                 "ReaderAccessDisplayName": {
             "type": "string"
         },
-		                "UserAdminAccessPrincipalID": {
-            "type": "string"
-        },
-                "UserAdminAccessDisplayName": {
-            "type": "string"
-        },
-		         "SentinelContributorAccessPrincipalID": {
-            "type": "string"
-        },
-                "SentinelContributorAccessDisplayName": {
-            "type": "string"
-        },
         "authorizations": {
             "type": "array",
             "metadata": {
@@ -62,22 +50,7 @@
                     "principalId": "[parameters('ReaderAccessPrincipalID')]",
                     "principalIdDisplayName": "[parameters('ReaderAccessDisplayName')]",
                     "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
-                },
-{
-                    "principalId": "[parameters('UserAdminAccessPrincipalID')]",
-                    "principalIdDisplayName": "[parameters('UserAdminAccessDisplayName')]",
-                    "roleDefinitionId": "18d7d88d-d35e-4fb5-a5c3-7773c20a72d9",
-						"delegatedRoleDefinitionIds": [
-						 "b24988ac-6180-42a0-ab88-20f7382dd24c",
-						 "92aaf0da-9dab-42b6-94a3-d43ce8d16293"
-					]	
-                },
-{
-                    "principalId": "[parameters('SentinelContributorAccessPrincipalID')]",
-                    "principalIdDisplayName": "[parameters('SentinelContributorAccessDisplayName')]",
-                    "roleDefinitionId": "ab8e14d6-4a74-4a29-9ba8-549422addade"	
-             
-                }			
+                }              
             ]
         },
         "rgName": {
@@ -405,22 +378,6 @@
                 "ReaderAccessDisplayName": {
             "type": "string",
             "value": "[parameters('ReaderAccessDisplayName')]"
-        },
-		                "UserAdminAccessPrincipalID": {
-            "type": "string",
-            "value": "[parameters('UserAdminAccessPrincipalID')]"
-        },
-                "UserAdminAccessDisplayName": {
-            "type": "string",
-            "value": "[parameters('UserAdminAccessDisplayName')]"
-        },
-		                "SentinelContributorAccessPrincipalID": {
-            "type": "string",
-            "value": "[parameters('SentinelContributorAccessPrincipalID')]"
-        },
-                "SentinelContributorAccessDisplayName": {
-            "type": "string",
-            "value": "[parameters('SentinelContributorAccessDisplayName')]"
         },
 
                 "mspOfferDescription": {
