@@ -35,6 +35,18 @@
                 "ReaderAccessDisplayName": {
             "type": "string"
         },
+		                "UserAdminAccessPrincipalID": {
+            "type": "string"
+        },
+                "UserAdminAccessDisplayName": {
+            "type": "string"
+        },
+		         "SentinelContributorAccessPrincipalID": {
+            "type": "string"
+        },
+                "SentinelContributorAccessDisplayName": {
+            "type": "string"
+        },
         "authorizations": {
             "type": "array",
             "metadata": {
@@ -58,7 +70,7 @@
                 },
 {
                     "principalId": "[parameters('SentinelContributorAccessPrincipalID')]",
-                    "principalIdDisplayName": "[parameters('SentineContributorAccessDisplayName')]",
+                    "principalIdDisplayName": "[parameters('SentinelContributorAccessDisplayName')]",
                     "roleDefinitionId": "ab8e14d6-4a74-4a29-9ba8-549422addade"
                 }				
             ]
@@ -388,6 +400,22 @@
                 "ReaderAccessDisplayName": {
             "type": "string",
             "value": "[parameters('ReaderAccessDisplayName')]"
+        },
+		                "UserAdminAccessPrincipalID": {
+            "type": "string",
+            "value": "[parameters('UserAdminAccessPrincipalID')]"
+        },
+                "UserAdminAccessDisplayName": {
+            "type": "string",
+            "value": "[parameters('UserAdminAccessDisplayName')]"
+        },
+		                "SentinelContributorAccessPrincipalID": {
+            "type": "string",
+            "value": "[parameters('SentinelContributorAccessPrincipalID')]"
+        },
+                "SentinelContributorAccessDisplayName": {
+            "type": "string",
+            "value": "[parameters('SentinelContributorAccessDisplayName')]"
         },
 
                 "mspOfferDescription": {
