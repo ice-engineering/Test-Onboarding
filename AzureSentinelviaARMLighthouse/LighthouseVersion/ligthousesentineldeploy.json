@@ -50,7 +50,17 @@
                     "principalId": "[parameters('ReaderAccessPrincipalID')]",
                     "principalIdDisplayName": "[parameters('ReaderAccessDisplayName')]",
                     "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
-                }              
+                },
+{
+                    "principalId": "[parameters('UserAdminAccessPrincipalID')]",
+                    "principalIdDisplayName": "[parameters('UserAdminAccessDisplayName')]",
+                    "roleDefinitionId": "18d7d88d-d35e-4fb5-a5c3-7773c20a72d9"
+                },
+{
+                    "principalId": "[parameters('SentinelContributorAccessPrincipalID')]",
+                    "principalIdDisplayName": "[parameters('SentineContributorAccessDisplayName')]",
+                    "roleDefinitionId": "ab8e14d6-4a74-4a29-9ba8-549422addade"
+                }				
             ]
         },
         "rgName": {
