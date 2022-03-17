@@ -101,38 +101,6 @@
                 "defaultValue": "",
                 "visible": true
             },
-			            {
-                "name": "UserAdminAccessPrincipalID",
-                "type": "Microsoft.Common.TextBox",
-                "label": "User Admin Access Principal ID",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
-                "name": "UserAdminAccessDisplayName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "User Admin Access Display Name",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-			            {
-                "name": "SentinelContributorAccessPrincipalID",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Sentinel Contributor Access Principal ID",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
-            {
-                "name": "SentinelContributorAccessDisplayName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Sentinel Contributor Access Display Name",
-                "placeholder": "",
-                "defaultValue": "",
-                "visible": true
-            },
             {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
@@ -336,10 +304,6 @@
             "ContributorAccessDisplayName": "[basics('ContributorAccessDisplayName')]",
             "ReaderAccessPrincipalID": "[basics('ReaderAccessPrincipalID')]",
             "ReaderAccessDisplayName": "[basics('ReaderAccessDisplayName')]",
-			"UserAdminAccessPrincipalID": "[basics('UserAdminAccessPrincipalID')]",
-            "UserAdminAccessDisplayName": "[basics('UserAdminAccessDisplayName')]",
-			"SentinelContributorAccessPrincipalID": "[basics('SentinelContributorAccessPrincipalID')]",
-            "SentinelContributorAccessDisplayName": "[basics('SentinelContributorAccessDisplayName')]",
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
