@@ -37,7 +37,7 @@
 					"label": "Select Native Workbooks to include in Deployment",
 					"placeholder": "",
 					"multiselect": true,
-					"defaultValue": "o365",
+					"defaultValue": "",
 					"toolTip": "Select the Native Workbooks that you would like to enable",
 					"constraints": {
 						"allowedValues": [{
@@ -95,7 +95,7 @@
 					"label": "Select Custom Workbooks to include in Deployment",
 					"placeholder": "",
 					"multiselect": true,
-					"defaultValue": "o365",
+					"defaultValue": "",
 					"toolTip": "Select the Custom Workbooks that you would like to enable",
 					"constraints": {
 						"allowedValues": [{
@@ -103,7 +103,7 @@
 								"value": "iCEReporting"
 							},
 							{
-								"label": "Brute Fore Monitoring",
+								"label": "Brute Force Monitoring",
 								"value": "bruteforcemonitoring"
 							}
 						],
