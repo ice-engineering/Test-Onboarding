@@ -149,6 +149,28 @@
 						"required": true
 					},
 					"visible": true
+				},
+				     {
+					"name": "enableCustomWorkbooksKind",
+					"type": "Microsoft.Common.DropDown",
+					"label": "Select Workbooks to include in Deployment",
+					"placeholder": "",
+					"multiselect": true,
+					"defaultValue": "o365",
+					"toolTip": "Select the Custom Workbooks that you would like to enable",
+					"constraints": {
+						"allowedValues": [{
+								"label": "iCE Reporting",
+								"value": "iCE Reporting"
+							},
+							{
+								"label": "Brute Force Monitoring",
+								"value": "bruteforcemonitoring"
+							}
+						],
+						"required": true
+					},
+					"visible": true
 				}
 			]
 		}],
