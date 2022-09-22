@@ -115,8 +115,7 @@
 		} ],
 		"outputs": {
 			"enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
-			"enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]",
-			"location": "[location()]"
+			"enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]"
 		}
 	}
 }
