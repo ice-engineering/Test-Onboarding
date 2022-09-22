@@ -149,7 +149,7 @@
                             "required": true
                         },
                         "visible": true
-                    }
+                    },
 			{
                         "name": "enableCustomWorkbooksKind",
                         "type": "Microsoft.Common.DropDown",
