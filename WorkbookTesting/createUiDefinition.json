@@ -25,11 +25,11 @@
                 "defaultValue": "",
                 "toolTip": "Enter a resource group name.",
                 "constraints": {
-                    "required": false,
+                    "required": true,
                     "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
                     "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
                 },
-                "visible": false  
+                "visible": true  
             },
             {
                 "name": "workspaceName",
@@ -39,11 +39,11 @@
                 "defaultValue": "",
                 "toolTip": "The Workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
                 "constraints": {
-                    "required": false,
+                    "required": true,
                     "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
                     "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
                 },
-                "visible": false
+                "visible": true
             }
             {
                 "name": "dailyQuota",
@@ -53,11 +53,11 @@
                 "defaultValue": "0",
                 "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
                 "constraints": {
-                    "required": false,
+                    "required": true,
                     "regex": "^[0-9]{1,4}$",
                     "validationMessage": "Only numbers allowed, and the value must be 1-4 characters long."
                 },
-                "visible": false
+                "visible": true
             },
             {
                 "name": "dataRetention",
@@ -67,11 +67,11 @@
                 "defaultValue": "90",
                 "toolTip": "Only numbers allowed",
                 "constraints": {
-                    "required": false,
+                    "required": true,
                     "regex": "([3-8][0-9]|9[0-9]|[1-6][0-9]{2}|7[0-2][0-9]|730)",
                     "validationMessage": "Retention must be between 30 and 730 days."
                 },
-                "visible": false
+                "visible": true
             }
         ],
         "steps": [
@@ -94,11 +94,11 @@
                     {
                         "name": "enableNativeWorkbooksKind",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Select Native Workbooks to include in Deployment",
+                        "label": "Select Workbooks to include in Deployment",
                         "placeholder": "",
                         "multiselect": true,
                         "defaultValue": "o365",
-                        "toolTip": "Select the NAtive Workbooks that you would like to enable",
+                        "toolTip": "Select the Native Workbooks that you would like to enable",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -153,35 +153,12 @@
                             "required": true
                         },
                         "visible": true
-                    },
-					{
-                        "name": "enableCustomWorkbooksKind",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Select Custom Workbooks to include in Deployment",
-                        "placeholder": "",
-                        "multiselect": true,
-                        "defaultValue": "o365",
-                        "toolTip": "Select the Custom Workbooks that you would like to enable",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "iCe Reporting",
-                                    "value": "icereporting"
-                                },
-                                {
-                                    "label": "Brute Force Monitoring",
-                                    "value": "bruteforcemonitoring"
-                                }
-                            ],
-                            "required": true
-                        },
-                        "visible": true
                     }
                 ]
-            }
+            },
         ],
         "outputs": {
-            "workspaceName": "[basics('workspaceName')]",
+            "workspaceName": "[basics('workspaceName')]"
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableNativeWorkbooksKind": "[steps('dataConnectors').enableNativeWorkbooksKind]",
