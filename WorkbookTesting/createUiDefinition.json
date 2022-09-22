@@ -156,9 +156,7 @@
 			"workspaceName": "[basics('workspaceName')]",
 			"dailyQuota": "[basics('dailyQuota')]",
 			"dataRetention": "[basics('dataRetention')]",
-			"enableNativeWorkbooksKind": "[steps('dataConnectors').enableNativeWorkbooksKind]",
-			"securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
-			"mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
+			"enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
 			"location": "[location()]",
 			"rgName": "[basics('rgName')]"
 		}
