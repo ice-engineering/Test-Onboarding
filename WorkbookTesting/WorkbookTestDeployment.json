@@ -1,0 +1,77 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rgName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the Log Analytics workspace"
+            }
+        },
+        "enableNativeWorkbooksKind": {
+            "type": "array",
+            "metadata": {
+                "description": "All native Azure workbooks can be deployed."
+            },
+            "defaultValue": []
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2020-06-01",
+            "name": "[parameters('rgName')]",
+            "location": "[parameters('location')]",
+            "properties": {}
+        },
+        {
+            "condition": "[not(empty(parameters('enableNativeWorkbooksKind')))]",
+            "name": "enableNativeWorkbooksKind",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "resourceGroup": "[parameters('rgName')]",
+            "location": "[parameters('location')]",
+            "kind": "parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment']",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment'],'.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "tenantId": {
+                        "value": "[subscription().tenantId]"
+                    },
+                    "subscriptionId": {
+                        "value": "[subscription().subscriptionId]"
+                    },
+                    "rgName": {
+                        "value": "[parameters('rgName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            },
+            "copy": {
+                "name": "workbookDeployment",
+                "count": "[length(parameters('enableNativeWorkbooksKind'))]"
+            }
+        }
+    ],
+    "outputs": {
+        "workspaceName": {
+            "type": "string",
+            "value": "[parameters('workspaceName')]"
+        }
+    }
+}
