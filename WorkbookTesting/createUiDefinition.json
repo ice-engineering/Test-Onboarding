@@ -177,7 +177,7 @@
             },
         ],
         "outputs": {
-            "workspaceName": "[basics('workspaceName')]"
+            "workspaceName": "[basics('workspaceName')]",
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
