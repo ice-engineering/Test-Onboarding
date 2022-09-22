@@ -44,7 +44,7 @@
                     "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
                 },
                 "visible": false
-            }
+            },
             {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
@@ -178,10 +178,10 @@
                         "visible": true
                     }
                 ]
-            },
+            }
         ],
         "outputs": {
-            "workspaceName": "[basics('workspaceName')]"
+            "workspaceName": "[basics('workspaceName')]",
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
             "enableNativeWorkbooksKind": "[steps('dataConnectors').enableNativeWorkbooksKind]",
