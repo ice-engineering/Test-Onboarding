@@ -34,7 +34,7 @@
 				{
 					"name": "enableNativeWorkbooksKind",
 					"type": "Microsoft.Common.DropDown",
-					"label": "Select Workbooks to include in Deployment",
+					"label": "Select Native Workbooks to include in Deployment",
 					"placeholder": "",
 					"multiselect": true,
 					"defaultValue": "o365",
@@ -92,7 +92,7 @@
 				{
 					"name": "enableCustomWorkbooksKind",
 					"type": "Microsoft.Common.DropDown",
-					"label": "Select Workbooks to include in Deployment",
+					"label": "Select Custom Workbooks to include in Deployment",
 					"placeholder": "",
 					"multiselect": true,
 					"defaultValue": "o365",
@@ -103,7 +103,7 @@
 								"value": "iCEReporting"
 							},
 							{
-								"label": "Brute Fore Monitoring",
+								"label": "Brute Force Monitoring",
 								"value": "bruteforcemonitoring"
 							}
 						],
