@@ -180,9 +180,8 @@
             "workspaceName": "[basics('workspaceName')]"
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
-            "enableNativeWorkbooksKind": "[steps('dataConnectors').enableNativeWorkbooksKind]",
-            "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
-            "mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
+            "enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
+	    "enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]",
             "location": "[location()]",
             "rgName": "[basics('rgName')]"
         }
