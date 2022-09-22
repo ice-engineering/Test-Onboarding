@@ -110,10 +110,6 @@
 								"value": "ExchangeOnline"
 							},
 							{
-								"label": "iCE Monthly Report",
-								"value": "iCEMonthlyReport"
-							},
-							{
 								"label": "Insecure Protocols",
 								"value": "InsecureProtocols"
 							},
