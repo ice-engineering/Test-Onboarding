@@ -6,7 +6,7 @@
         "config": {
             "isWizard": true,
             "basics": {
-                "description": "**Streamline Workbook Deployment**,
+                "description": "**Streamline Workbook Deployment**",
                 "location": {
                     "label": "Location",
                     "toolTip": "Location for all resources",
