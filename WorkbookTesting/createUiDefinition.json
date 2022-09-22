@@ -6,7 +6,7 @@
         "config": {
             "isWizard": true,
             "basics": {
-                "description": "**Streamline Workbook Deployment**,
+                "description": "**Streamline Workbook Deployment**",
                 "location": {
                     "label": "Location",
                     "toolTip": "Location for all resources",
@@ -114,10 +114,6 @@
                                     "value": "ExchangeOnline"
                                 },
                                 {
-                                    "label": "iCE Monthly Report",
-                                    "value": "iCEMonthlyReport"
-                                },
-                                {
                                     "label": "Insecure Protocols",
                                     "value": "InsecureProtocols"
                                 },
@@ -148,6 +144,29 @@
 								{
                                     "label": "SharePoint & OneDrive",
                                     "value": "SharePointAndOneDrive"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    }
+			{
+                        "name": "enableCustomWorkbooksKind",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select Workbooks to include in Deployment",
+                        "placeholder": "",
+                        "multiselect": true,
+                        "defaultValue": "o365",
+                        "toolTip": "Select the Workbooks that you would like to enable",
+                        "constraints": {
+                            "allowedValues": [
+			                                {
+                                    "label": "iCE Reporting",
+                                    "value": "iCEReporting"
+                                },
+								{
+                                    "label": "Brute Fore Monitoring",
+                                    "value": "bruteforcemonitoring"
                                 }
                             ],
                             "required": true
