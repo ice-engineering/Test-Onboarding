@@ -44,7 +44,7 @@
                     "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
                 },
                 "visible": false
-            },
+            }
             {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
@@ -98,7 +98,7 @@
                         "placeholder": "",
                         "multiselect": true,
                         "defaultValue": "o365",
-                        "toolTip": "Select the Workbooks that you would like to enable",
+                        "toolTip": "Select the NAtive Workbooks that you would like to enable",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -161,7 +161,7 @@
                         "placeholder": "",
                         "multiselect": true,
                         "defaultValue": "o365",
-                        "toolTip": "Select the Workbooks that you would like to enable",
+                        "toolTip": "Select the Custom Workbooks that you would like to enable",
                         "constraints": {
                             "allowedValues": [
                                 {
