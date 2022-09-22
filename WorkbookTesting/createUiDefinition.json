@@ -44,7 +44,7 @@
                     "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
                 },
                 "visible": true
-            }
+            },
             {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
