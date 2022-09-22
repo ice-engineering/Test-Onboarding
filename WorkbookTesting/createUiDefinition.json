@@ -1,189 +1,182 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
-    "handler": "Microsoft.Azure.CreateUIDef",
-    "version": "0.1.2-preview",
-    "parameters": {
-        "config": {
-            "isWizard": true,
-            "basics": {
-                "description": "**Streamline Workbook Deployment**",
-                "location": {
-                    "label": "Location",
-                    "toolTip": "Location for all resources",
-                    "resourceTypes": [
-                        "Microsoft.OperationalInsights"
-                    ]
-                }
-            }
-        },
-        "basics": [
-            {
-                "name": "rgName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Resource Group Name",
-                "placeholder": "",
-                "defaultValue": "",
-                "toolTip": "Enter a resource group name.",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
-                    "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
-                },
-                "visible": true  
-            },
-            {
-                "name": "workspaceName",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Workspace Name",
-                "placeholder": "",
-                "defaultValue": "",
-                "toolTip": "The Workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
-                    "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
-                },
-                "visible": true
-            }
-            {
-                "name": "dailyQuota",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
-                "placeholder": "",
-                "defaultValue": "0",
-                "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[0-9]{1,4}$",
-                    "validationMessage": "Only numbers allowed, and the value must be 1-4 characters long."
-                },
-                "visible": true
-            },
-            {
-                "name": "dataRetention",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Number of days of retention",
-                "placeholder": "",
-                "defaultValue": "90",
-                "toolTip": "Only numbers allowed",
-                "constraints": {
-                    "required": true,
-                    "regex": "([3-8][0-9]|9[0-9]|[1-6][0-9]{2}|7[0-2][0-9]|730)",
-                    "validationMessage": "Retention must be between 30 and 730 days."
-                },
-                "visible": true
-            }
-        ],
-        "steps": [
-            {
-                "name": "workBooks",
-                "label": "Workbooks",
-                "elements": [
-                    {
-                        "name": "textBlock1",
-                        "type": "Microsoft.Common.TextBlock",
-                        "visible": true,
-                        "options": {
-                            "text": "Please select which Workbooks you want to deply into your Azure Sentinel environment",
-                            "link": {
-                                "label": "Learn more",
-                                "uri": "https://www.microsoft.com"
-                            }
-                        }
-                    },
-                    {
-                        "name": "enableNativeWorkbooksKind",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Select Workbooks to include in Deployment",
-                        "placeholder": "",
-                        "multiselect": true,
-                        "defaultValue": "o365",
-                        "toolTip": "Select the Workbooks that you would like to enable",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Azure Activity",
-                                    "value": "AzureActivity"
-                                },
-                                {
-                                    "label": "Azure AD Sign in And Audit Logs",
-                                    "value": "AzureAuditActivityAndSignin"
-                                },
-                                {
-                                    "label": "Exchange Online",
-                                    "value": "ExchangeOnline"
-                                },
-                                {
-                                    "label": "Insecure Protocols",
-                                    "value": "InsecureProtocols"
-                                },
-                                {
-                                    "label": "Investigation Insights",
-                                    "value": "InvestigationInsights"
-                                },
-                                {
-                                    "label": "Microsoft Cloud App Security - discovery logs",
-                                    "value": "MicrosoftCloudAppSecurity"
-                                },
-                                {
-                                    "label": "Microsoft Teams",
-                                    "value": "MicrosoftTeams"
-                                },
-                                {
-                                    "label": "Office 365",
-                                    "value": "Office365"
-                                },
-                                {
-                                    "label": "Security Alerts",
-                                    "value": "AzureSentinelSecurityAlerts"
-                                },
-                                {
-                                    "label": "Security Status",
-                                    "value": "SecurityStatus"
-                                },
-								{
-                                    "label": "SharePoint & OneDrive",
-                                    "value": "SharePointAndOneDrive"
-                                }
-                            ],
-                            "required": true
-                        },
-                        "visible": true
-                    },
+	"$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+	"handler": "Microsoft.Azure.CreateUIDef",
+	"version": "0.1.2-preview",
+	"parameters": {
+		"config": {
+			"isWizard": true,
+			"basics": {
+				"description": "**Streamline Workbook Deployment**",
+				"location": {
+					"label": "Location",
+					"toolTip": "Location for all resources",
+					"resourceTypes": [
+						"Microsoft.OperationalInsights"
+					]
+				}
+			}
+		},
+		"basics": [{
+				"name": "rgName",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Resource Group Name",
+				"placeholder": "",
+				"defaultValue": "",
+				"toolTip": "Enter a resource group name.",
+				"constraints": {
+					"required": true,
+					"regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+					"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+				},
+				"visible": true
+			},
 			{
-                        "name": "enableCustomWorkbooksKind",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Select Workbooks to include in Deployment",
-                        "placeholder": "",
-                        "multiselect": true,
-                        "defaultValue": "o365",
-                        "toolTip": "Select the Workbooks that you would like to enable",
-                        "constraints": {
-                            "allowedValues": [
-			                                {
-                                    "label": "iCE Reporting",
-                                    "value": "iCEReporting"
-                                },
-								{
-                                    "label": "Brute Fore Monitoring",
-                                    "value": "bruteforcemonitoring"
-                                }
-                            ],
-                            "required": true
-                        },
-                        "visible": true
-                    }
-                ]
-            },
-        ],
-        "outputs": {
-            "workspaceName": "[basics('workspaceName')]",
-            "dailyQuota": "[basics('dailyQuota')]",
-            "dataRetention": "[basics('dataRetention')]",
-            "enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
-	    "enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]",
-            "location": "[location()]",
-            "rgName": "[basics('rgName')]"
-        }
-    }
+				"name": "workspaceName",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Workspace Name",
+				"placeholder": "",
+				"defaultValue": "",
+				"toolTip": "The Workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
+				"constraints": {
+					"required": true,
+					"regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+					"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+				},
+				"visible": true
+			}, {
+				"name": "dailyQuota",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
+				"placeholder": "",
+				"defaultValue": "0",
+				"toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
+				"constraints": {
+					"required": true,
+					"regex": "^[0-9]{1,4}$",
+					"validationMessage": "Only numbers allowed, and the value must be 1-4 characters long."
+				},
+				"visible": true
+			},
+			{
+				"name": "dataRetention",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Number of days of retention",
+				"placeholder": "",
+				"defaultValue": "90",
+				"toolTip": "Only numbers allowed",
+				"constraints": {
+					"required": true,
+					"regex": "([3-8][0-9]|9[0-9]|[1-6][0-9]{2}|7[0-2][0-9]|730)",
+					"validationMessage": "Retention must be between 30 and 730 days."
+				},
+				"visible": true
+			}
+		],
+		"steps": [{
+			"name": "workBooks",
+			"label": "Workbooks",
+			"elements": [{
+					"name": "textBlock1",
+					"type": "Microsoft.Common.TextBlock",
+					"visible": true,
+					"options": {
+						"text": "Please select which Workbooks you want to deply into your Azure Sentinel environment",
+						"link": {
+							"label": "Learn more",
+							"uri": "https://www.microsoft.com"
+						}
+					}
+				},
+				{
+					"name": "enableNativeWorkbooksKind",
+					"type": "Microsoft.Common.DropDown",
+					"label": "Select Workbooks to include in Deployment",
+					"placeholder": "",
+					"multiselect": true,
+					"defaultValue": "o365",
+					"toolTip": "Select the Workbooks that you would like to enable",
+					"constraints": {
+						"allowedValues": [{
+								"label": "Azure Activity",
+								"value": "AzureActivity"
+							},
+							{
+								"label": "Azure AD Sign in And Audit Logs",
+								"value": "AzureAuditActivityAndSignin"
+							},
+							{
+								"label": "Exchange Online",
+								"value": "ExchangeOnline"
+							},
+							{
+								"label": "Insecure Protocols",
+								"value": "InsecureProtocols"
+							},
+							{
+								"label": "Investigation Insights",
+								"value": "InvestigationInsights"
+							},
+							{
+								"label": "Microsoft Cloud App Security - discovery logs",
+								"value": "MicrosoftCloudAppSecurity"
+							},
+							{
+								"label": "Microsoft Teams",
+								"value": "MicrosoftTeams"
+							},
+							{
+								"label": "Office 365",
+								"value": "Office365"
+							},
+							{
+								"label": "Security Alerts",
+								"value": "AzureSentinelSecurityAlerts"
+							},
+							{
+								"label": "Security Status",
+								"value": "SecurityStatus"
+							},
+							{
+								"label": "SharePoint & OneDrive",
+								"value": "SharePointAndOneDrive"
+							}
+						],
+						"required": true
+					},
+					"visible": true
+				},
+				{
+					"name": "enableCustomWorkbooksKind",
+					"type": "Microsoft.Common.DropDown",
+					"label": "Select Workbooks to include in Deployment",
+					"placeholder": "",
+					"multiselect": true,
+					"defaultValue": "o365",
+					"toolTip": "Select the Workbooks that you would like to enable",
+					"constraints": {
+						"allowedValues": [{
+								"label": "iCE Reporting",
+								"value": "iCEReporting"
+							},
+							{
+								"label": "Brute Fore Monitoring",
+								"value": "bruteforcemonitoring"
+							}
+						],
+						"required": true
+					},
+					"visible": true
+				}
+			]
+		} ],
+		"outputs": {
+			"workspaceName": "[basics('workspaceName')]",
+			"dailyQuota": "[basics('dailyQuota')]",
+			"dataRetention": "[basics('dataRetention')]",
+			"enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
+			"enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]",
+			"location": "[location()]",
+			"rgName": "[basics('rgName')]"
+		}
+	}
 }
