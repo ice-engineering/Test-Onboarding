@@ -114,13 +114,9 @@
 			]
 		} ],
 		"outputs": {
-			"workspaceName": "[basics('workspaceName')]",
-			"dailyQuota": "[basics('dailyQuota')]",
-			"dataRetention": "[basics('dataRetention')]",
 			"enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
 			"enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]",
 			"location": "[location()]",
-			"rgName": "[basics('rgName')]"
 		}
 	}
 }
