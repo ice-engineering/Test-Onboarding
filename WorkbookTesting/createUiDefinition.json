@@ -157,6 +157,8 @@
 			"dailyQuota": "[basics('dailyQuota')]",
 			"dataRetention": "[basics('dataRetention')]",
 			"enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
+			"securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
+			"mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
 			"location": "[location()]",
 			"rgName": "[basics('rgName')]"
 		}
