@@ -34,11 +34,11 @@
 				{
 					"name": "enableNativeWorkbooksKind",
 					"type": "Microsoft.Common.DropDown",
-					"label": "Select Native Workbooks to include in Deployment",
+					"label": "Select Workbooks to include in Deployment",
 					"placeholder": "",
 					"multiselect": true,
-					"defaultValue": "",
-					"toolTip": "Select the Native Workbooks that you would like to enable",
+					"defaultValue": "o365",
+					"toolTip": "Select the Workbooks that you would like to enable",
 					"constraints": {
 						"allowedValues": [{
 								"label": "Azure Activity",
@@ -92,18 +92,18 @@
 				{
 					"name": "enableCustomWorkbooksKind",
 					"type": "Microsoft.Common.DropDown",
-					"label": "Select Custom Workbooks to include in Deployment",
+					"label": "Select Workbooks to include in Deployment",
 					"placeholder": "",
 					"multiselect": true,
-					"defaultValue": "",
-					"toolTip": "Select the Custom Workbooks that you would like to enable",
+					"defaultValue": "o365",
+					"toolTip": "Select the Workbooks that you would like to enable",
 					"constraints": {
 						"allowedValues": [{
 								"label": "iCE Reporting",
 								"value": "iCEReporting"
 							},
 							{
-								"label": "Brute Force Monitoring",
+								"label": "Brute Fore Monitoring",
 								"value": "bruteforcemonitoring"
 							}
 						],
@@ -114,8 +114,13 @@
 			]
 		} ],
 		"outputs": {
+			"workspaceName": "[basics('workspaceName')]",
+			"dailyQuota": "[basics('dailyQuota')]",
+			"dataRetention": "[basics('dataRetention')]",
 			"enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
-			"enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]"
+			"enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]",
+			"location": "[location()]",
+			"rgName": "[basics('rgName')]"
 		}
 	}
 }
