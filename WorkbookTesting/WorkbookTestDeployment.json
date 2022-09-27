@@ -37,7 +37,7 @@
             "apiVersion": "2020-06-01",
             "resourceGroup": "[parameters('rgName')]",
             "location": "[parameters('location')]",
-            "kind": "parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment']",
+            "kind": "parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
