@@ -164,7 +164,7 @@
 								"value": "bruteforcemonitoring"
 							}
 						],
-						"required": true
+						"required": false
 					},
 					"visible": true
 				}
