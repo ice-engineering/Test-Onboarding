@@ -41,7 +41,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment'],'.json')]",
+                    "uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')],'.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
