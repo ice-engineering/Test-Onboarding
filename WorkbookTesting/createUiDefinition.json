@@ -24,11 +24,11 @@
 				"defaultValue": "",
 				"toolTip": "Enter a resource group name.",
 				"constraints": {
-					"required": false,
+					"required": true,
 					"regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
 					"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
 				},
-				"visible": false
+				"visible": true
 			},
 			{
 				"name": "workspaceName",
@@ -38,11 +38,11 @@
 				"defaultValue": "",
 				"toolTip": "The Workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
 				"constraints": {
-					"required": false,
+					"required": true,
 					"regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
 					"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
 				},
-				"visible": false
+				"visible": true
 			},
 			{
 				"name": "dailyQuota",
