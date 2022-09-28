@@ -32,7 +32,7 @@
         },
         {
             "condition": "[not(empty(parameters('enableNativeWorkbooksKind')))]",
-            "name": "enableNativeWorkbooksKind",
+            "name": "[concat('enableNativeWorkbooksKind',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')])",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "resourceGroup": "[parameters('rgName')]",
@@ -59,12 +59,12 @@
                     "location": {
                         "value": "[parameters('location')]"
                     }
-                },
-                "copy": {
-                    "name": "workbookDeployment",
-                    "count": "[length(parameters('enableNativeWorkbooksKind'))]"
-                }
-            }            
+                }                
+            },
+            "copy": {
+                "name": "workbookDeployment",
+                "count": "[length(parameters('enableNativeWorkbooksKind'))]"
+            }        
         }
     ],
     "outputs": {
