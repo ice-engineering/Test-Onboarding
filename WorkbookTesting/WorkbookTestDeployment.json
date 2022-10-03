@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/Microsoft.Resources.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "rgName": {
@@ -25,15 +25,29 @@
     "resources": [
         {
             "condition": "[not(empty(parameters('enableNativeWorkbooksKind')))]",
-            "name": "[concat('enableNativeWorkbooksKind',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')])]",
-            "type": "Microsoft.Insights/workbooktemplates",
-            "apiVersion": "2020-11-20",
+            "name": "WorkbookDeployment",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
             "location": "[parameters('location')]",
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')],'.json')]",
-                    "contentVersion": "1.0.0.0"
+                "template": {
+                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",   
+                    "resources": [
+                        {
+                            "name": "[concat('Workbook_',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')])]",
+                            "type": "Microsoft.Insights/workbooks",
+                            "location": "[parameters('location')]",
+                            "kind": "shared",
+                            "apiVersion": "2018-06-17-preview",
+                            "dependsOn": [],
+                            "properties": {
+                                "serializedData": [ {"uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')],'.json')]"} ],
+                                "version": "1.0"
+                            }
+                        }
+                    ]
                 },
                 "parameters": {
                     "workspaceName": {
@@ -51,12 +65,12 @@
                     "location": {
                         "value": "[parameters('location')]"
                     }
+                },
+                "copy": {
+                    "name": "workbookDeployment",
+                    "count": "[length(parameters('enableNativeWorkbooksKind'))]"
                 }                
-            },
-            "copy": {
-                "name": "workbookDeployment",
-                "count": "[length(parameters('enableNativeWorkbooksKind'))]"
-            }        
+            }   
         }
     ],
     "outputs": {
