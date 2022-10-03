@@ -35,7 +35,6 @@
             "name": "[concat('enableNativeWorkbooksKind',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')])]",
             "type": "Microsoft.Insights/workbooks",
             "apiVersion": "2022-04-01",
-            "resourceGroup": "[parameters('rgName')]",
             "location": "[parameters('location')]",
             "properties": {
                 "mode": "Incremental",
