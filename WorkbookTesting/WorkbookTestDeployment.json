@@ -34,7 +34,7 @@
             "condition": "[not(empty(parameters('enableNativeWorkbooksKind')))]",
             "name": "[concat('enableNativeWorkbooksKind',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')])]",
             "type": "Microsoft.Insights/workbooktemplates",
-            "apiVersion": "2022-04-01",
+            "apiVersion": "2020-11-20",
             "location": "[parameters('location')]",
             "properties": {
                 "mode": "Incremental",
