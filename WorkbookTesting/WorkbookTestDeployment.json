@@ -33,8 +33,8 @@
         {
             "condition": "[not(empty(parameters('enableNativeWorkbooksKind')))]",
             "name": "[concat('enableNativeWorkbooksKind',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')])]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
+            "type": "Microsoft.Insights/workbooks",
+            "apiVersion": "2022-04-01",
             "resourceGroup": "[parameters('rgName')]",
             "location": "[parameters('location')]",
             "properties": {
