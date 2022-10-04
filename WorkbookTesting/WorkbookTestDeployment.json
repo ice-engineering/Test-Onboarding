@@ -29,19 +29,22 @@
             "metadata": {
                 "description": "The unique guid for this workbook instance"
             }
+        },
+        "location": {
+            "type": "string"
         }
     }, 
     "resources": [
         {
             "name": "[parameters('workbookId')]",
             "type": "microsoft.insights/workbooks",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "kind": "shared",
             "apiVersion": "2021-03-08",
             "dependsOn": [],
             "properties": {
                 "displayName": "[parameters('workbookDisplayName')]",
-                "serializedData": [ {"uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/','AzureActivity','.json')]"} ],
+                "serializedData": "[{\"uri\": \"[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/','AzureActivity','.json')]\"}]",
                 "version": "1.0",
                 "sourceId": "[parameters('workbookSourceId')]",
                 "category": "[parameters('workbookType')]"
