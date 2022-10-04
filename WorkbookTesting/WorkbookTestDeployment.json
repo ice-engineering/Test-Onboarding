@@ -36,14 +36,14 @@
                     "contentVersion": "1.0.0.0",   
                     "resources": [
                         {
-                            "name": "[concat('Workbook_',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')])]",
+                            "name": "AzureActivity",
                             "type": "Microsoft.Insights/workbooks",
                             "location": "[parameters('location')]",
                             "kind": "shared",
                             "apiVersion": "2018-06-17-preview",
                             "dependsOn": [],
                             "properties": {
-                                "serializedData": [ {"uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/',parameters('enableNativeWorkbooksKind')[copyIndex('workbookDeployment')],'.json')]"} ],
+                                "serializedData": [ {"uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/','AzureActivity','.json')]"} ],
                                 "version": "1.0"
                             },
                             "parameters": {
@@ -62,11 +62,7 @@
                                 "location": {
                                     "value": "[parameters('location')]"
                                 }
-                            },
-                            "copy": {
-                                "name": "workbookDeployment",
-                                "count": "[length(parameters('enableNativeWorkbooksKind'))]"
-                            }  
+                            }
                         }
                     ]
                 }                              
