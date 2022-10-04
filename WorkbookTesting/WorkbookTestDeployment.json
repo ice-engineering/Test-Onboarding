@@ -33,20 +33,52 @@
                 "mode": "Incremental",
                 "template": {
                     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",   
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "workbookDisplayName": {
+                            "type": "string",
+                            "defaultValue": "Azure Activity - workbooktestdeployment",
+                            "metadata": {
+                                "description": "The friendly name for the workbook that is used in the Gallery or Saved List.  This name must be unique within a resource group."
+                            }
+                        },
+                        "workbookType": {
+                            "type": "string",
+                            "defaultValue": "sentinel",
+                            "metadata": {
+                                "description": "The gallery that the workbook will been shown under. Supported values include workbook, tsg, etc. Usually, this is 'workbook'"
+                            }
+                        },
+                        "workbookSourceId": {
+                            "type": "string",
+                            "defaultValue": "/subscriptions/672b7821-c844-4e09-9a36-15f50e864d0b/resourcegroups/rg-icedevonboarding/providers/microsoft.operationalinsights/workspaces/workbooktestdeployment",
+                            "metadata": {
+                                "description": "The id of resource instance to which the workbook will be associated"
+                            }
+                        },
+                        "workbookId": {
+                            "type": "string",
+                            "defaultValue": "[newGuid()]",
+                            "metadata": {
+                                "description": "The unique guid for this workbook instance"
+                            }
+                        }
+                    }, 
                     "resources": [
                         {
-                            "name": "AzureActivity",
-                            "type": "Microsoft.Insights/workbooks",
+                            "name": "[parameters('workbookId')]",
+                            "type": "microsoft.insights/workbooks",
                             "location": "[parameters('location')]",
                             "kind": "shared",
-                            "apiVersion": "2018-06-17-preview",
+                            "apiVersion": "2021-03-08",
                             "dependsOn": [],
                             "properties": {
+                                "displayName": "[parameters('workbookDisplayName')]",
                                 "serializedData": [ {"uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/','AzureActivity','.json')]"} ],
-                                "version": "1.0"
-                            },
-                            "parameters": {}
+                                "version": "1.0",
+                                "sourceId": "[parameters('workbookSourceId')]",
+                                "category": "[parameters('workbookType')]"
+                            }
                         }
                     ]
                 }                              
