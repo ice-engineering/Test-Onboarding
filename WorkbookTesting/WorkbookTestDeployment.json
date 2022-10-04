@@ -46,23 +46,7 @@
                                 "serializedData": [ {"uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Workbooks/','AzureActivity','.json')]"} ],
                                 "version": "1.0"
                             },
-                            "parameters": {
-                                "workspaceName": {
-                                    "value": "[parameters('workspaceName')]"
-                                },
-                                "tenantId": {
-                                    "value": "[subscription().tenantId]"
-                                },
-                                "subscriptionId": {
-                                    "value": "[subscription().subscriptionId]"
-                                },
-                                "rgName": {
-                                    "value": "[parameters('rgName')]"
-                                },
-                                "location": {
-                                    "value": "[parameters('location')]"
-                                }
-                            }
+                            "parameters": {}
                         }
                     ]
                 }                              
