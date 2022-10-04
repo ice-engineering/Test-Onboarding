@@ -58,7 +58,7 @@
                         },
                         "workbookId": {
                             "type": "string",
-                            "defaultValue": "[newGuid()]",
+                            "defaultValue": "TestAzureActivityDeployment",
                             "metadata": {
                                 "description": "The unique guid for this workbook instance"
                             }
@@ -80,7 +80,13 @@
                                 "category": "[parameters('workbookType')]"
                             }
                         }
-                    ]
+                    ],
+                    "outputs": {
+                        "workbookId": {
+                            "type": "string",
+                            "value": "[resourceId( 'microsoft.insights/workbooks', parameters('workbookId'))]"
+                        }
+                    }
                 }                              
             }   
         }
