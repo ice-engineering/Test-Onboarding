@@ -17,7 +17,7 @@
       },
       "workbookSourceId": {
         "type": "string",
-        "defaultValue": "/subscriptions/672b7821-c844-4e09-9a36-15f50e864d0b/resourcegroups/rg-icedevonboarding/providers/microsoft.operationalinsights/workspaces/workbooktestdeployment",
+        "defaultValue": "Azure Monitor",
         "metadata": {
           "description": "The id of resource instance to which the workbook will be associated"
         }
