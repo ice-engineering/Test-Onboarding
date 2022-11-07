@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory=$true)][string]$ResourceGroup,
-    [Parameter(Mandatory=$true)][string]$Workspace
-    #[Parameter(Mandatory=$true)][string[]]$Connectors
+    [Parameter(Mandatory=$true)][string]$Workspace,
+    [Parameter(Mandatory=$true)][string[]]$Connectors
 )
 
 $context = Get-AzContext
