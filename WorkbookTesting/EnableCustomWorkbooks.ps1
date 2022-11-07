@@ -42,7 +42,7 @@ if ($customWorkbooks){
 
         Write-Host "Break 2"
 
-        $workbookUriGuid = $workbookUri + $guid + '?api-version=2020-10-01'
+        $workbookUriGuid = $workbookUri + $guid + '?api-version=2021-08-01'
 
         $workbookBody = @{}
         $workbookBody | Add-Member -NotePropertyName name -NotePropertyValue $guid
