@@ -20,10 +20,14 @@ $workbookUri = "$baseUri/providers/Microsoft.Insights/workbooks/"
 
 $customWorkbooks = @("iCEReporting")
 
+Write-Host "Break 0"
+
 if ($customWorkbooks){
     foreach ($workbook in $customWorkbooks){
 
         $workbookName = $workbook.replace(' ','')
+
+        Write-Host "Break 1"
 
         $serializedData = (Invoke-webrequest -URI "https://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/WorkbookTesting/iCEReporting.json").Content
 
@@ -37,6 +41,8 @@ if ($customWorkbooks){
             category = "sentinel"
         }
 
+        Write-Host "Break 2"
+
         $workbookUriGuid = $workbookUri + $guid + '?api-version=2020-10-01'
 
         $workbookBody = @{}
@@ -47,6 +53,8 @@ if ($customWorkbooks){
         $workbookBody | Add-Member -NotePropertyName kind -NotePropertyValue "shared"
         $workbookBody | Add-Member -NotePropertyName properties -NotePropertyValue $properties
 
+        Write-Host "Break 3"
+
         try{
             Invoke-AzRestMethod -Path $workbookUriGuid -Method PUT -Payload ($workbookBody | ConvertTo-Json -Depth 3)
         }
@@ -54,5 +62,7 @@ if ($customWorkbooks){
             Write-Verbose $_
             Write-Error "Unable to create workbook with error code: $($_.Exception.Message)" -ErrorAction Stop
         }
+
+        Write-Host "Break 4"
     }
 }
