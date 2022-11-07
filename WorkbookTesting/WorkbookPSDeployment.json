@@ -8,12 +8,6 @@
                 "description": "Name for the Log Analytics workspace"
             }
         },
-        "dataConnectorsList": {
-            "type": "string",
-            "metadata": {
-                "description": "Comma separated enabled connectors: AzureActivityLog,SecurityEvents,WindowsFirewall,DnsAnalytics. Reference: https://docs.microsoft.com/azure/templates/microsoft.operationalinsights/2020-03-01-preview/workspaces/datasources#microsoftoperationalinsightsworkspacesdatasources-object"
-            }
-        },
         "roleGuid": {
             "type": "string",
             "defaultValue": "[newGuid()]"
