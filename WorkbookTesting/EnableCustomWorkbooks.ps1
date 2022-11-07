@@ -46,6 +46,8 @@ if ($customWorkbooks){
 
         Write-Host $workbookUriGuid
 
+        Write-Host $ResourceGroup.location
+
         $workbookBody = @{}
         $workbookBody | Add-Member -NotePropertyName name -NotePropertyValue $guid
         $workbookBody | Add-Member -NotePropertyName type -NotePropertyValue "microsoft.insights/workbooks"
