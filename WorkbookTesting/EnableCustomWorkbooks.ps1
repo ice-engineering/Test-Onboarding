@@ -44,6 +44,8 @@ if ($customWorkbooks){
 
         $workbookUriGuid = $workbookUri + $guid + '?api-version=2021-08-01'
 
+        Write-Host $workbookUriGuid
+
         $workbookBody = @{}
         $workbookBody | Add-Member -NotePropertyName name -NotePropertyValue $guid
         $workbookBody | Add-Member -NotePropertyName type -NotePropertyValue "microsoft.insights/workbooks"
