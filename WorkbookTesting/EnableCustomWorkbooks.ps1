@@ -25,7 +25,7 @@ if ($customWorkbooks){
 
         $workbookName = $workbook.replace(' ','')
 
-        $serializedData = (Invoke-webrequest -URI "https://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/WorkbookTesting/" + $workbookName + ".json").Content
+        $serializedData = (Invoke-webrequest -URI "https://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/WorkbookTesting/iCEReporting.json").Content
 
         $guid = New-Guid
 
