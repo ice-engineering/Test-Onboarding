@@ -50,7 +50,6 @@ if ($customWorkbooks){
         $workbookBody | Add-Member -NotePropertyName name -NotePropertyValue $guid
         $workbookBody | Add-Member -NotePropertyName type -NotePropertyValue "microsoft.insights/workbooks"
         $workbookBody | Add-Member -NotePropertyName location -NotePropertyValue $ResourceGroup.location
-        $workbookBody | Add-Member -NotePropertyName apiVersion -NotePropertyValue "2021-08-01"
         $workbookBody | Add-Member -NotePropertyName kind -NotePropertyValue "shared"
         $workbookBody | Add-Member -NotePropertyName properties -NotePropertyValue $properties
 
