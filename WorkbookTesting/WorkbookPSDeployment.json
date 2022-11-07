@@ -34,7 +34,7 @@
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0",
                 "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Connectors ', parameters('dataConnectorsList'))]",
-                "primaryScriptUri": "hhttps://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/AzureSentinelviaARMLighthouse/LighthouseVersion/Scripts/EnableCustomWorkbooks.ps1",
+                "primaryScriptUri": "https://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/AzureSentinelviaARMLighthouse/LighthouseVersion/Scripts/EnableCustomWorkbooks.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
                 "cleanupPreference": "OnSuccess",
