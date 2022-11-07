@@ -37,7 +37,7 @@ if ($customWorkbooks){
             category = "sentinel"
         }
 
-        $workbookUriGuid = $workbookUri + $guid + '?api-version=2020-01-01'
+        $workbookUriGuid = $workbookUri + $guid + '?api-version=2020-10-01'
 
         $workbookBody = @{}
         $workbookBody | Add-Member -NotePropertyName name -NotePropertyValue $guid
