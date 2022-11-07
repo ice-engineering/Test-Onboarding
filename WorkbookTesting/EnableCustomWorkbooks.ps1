@@ -15,8 +15,7 @@ $SubscriptionId = $context.Subscription.Id
 
 Write-Host "Connected to Azure with subscription: " + $context.Subscription
 
-$baseUri = "/subscriptions/${SubscriptionId}/resourceGroups/${ResourceGroup}/providers/Microsoft.OperationalInsights/workspaces/${Workspace}"
-$workbookUri = "$baseUri/providers/Microsoft.Insights/workbooks/"
+$workbookUri = "/subscriptions/${SubscriptionId}/resourceGroups/${ResourceGroup}/providers/Microsoft.Insights/workbooks/"
 
 $customWorkbooks = @("iCEReporting")
 
