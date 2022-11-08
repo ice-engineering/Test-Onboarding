@@ -46,12 +46,12 @@ if ($customWorkbooks){
 
         Write-Host $workbookUriGuid
 
-        Write-Host $ResourceGroup.location
+        Write-Host "Location: " + $ResourceGroup.location
 
         $workbookBody = @{}
         $workbookBody | Add-Member -NotePropertyName name -NotePropertyValue $guid
         $workbookBody | Add-Member -NotePropertyName type -NotePropertyValue "microsoft.insights/workbooks"
-        $workbookBody | Add-Member -NotePropertyName location -NotePropertyValue $ResourceGroup.location
+        $workbookBody | Add-Member -NotePropertyName location -NotePropertyValue "australiaeast"
         $workbookBody | Add-Member -NotePropertyName kind -NotePropertyValue "shared"
         $workbookBody | Add-Member -NotePropertyName properties -NotePropertyValue $properties
 
