@@ -32,11 +32,13 @@ if ($customWorkbooks){
 
         $guid = New-Guid
 
+        $sourceId = "/subscriptions/${SubscriptionId}/resourceGroups/${ResourceGroup}/providers/Microsoft.OperationalInsights/workspaces/${Workspace}"
+
         $properties = @{
             displayName = $workbook
             serializedData = $serializedData
             version = "1.0"
-            sourceId = $Workspace
+            sourceId = $sourceId
             category = "sentinel"
         }
 
