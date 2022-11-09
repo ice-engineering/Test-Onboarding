@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory=$true)][string]$ResourceGroup,
     [Parameter(Mandatory=$true)][string]$Workspace,
-    [Parameter(Mandatory=$true)][string[]]$CustomWorkbooksList,
+    [Parameter(Mandatory=$true)][array]$CustomWorkbooksList,
     [Parameter(Mandatory=$true)][string]$Location
 )
 
