@@ -1,7 +1,8 @@
 param(
     [Parameter(Mandatory=$true)][string]$ResourceGroup,
-    [Parameter(Mandatory=$true)][string]$Workspace
-    #[Parameter(Mandatory=$true)][string[]]$customWorkbooks
+    [Parameter(Mandatory=$true)][string]$Workspace,
+    [Parameter(Mandatory=$true)][string[]]$CustomWorkbooksList,
+    [Parameter(Mandatory=$true)][string]$Location
 )
 
 $context = Get-AzContext
@@ -19,16 +20,16 @@ $workbookUri = "/subscriptions/${SubscriptionId}/resourceGroups/${ResourceGroup}
 
 $customWorkbooks = @("iCEReporting")
 
-Write-Host "Break 0"
+Write-Host "Workbooks List: ${CustomWorkbooksList}"
 
-if ($customWorkbooks){
-    foreach ($workbook in $customWorkbooks){
+if ($CustomWorkbooksList){
+    foreach ($workbook in $CustomWorkbooksList){
 
         $workbookName = $workbook.replace(' ','')
 
-        Write-Host "Break 1"
+        Write-Host "Workbook: ${workbook}"
 
-        $serializedData = (Invoke-webrequest -URI "https://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/WorkbookTesting/iCEReporting.json").Content
+        $serializedData = (Invoke-webrequest -URI "https://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/WorkbookTesting/${workbookName}.json").Content
 
         $guid = New-Guid
 
@@ -42,18 +43,12 @@ if ($customWorkbooks){
             category = "sentinel"
         }
 
-        Write-Host "Break 2"
-
         $workbookUriGuid = $workbookUri + $guid + '?api-version=2021-08-01'
-
-        Write-Host $workbookUriGuid
-
-        Write-Host "Location: " + $ResourceGroup.location
 
         $workbookBody = @{}
         $workbookBody | Add-Member -NotePropertyName name -NotePropertyValue $guid
         $workbookBody | Add-Member -NotePropertyName type -NotePropertyValue "microsoft.insights/workbooks"
-        $workbookBody | Add-Member -NotePropertyName location -NotePropertyValue "australiaeast"
+        $workbookBody | Add-Member -NotePropertyName location -NotePropertyValue $Location
         $workbookBody | Add-Member -NotePropertyName kind -NotePropertyValue "shared"
         $workbookBody | Add-Member -NotePropertyName properties -NotePropertyValue $properties
 
