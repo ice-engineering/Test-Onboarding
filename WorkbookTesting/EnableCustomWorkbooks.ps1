@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory=$true)][string]$ResourceGroup,
     [Parameter(Mandatory=$true)][string]$Workspace,
-    [Parameter(Mandatory=$true)][array]$CustomWorkbooksList,
+    [Parameter(Mandatory=$true)][string]$CustomWorkbooksList,
     [Parameter(Mandatory=$true)][string]$Location
 )
 
@@ -22,8 +22,10 @@ $customWorkbooks = @("iCEReporting")
 
 Write-Host "Workbooks List: ${CustomWorkbooksList}"
 
-if ($CustomWorkbooksList){
-    foreach ($workbook in $CustomWorkbooksList){
+$workbookList = $CustomWorkbooksList -split ","
+
+if ($workbookList){
+    foreach ($workbook in $workbookList){
 
         $workbookName = $workbook.replace(' ','')
 
