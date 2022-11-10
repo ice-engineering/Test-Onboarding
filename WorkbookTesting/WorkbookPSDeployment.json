@@ -78,7 +78,7 @@
             "properties": {
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0",
-                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Location ', resourceGroup().location, ' -CustomWorkbooksList ', '[replace(replace(string(parameters('enableCustomWorkbooksKind')),'\"',''),'[','')]')]",
+                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Location ', resourceGroup().location, ' -CustomWorkbooksList ', parameters('enableCustomWorkbooksKind'))]",
                 "primaryScriptUri": "https://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/WorkbookTesting/EnableCustomWorkbooks.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
