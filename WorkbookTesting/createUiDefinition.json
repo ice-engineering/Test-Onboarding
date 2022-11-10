@@ -176,7 +176,7 @@
 			"dailyQuota": "[basics('dailyQuota')]",
 			"dataRetention": "[basics('dataRetention')]",
 			"enableNativeWorkbooksKind": "[steps('workBooks').enableNativeWorkbooksKind]",
-			"enableCustomWorkbooksKind": "[replace(replace(string([steps('workBooks').enableCustomWorkbooksKind]),'\"',''),'[','')]",
+			"enableCustomWorkbooksKind": "[steps('workBooks').enableCustomWorkbooksKind]",
 			"location": "[location()]",
 			"rgName": "[basics('rgName')]"
 		}
