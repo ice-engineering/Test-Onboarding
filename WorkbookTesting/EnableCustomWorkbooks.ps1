@@ -22,7 +22,7 @@ $customWorkbooks = @("iCEReporting")
 
 Write-Host "Workbooks List: ${CustomWorkbooksList}"
 
-$workbookList = $CustomWorkbooksList #-split ","
+$workbookList = $CustomWorkbooksList -split ","
 
 if ($workbookList){
     foreach ($workbook in $workbookList){
