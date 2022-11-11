@@ -19,10 +19,7 @@
             "defaultValue": []
         }
     },
-    "variables": {
-        "mspRegistrationName": "[guid(parameters('mspOfferName'))]",
-        "mspAssignmentName": "[guid(parameters('mspOfferName'))]"
-    },
+    "variables": {},
     "resources": [
         {
             "name": "enableCustomWorkbooks",
