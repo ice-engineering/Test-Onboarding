@@ -38,7 +38,7 @@
                         "value": "[parameters('workspaceName')]"
                     },
                     "enableCustomWorkbooksKind":{
-                        "value": "[replace(replace(replace(string(parameters('enableCustomWorkbooksKind')),'\"',''),'[',''),'` ',' ')]"
+                        "value": "[replace(replace(string(parameters('enableCustomWorkbooksKind')),'\"',''),'[','')]"
                     }
                 }
             }
@@ -51,7 +51,7 @@
         },
         "customWorkbooksList": {
             "type": "string",
-            "value": "[replace(replace(replace(string(parameters('enableCustomWorkbooksKind')),'\"',''),'[',''),'` ',' ')]"
+            "value": "[replace(replace(string(parameters('enableCustomWorkbooksKind')),'\"',''),'[','')]"
         }
     }
 }
