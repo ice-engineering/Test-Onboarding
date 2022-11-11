@@ -37,7 +37,7 @@
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
                     },
-                    "dataConnectorsList":{
+                    "enableCustomWorkbooksKind":{
                         "value": "[replace(replace(string(parameters('enableCustomWorkbooksKind')),'\"',''),'[','')]"
                     }
                 }
