@@ -18,18 +18,10 @@ Write-Host "Connected to Azure with subscription: " + $context.Subscription
 
 $workbookUri = "/subscriptions/${SubscriptionId}/resourceGroups/${ResourceGroup}/providers/Microsoft.Insights/workbooks/"
 
-$customWorkbooks = @("iCEReporting")
-
-Write-Host "Workbooks List: ${CustomWorkbooksList}"
-
-$workbookList = $CustomWorkbooksList #-split ","
-
-if ($workbookList){
-    foreach ($workbook in $workbookList){
+if ($CustomWorkbooksList){
+    foreach ($workbook in $CustomWorkbooksList){
 
         $workbookName = $workbook.replace(' ','')
-
-        Write-Host "Workbook: ${workbook}"
 
         $serializedData = (Invoke-webrequest -URI "https://raw.githubusercontent.com/ice-engineering/Test-Onboarding/AlexTest/WorkbookTesting/${workbookName}.json").Content
 
@@ -54,8 +46,6 @@ if ($workbookList){
         $workbookBody | Add-Member -NotePropertyName kind -NotePropertyValue "shared"
         $workbookBody | Add-Member -NotePropertyName properties -NotePropertyValue $properties
 
-        Write-Host "Break 3"
-
         try{
             Invoke-AzRestMethod -Path $workbookUriGuid -Method PUT -Payload ($workbookBody | ConvertTo-Json -Depth 3)
         }
@@ -63,7 +53,5 @@ if ($workbookList){
             Write-Verbose $_
             Write-Error "Unable to create workbook with error code: $($_.Exception.Message)" -ErrorAction Stop
         }
-
-        Write-Host "Break 4"
     }
 }
