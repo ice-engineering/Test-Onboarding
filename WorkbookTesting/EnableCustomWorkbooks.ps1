@@ -2,7 +2,7 @@ param(
     [Parameter(Mandatory=$true)][string]$ResourceGroup,
     [Parameter(Mandatory=$true)][string]$Workspace,
     [Parameter(Mandatory=$true)][string]$Location,
-    [Parameter(Mandatory=$true)][string]$CustomWorkbooksList
+    [Parameter(Mandatory=$true)][string[]]$CustomWorkbooksList
 )
 
 $context = Get-AzContext
@@ -22,7 +22,7 @@ $customWorkbooks = @("iCEReporting")
 
 Write-Host "Workbooks List: ${CustomWorkbooksList}"
 
-$workbookList = $CustomWorkbooksList -split ","
+$workbookList = $CustomWorkbooksList #-split ","
 
 if ($workbookList){
     foreach ($workbook in $workbookList){
