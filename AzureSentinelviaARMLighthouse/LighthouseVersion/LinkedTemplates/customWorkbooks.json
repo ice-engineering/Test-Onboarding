@@ -8,7 +8,7 @@
                 "description": "Name for the Log Analytics workspace"
             }
         },
-        "enableCustomWorkbooksKind": {
+        "customWorkbooksList": {
             "type": "string",
             "metadata": {
                 "description": "Comma separated enabled connectors: AzureActivityLog,SecurityEvents,WindowsFirewall,DnsAnalytics. Reference: https://docs.microsoft.com/azure/templates/microsoft.operationalinsights/2020-03-01-preview/workspaces/datasources#microsoftoperationalinsightsworkspacesdatasources-object"
@@ -83,7 +83,7 @@
             "properties": {
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0",
-                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Location ', resourceGroup().location, ' -CustomWorkbooksList ', parameters('enableCustomWorkbooksKind'), ' -ArtifactsLocation ', parameters('_artifactsLocation'))]",
+                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Location ', resourceGroup().location, ' -CustomWorkbooksList ', parameters('customWorkbooksList'), ' -ArtifactsLocation ', parameters('_artifactsLocation'))]",
                 "primaryScriptUri": "[concat([parameters('_artifactsLocation')], 'AzureSentinelviaARMLighthouse/LighthouseVersion/Scripts/EnableCustomWorkbooks.ps1')]",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",

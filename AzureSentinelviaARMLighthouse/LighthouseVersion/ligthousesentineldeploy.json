@@ -365,7 +365,7 @@
             }
         },
         {
-            "name": "enableCustomWorkbooks",
+            "name": "enableCustomWorkbooksKind",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "resourceGroup": "[parameters('rgName')]",
@@ -382,7 +382,7 @@
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
                     },
-                    "enableCustomWorkbooksKind":{
+                    "customWorkbooksList":{
                         "value": "[replace(replace(replace(replace(string(parameters('enableCustomWorkbooksKind')),'\"',''),'[',''),']',''),' ','` ')]"
                     },
                     "_artifactsLocation": {
@@ -433,6 +433,10 @@
         "dataConnectorsList": {
             "type": "string",
             "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
+        },
+        "customWorkbooksList":{
+            "type": "string",
+            "value": "[replace(replace(replace(replace(string(parameters('enableCustomWorkbooksKind')),'\"',''),'[',''),']',''),' ','` ')]"
         }
     }
 }
