@@ -319,12 +319,16 @@
                         "toolTip": "Select the Custom Workbooks that you would like to enable",
                         "constraints": {
                             "allowedValues": [{
-                                    "label": "iCE Reporting",
-                                    "value": "iCE Reporting"
+                                    "label": "Reporting",
+                                    "value": "Reporting"
                                 },
                                 {
-                                    "label": "Brute Force Monitoring",
-                                    "value": "bruteforcemonitoring"
+                                    "label": "Azure AD Identity Protection Risk Analysis",
+                                    "value": "Azure AD Identity Protection Risk Analysis"
+                                },
+                                {
+                                    "label": "MFA Authentication Analysis",
+                                    "value": "MFA Authentication Analysis"
                                 }
                             ],
                             "required": false
