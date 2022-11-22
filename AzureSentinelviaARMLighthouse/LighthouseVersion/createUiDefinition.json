@@ -293,6 +293,45 @@
                         "visible": true
                     }
                 ]
+            },
+            {
+                "name": "workBooks",
+                "label": "Workbooks",
+                "elements": [{
+                        "name": "textBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please select which Workbooks you want to deply into your Azure Sentinel environment",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://www.microsoft.com"
+                            }
+                        }
+                    },
+                    {
+                        "name": "enableCustomWorkbooksKind",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select Workbooks to include in Deployment",
+                        "placeholder": "",
+                        "multiselect": true,
+                        "defaultValue": "o365",
+                        "toolTip": "Select the Custom Workbooks that you would like to enable",
+                        "constraints": {
+                            "allowedValues": [{
+                                    "label": "iCE Reporting",
+                                    "value": "iCE Reporting"
+                                },
+                                {
+                                    "label": "Brute Force Monitoring",
+                                    "value": "bruteforcemonitoring"
+                                }
+                            ],
+                            "required": false
+                        },
+                        "visible": true
+                    }
+                ]
             }
         ],
         "outputs": {
