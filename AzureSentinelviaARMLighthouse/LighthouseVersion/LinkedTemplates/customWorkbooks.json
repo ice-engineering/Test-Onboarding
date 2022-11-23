@@ -84,7 +84,7 @@
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0",
                 "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Location ', resourceGroup().location, ' -CustomWorkbooksList ', parameters('customWorkbooksList'), ' -ArtifactsLocation ', parameters('_artifactsLocation'))]",
-                "primaryScriptUri": "[concat([parameters('_artifactsLocation')], 'AzureSentinelviaARMLighthouse/LighthouseVersion/Scripts/EnableCustomWorkbooks.ps1')]",
+                "primaryScriptUri": "[concat(parameters('_artifactsLocation'), 'AzureSentinelviaARMLighthouse/LighthouseVersion/Scripts/EnableCustomWorkbooks.ps1')]",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
                 "cleanupPreference": "OnSuccess",
